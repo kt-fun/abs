@@ -6,6 +6,7 @@ import NextLink from 'next/link';
 import { usePathname, useRouter } from 'next/navigation'
 import ThemeButton from './ThemeButton';
 import HeaderHelpMenu from './HeaderHelpMenu';
+import UserNav from './UserNav';
 
 export interface HeaderProps {
   gitHubLink?: string;
@@ -64,24 +65,26 @@ export const Header = ({gitHubLink, ghost }: HeaderProps) => {
             <HeaderProductLink
               href="/map"
               active={ pathname === '/map' }
-            >beatmap</HeaderProductLink>
+            >
+                <Text size={"4"}> beatmap </Text>
+              </HeaderProductLink>
             <HeaderProductLink
               href="/playlist"
               active={ pathname === '/playlist' }
-            >playlist</HeaderProductLink>
+            >
+                <Text size={"4"}>playlist</Text>
+            </HeaderProductLink>
             <HeaderProductLink 
               href="/mapper" 
               active={pathname === '/mapper'}
-            >mapper</HeaderProductLink>
+            >
+                <Text size={"4"}>mapper</Text>
+            </HeaderProductLink>
           </div>
-          <div className='flex space-x-4 items-center'>
+          <div className='flex space-x-4 items-center '>
+            <UserNav/>
             <div className='hidden md:flex'>
-              <Tooltip className="" content="View GitHub ">
-                <div>Login</div>
-              </Tooltip>
-              </div>
-            <div className='hidden md:flex'>
-            <HeaderHelpMenu/>
+              <HeaderHelpMenu/>
             </div>
 
             <div className='hidden md:flex'>
@@ -127,9 +130,14 @@ const HeaderProductLink = ({
   ...props
 }: React.ComponentPropsWithoutRef<'a'> & { active?: boolean }) => (
   <NextLink href={href} passHref legacyBehavior>
-    <a data-state={active ? 'active' : 'inactive'} {...props}>
-      <span className={`px-2 font-medium text-base rounded-lg ${active?'bg-gradient-to-r text-white':''} from-red-500 to-blue-500`}>{children}</span>
-      <span className="hidden">{children}</span>
-    </a>
+
+  <div className='hidden md:flex hover:bg-gradient-to-r cursor-pointer from-red-500 to-blue-500 hover:text-white rounded-full px-2 py-0.5 space-x-2 items-center font-semibold'>
+
+      <a data-state={active ? 'active' : 'inactive'} {...props}>
+        <span className={`px-2 py-1 rounded-full ${active?'bg-gradient-to-r text-white':''} from-red-500 to-blue-500`}>{children}</span>
+        <span className="hidden">{children}</span>
+      </a>
+    </div>
+
   </NextLink>
 );

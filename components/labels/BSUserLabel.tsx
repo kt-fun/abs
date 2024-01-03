@@ -6,13 +6,13 @@ import { ClientOnly } from "../ClientOnly";
 import BSUserDetailCard from "../BSUserDetialCard";
 import { TextSize } from "@/interfaces/text-size";
 const truncated = (text:string) => {
-    if (text.length > 8) {
-        return text.substring(0,8) + '...'
+    if (text.length > 15) {
+        return text.substring(0,15) + '...'
     }
     return text
 }
 export default function BSUserLabel(
-    {user,size}:{user:BSUser,size?:TextSize}
+    {user,size,tooltip}:{user:BSUser,size?:TextSize,tooltip?:string}
 ){
     return (
         <>

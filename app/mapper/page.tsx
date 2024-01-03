@@ -25,7 +25,7 @@ export default function MapperPage() {
 
     return (
       <>
-      <div>
+      <div className="flex-cols flex max-w-[1200px]  space-x-2">
         {
             !isLoadingMore&&isEmpty && 
             <div>

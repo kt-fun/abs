@@ -1,12 +1,14 @@
 import { BSMapTagType, BSMapTag as Tag } from "@/interfaces/mapTags";
+import { TextSize } from "@/interfaces/text-size";
+import { Text } from "@radix-ui/themes";
 export default function BSMapTag(
-    {tag}:{tag:Tag}
+    {tag,size,className}:{tag:Tag,size?:TextSize, className?:string}
 ){
     return (
         <>
-            <span className={`p-0.5 text-xs font-semibold text-white rounded-md ${tag.type==BSMapTagType.Style ?'bg-red-500':'bg-blue-500'} `}>
+            <Text size={size} className={` ${className} `}>
                 {tag.human}
-            </span>
+            </Text>
         </>
     )
 }

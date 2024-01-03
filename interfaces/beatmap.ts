@@ -14,7 +14,7 @@ export function getMaxNPS(bsMap: BSBeatMap): number {
     return maxNPS;
 }
 export function checkIfAI(bsMap: BSBeatMap): boolean {
-    return bsMap.automapper || bsMap.declaredAi !== "";
+    return bsMap.automapper || bsMap.declaredAi !== "None";
 }
 export function checkIfME(bsMap: BSBeatMap): boolean {
     for (const version of bsMap.versions) {

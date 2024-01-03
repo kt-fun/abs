@@ -10,25 +10,33 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json()).then((res)
 
 export interface PlaylistQueryParam {
     queryKey:string,
-    autoMapper?:boolean,
+    curated?:boolean,
     verifiedMapper?: boolean,
-    sortKey: "",
+    sortKey: string,
 }
 const buildURL = (index:number,param:PlaylistQueryParam) => {
     const baseURL = `https://bs-api.kt-f63.workers.dev/playlists/search/${index}`
     let paramMap:any = {}
-    if (param.autoMapper) {
-        paramMap["automapper"] = true
+    if (param.verifiedMapper) {
+        paramMap["verifiedMapper"] = true
+    }
+    if (param.curated) {
+        paramMap["curated"] = true
     }
     if (param.queryKey!="") {
         paramMap["q"] = param.queryKey
     }
+    if (param.sortKey=="") {
+        paramMap["sortOrder"] = "Relevance"
+    }else {
+        paramMap["sortOrder"] = param.sortKey
+    }
     let keys = Object.keys(paramMap)
     let queryParam = "?"
     for (const k in keys) {
-        queryParam += `${k}=${paramMap[k]}`
+        queryParam += `${keys[k]}=${paramMap[keys[k]]}&`
     }
-    return baseURL + queryParam
+    return (baseURL + queryParam)
 }
 
 const defaultParam:PlaylistQueryParam = {
@@ -38,6 +46,7 @@ const defaultParam:PlaylistQueryParam = {
 
 export const usePagingBSPlaylist = () => {
     const [state,setState] = useState<PlaylistQueryParam>(defaultParam)
+    const [storedState,setStoredState] = useState<PlaylistQueryParam>(defaultParam)
     const {
         data,
         mutate,
@@ -49,7 +58,7 @@ export const usePagingBSPlaylist = () => {
         (index) => buildURL(index, state),
         fetcher,
       );
-      
+    
     const playlists:BSPlaylist[] = data ? [].concat(...data) : [];
     const isLoadingMore =
     isLoading || (size > 0 && data && typeof data[size - 1] === "undefined");
@@ -58,14 +67,15 @@ export const usePagingBSPlaylist = () => {
     const loadMore = () => setSize(size + 1);
     const hasMore = data?.[data.length - 1]?.length === PAGE_SIZE;
     const refresh = useCallback(()=> {
+        setState(storedState)
         setSize(0)
-    },[setSize])
+    },[setSize,setState,storedState])
     const updateQuery = useCallback((param:PlaylistQueryParam)=> {
-        setState(param)
-    },[setState])
+        setStoredState(param)
+    },[setStoredState])
     return {
         playlists,
-        "queryParam":state,
+        "queryParam":storedState,
         isLoadingMore,
         refresh,
         loadMore,

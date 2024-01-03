@@ -6,50 +6,50 @@ import { BiCameraMovie } from "react-icons/bi";
 import { RiRobot2Line } from "react-icons/ri";
 import { GiRank3 } from "react-icons/gi";
 export default function FeatureIcons(
-    {bsMap}:{bsMap:BSBeatMap}
+    {bsMap,className}:{bsMap:BSBeatMap,className?:string}
 ) {
     return (
-        <Box className="">
+        <Box className={className}>
             <Flex gap="3">
                 {
                     bsMap.ranked && (
                         <Tooltip content="Ranked Map">
-                            <GiRank3/>
+                            <span className="p-0.5"><GiRank3/></span>
                         </Tooltip>
                     )
                 }
                 {
                     checkIfAI(bsMap) && (
                         <Tooltip content="Auto Mapper, notice, not all AI map has such tag">
-                            <RiRobot2Line/>
+                            <span className="p-0.5"><RiRobot2Line/></span>
                         </Tooltip>
                         )
                 }
                 {
                     checkIfCinema(bsMap) && (
                         <Tooltip content="Cinema Map">
-                            <BiCameraMovie/>
+                            <span className="p-0.5"><BiCameraMovie/></span>
                         </Tooltip>
                     )
                 }
                 {
                     checkIfChroma(bsMap) && (
                         <Tooltip content="Chroma Map">
-                            <CiLight/>
+                            <span className="p-0.5"><CiLight/></span>
                         </Tooltip>
                     )
                 }
                 {
                     checkIfME(bsMap) && (
                         <Tooltip content="Mapping Extensions Map">
-                            <CiLight/>
+                        <span className="p-0.5"><CiLight/></span>
                         </Tooltip>
                     )
                 }
                 {
                     checkIfNE(bsMap) && (
                         <Tooltip content="Noodle Extensions Map">
-                            <CiLight/>
+                        <span className="p-0.5"><CiLight/></span>
                         </Tooltip>
                     )
                 }

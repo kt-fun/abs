@@ -18,6 +18,9 @@ export default function RootLayout({
 }) {
   const userPreference = useUserPreferenceStore((state) => state.userPreference)
   const {themeMode} = useThemeMode()
+
+  // when scroll down show a floating ball to go back to top
+
   return (
     <UserPreferenceContext.Provider value={userPreference}>
       <html lang={"en"} className={themeMode}>
@@ -28,10 +31,11 @@ export default function RootLayout({
         <main className="flex min-h-screen flex-col bg-gray-100 dark:bg-gray-700">
             <ClientOnly>
               <Header />
-              <section className='items-center justify-between px-24 xl:px-64 lg:px-48 py-4'>
+              <section className='items-center justify-center flex px-2 py-4'>
                 {children}
               </section>
             </ClientOnly>
+
           </main>
         </Theme>
         </body>

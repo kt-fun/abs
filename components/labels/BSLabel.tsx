@@ -14,14 +14,17 @@ export default function BSLabel(
             tooltip ? 
             <Tooltip content={tooltip}>
                 <span className="inline-flex items-center cursor-default">
-                    <span className="mr-1">{children}</span>
-                    <Text size={size} weight="medium">{label}</Text>
+                    <Text size={size} weight="medium" className="inline-flex items-center space-x-1">
+                    <span className="mr-1">{children}</span>                        
+                        {label}</Text>
                 </span>
             </Tooltip>
         :
         <span className="inline-flex items-center cursor-default">
+            
+            <Text size={size} weight="medium" className="inline-flex items-center space-x-1">
             <span className="mr-1">{children}</span>
-            <Text size={size} weight="medium">{label}</Text>
+                {label}</Text>
         </span>
         }
 

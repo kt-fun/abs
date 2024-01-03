@@ -16,6 +16,16 @@ const nextConfig = {
               protocol: 'https',
               hostname: 'na.cdn.beatsaver.com',
               pathname: '/**',
+            },
+            {
+              protocol: 'https',
+              hostname: 'cdn.beatsaver.com',
+              pathname: '/**',
+            },
+            {
+              protocol: 'https',
+              hostname: '*.cdn.beatsaver.com',
+              pathname: '/**',
             }
           ],
     }
