@@ -18,10 +18,14 @@ export default function ThemeButton(){
     },[themeMode, updateThemeMode])
     return (
         <>
-            <IconButton onClick={setTheme} radius="full" variant="ghost">
-                {themeMode === ThemeMode.Light && <CiLight/>}
-                {themeMode === ThemeMode.Dark && <FaMoon/>}
-                {themeMode === ThemeMode.System && <HiComputerDesktop/>}
+            <IconButton asChild onClick={setTheme} radius="full" variant="ghost">
+                <span>
+                    <span className="sr-only">Toggle theme</span>
+                    {themeMode === ThemeMode.Light && <CiLight/>}
+                    {themeMode === ThemeMode.Dark && <FaMoon/>}
+                    {themeMode === ThemeMode.System && <HiComputerDesktop/>}
+                </span>
+
             </IconButton>
         </>
     )

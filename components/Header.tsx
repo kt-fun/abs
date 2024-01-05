@@ -50,10 +50,9 @@ export const Header = ({gitHubLink, ghost }: HeaderProps) => {
       <header
         data-scroll-state={scrollState}
         data-mobile-menu-open={mobileMenu.open}
-        className='w-full px-20 h-16 top-0 z-50'
+        className='w-full px-20 h-16 top-0 z-50 sticky backdrop-blur-2xl'
       >
         <div className='h-full flex justify-between items-center'>
-            
           <div className='hidden md:flex items-center'>
                 <NextLink href="/">
                   <AccessibleIcon label="ABS">

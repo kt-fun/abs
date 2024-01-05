@@ -31,6 +31,12 @@ import BSNoteAmountLabel from './labels/BSNoteAmountLabel'
 import BSObstacleAmountLabel from './labels/BSObstacleAmountLabel'
 import BSBPMLabel from './labels/BSBPMLabel'
 import BSIDLabel from './labels/BSIDLabel'
+import { PiHeartbeat } from "react-icons/pi";
+import { useEffect, useState } from 'react'
+import { motion, useSpring } from 'framer-motion'
+import { useSongPreview, useSongPreviewState } from '@/hooks/useSongPreview'
+import { AiOutlineLoading } from "react-icons/ai";
+import CopyIcon from './CopyIcon'
 interface BSMapProps {
     bsMap:BSBeatMap
 }
@@ -69,12 +75,20 @@ type MapDiff = "Easy" | "Normal" | "Hard" | "Expert" | "ExpertPlus"
 export default function BSMap(
     {bsMap}: {bsMap:BSBeatMap}
 ) {
+  const {currentSong,state,play,stop} = useSongPreview()
   const bg = getBSMapCoverURL(bsMap)
-
-  const handlePlaySongPreview = ()=>{
-
+  const handlePlaySongPreview = () => {
+    if(state.playing && currentSong?.id == bsMap.id){
+      stop()
+    }else{
+      play({
+        id:bsMap.id,
+        previewURL:bsMap.versions[0].previewURL,
+        coverURL:bg,
+      })
+    }
   }
-
+  const current = currentSong?.id == bsMap.id
   const handleBookmark = ()=>{
 
   }
@@ -86,12 +100,11 @@ export default function BSMap(
   const handlePlayMapPreview = ()=>{
 
   }
-  const handleCopyTwitchRequest = ()=>{
-    navigator.clipboard.writeText(`!bsr ${bsMap.id}`);
-  }
   const handleCopyMapId = ()=>{
     navigator.clipboard.writeText(bsMap.id);
   }
+  const score = bsMap.stats.score*100
+
   return (
     <Card
     className='shadow-md max-h-[200px]'
@@ -104,7 +117,7 @@ export default function BSMap(
               backgroundImage: `url('${bg}')`,
               backgroundSize: 'cover',
           }}>
-              <div className="z-100 bg-black/[.6] h-full group-hover:visible invisible  bg-blend-darken">
+              <div className={`z-100 bg-black/[.6] h-full group-hover:visible ${current?'':'invisible'}  bg-blend-darken`}>
                   <Theme appearance="dark" className="bg-transparent h-full">
                       <div className="flex flex-col justify-between  h-full pt-auto pb-0">
                           <div className='mx-1'>
@@ -160,9 +173,33 @@ export default function BSMap(
                                     </span>
                                   </Tooltip>
                                   <Tooltip content="play song preview">
-                                    <span onClick={handlePlaySongPreview} className="hover:bg-white hover:text-red-400 p-1 rounded-full cursor-pointer">
-                                        <CiMusicNote1 />
+                                    {
+                                      current?
+                                    <motion.span 
+                                      animate={
+                                        state.loading?
+                                        {rotate:360}:
+                                        {scale:1.05}
+                                      }
+                                      transition={
+                                        state.loading?
+                                        {duration:1,repeat:Infinity}:
+                                        {duration:.5,repeat:Infinity}
+                                      }
+                                      onClick={handlePlaySongPreview} 
+                                      className={`hover:bg-white ${current?'bg-white text-red-400':''} hover:text-red-400 p-1 rounded-full cursor-pointer`}>
+                                        {
+                                          state.loading?
+                                          <AiOutlineLoading/>:
+                                          <PiHeartbeat/>
+                                        }
+                                    </motion.span>:
+                                    <span 
+                                    onClick={handlePlaySongPreview} 
+                                    className={`hover:bg-white hover:text-red-400 p-1 rounded-full cursor-pointer`}>
+                                      <CiMusicNote1/>
                                     </span>
+                                    }
                                   </Tooltip>
                                   <Tooltip content="play map preview">
                                     <span onClick={handlePlayMapPreview} className="hover:bg-white hover:text-red-400 p-1 rounded-full cursor-pointer">
@@ -170,9 +207,9 @@ export default function BSMap(
                                     </span>
                                   </Tooltip>
                                   <Tooltip content="copy twitch request">
-                                    <span onClick={handleCopyTwitchRequest} className="hover:bg-white hover:text-red-400 p-1 rounded-full cursor-pointer">
-                                        <FaTwitch />
-                                    </span>
+                                    <CopyIcon className="hover:bg-white hover:text-red-400 p-1 rounded-full cursor-pointer" content={`!bsr ${bsMap.id}`}>
+                                      <FaTwitch />
+                                    </CopyIcon>
                                   </Tooltip>
                                   <Tooltip content="download zip">
                                   <NextLink href={bsMap.versions[0].downloadURL}  className="hover:bg-white hover:text-red-400 p-1 rounded-full">
@@ -226,13 +263,13 @@ export default function BSMap(
           
 
             <div className='flex items-center'>
-              <Progress.Root className="relative overflow-hidden rounded-full w-32 h-2 bg-gray-100" value={bsMap.stats.score*100}>
+              <Progress.Root className="relative overflow-hidden rounded-full w-32 h-2 bg-gray-100" value={score}>
                 <Progress.Indicator
                     className=" h-2 rounded-full bg-gradient-to-r from-red-500 to-blue-500"
-                    style={{ transform: `translateX(-${100 - bsMap.stats.score*100}%)` }}
+                    style={{ transform: `translateX(-${100 - score}%)` }}
                 />
               </Progress.Root>
-              <Text className="pl-2" size="1" weight="medium">{(bsMap.stats.score*100).toFixed(1)}%</Text>
+              <Text className="pl-2" size="1" weight="medium">{score.toFixed(1)}%</Text>
             </div>
             <div className='flex items-center  space-x-2'>
               <div className='flex items-center space-x-2'>
@@ -248,3 +285,7 @@ export default function BSMap(
     </Card>
   )
 }
+function useAudio(arg0: { src: string; autoPlay: boolean }): [any, any, any, any] {
+  throw new Error('Function not implemented.')
+}
+

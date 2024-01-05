@@ -68,8 +68,7 @@ export const usePagingBSPlaylist = () => {
     const hasMore = data?.[data.length - 1]?.length === PAGE_SIZE;
     const refresh = useCallback(()=> {
         setState(storedState)
-        setSize(0)
-    },[setSize,setState,storedState])
+    },[setState,storedState])
     const updateQuery = useCallback((param:PlaylistQueryParam)=> {
         setStoredState(param)
     },[setStoredState])

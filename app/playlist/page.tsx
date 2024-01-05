@@ -9,6 +9,7 @@ import BSPlaylistQueryCard from "@/components/BSPlaylistQueryCard";
 import { motion } from "framer-motion";
 import { FaArrowUp } from "react-icons/fa";
 import * as Popover from "@radix-ui/react-popover";
+import BSPlaylistSkeleton from "@/components/BSPlaylistSkeleton";
 export default function Home() {
     const { playlists,isLoadingMore,isEmpty,hasMore,loadMore,refresh,queryParam,updateQuery} = usePagingBSPlaylist();
     const [top,setTop] = useState(0);
@@ -39,20 +40,17 @@ export default function Home() {
         hidden: { opacity: 0, y: "100vw" },
         visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
       };
-      
+      const skeleton = [1,2,3,4,5,6,7,8,9,10]
       return (
         <>
-          <div className="flex items-center justify-center">
+          <div className="flex justify-center grow">
             <div  className="flex-cols flex max-w-[1200px]  space-x-4">
               <div className="grid gap-8 grid-cols-1 xl:grid-cols-3 md:grid-cols-2">
                 {
-                  // todo add empty state
-                  playlists.length === 0 && <>
-                  <div>
-                    todo
-                    Nothing Here
-                    </div>
-                  </>
+                  playlists.length == 0  && (
+                    skeleton.map((i:number)=>
+                    <BSPlaylistSkeleton key={`${i}`}/>)
+                  )
                 }
                 {
                 playlists.map((playlist:IBSPlaylist) => {
@@ -67,7 +65,7 @@ export default function Home() {
 
 
               </div>
-              <div className="hidden lg:flex sticky top-12 items-center justify-center w-[320px]  h-full">
+              <div className="hidden lg:flex sticky top-12 items-center justify-center w-[320px] max-h-[480px]  h-full">
               <BSPlaylistQueryCard 
                 queryParam={queryParam}
                 updateQuery={updateQuery}

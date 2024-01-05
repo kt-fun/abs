@@ -187,9 +187,10 @@ export const usePagingBSMap = () => {
         isLoading
       } = useSWRInfinite(
         (index) => buildURL(index, state),
-        fetcher,
+        fetcher,{
+            keepPreviousData: true
+          }
       );
-      
     const maps:BSBeatMap[] = data ? [].concat(...data) : [];
     const isLoadingMore =
     isLoading || (size > 0 && data && typeof data[size - 1] === "undefined");
@@ -198,10 +199,9 @@ export const usePagingBSMap = () => {
     const loadMore = () => setSize(size + 1);
     const hasMore = data?.[data.length - 1]?.length === PAGE_SIZE;
 
-    const refresh = useCallback(()=> {
+    const refresh = ()=> {
         setState(storedState)
-        setSize(0)
-    },[setSize,setState,storedState])
+    }
     const updateQuery = useCallback((param:MapQueryParam)=> {
         setStoredState(param)
     },[setStoredState])

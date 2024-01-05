@@ -28,10 +28,10 @@ export default function RootLayout({
         <Theme
 
         >
-        <main className="flex min-h-screen flex-col bg-gray-100 dark:bg-gray-700">
+        <main className="flex min-h-screen flex-col">
             <ClientOnly>
               <Header />
-              <section className='items-center justify-center flex px-2 py-4'>
+              <section className='grow justify-center flex px-2 py-4'>
                 {children}
               </section>
             </ClientOnly>
