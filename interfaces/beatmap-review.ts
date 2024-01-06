@@ -20,11 +20,13 @@
 //     "curatedAt": "2022-11-26T19:26:10.299247Z"
 // }
 
+import { BSBeatMap } from "./beatmap";
 import { BSUser } from "./beatsaver-user";
 
 export interface BSMapReview {
     id:number,
-    creator: BSUser,
+    creator?: BSUser,
+    map?:BSBeatMap,
     text:string,
     sentiment: "POSITIVE" | "NEGATIVE",
     createAt: string,

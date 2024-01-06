@@ -17,7 +17,7 @@ interface LinkProps {
     href: string;
     icon?: React.ReactNode;
 }
-const menuItems = (
+const MenuItems = (
     {link}: {link: LinkProps}
 ) => {
     return (
@@ -87,7 +87,7 @@ return (
             {
                 menuList.map((link: LinkProps) => {
                     return (
-                        menuItems({link})
+                        <MenuItems key={link.text} link={link} />
                     )
                 })
             }

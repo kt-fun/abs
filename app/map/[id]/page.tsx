@@ -40,7 +40,7 @@ const ReviewItem = ({
         <div>
             <div className="flex space-x-2">
                 <Text size={"2"}>{bsMapReview.sentiment}</Text>
-                <Text size={"2"}>{bsMapReview.creator.name}</Text>
+                <Text size={"2"}>{bsMapReview.creator!!.name}</Text>
                 <Text size={"2"}>{bsMapReview.createAt}</Text>
             </div>
             <div>

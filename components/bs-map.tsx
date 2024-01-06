@@ -131,7 +131,7 @@ export default function BSMap(
                                 bsMap.versions[0].diffs.map((diff)=>{
                                   return (
                                     <>
-                                        <HoverCard.Root>
+                                        <HoverCard.Root key={diff.characteristic+diff.difficulty+bsMap.id}>
                                           <HoverCard.Trigger>
                                         <Text key={diff.difficulty + diff.characteristic} size={"1"}
                                         className='font-semibold m-0.5 px-1 rounded-full cursor-pointer border-white hover:border-red-500 hover:text-red-500 border-solid border flex items-center'

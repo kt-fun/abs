@@ -1,3 +1,4 @@
+import { BSUserWithStats } from "@/interfaces/beatsaver-user";
 import { use, useCallback, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 
@@ -6,7 +7,12 @@ import useSWR from "swr";
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
 export const useBSUser = (uid: number) => {
-    return useSWR(`https://beatsaver.com/api/users/id/${uid}`, fetcher)
+    const { data, isLoading,error } = useSWR(`https://beatsaver.com/api/users/id/${uid}`, fetcher)
+    return {
+        "bsUserWithStats": data as BSUserWithStats,
+        isLoading,
+        error,
+    }
 }
 
 
