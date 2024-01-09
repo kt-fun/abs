@@ -25,27 +25,6 @@ export const Header = ({gitHubLink, ghost }: HeaderProps) => {
   const mobileMenu = useMobileMenuContext();
   const pathname = usePathname();
   const [scrollState, setScrollState] = React.useState<ScrollState>('at-top');
-
-  React.useEffect(() => {
-    let previousScrollY = window.scrollY;
-
-    const handleScroll = () => {
-      const direction = previousScrollY < window.scrollY ? 'scrolling-down' : 'scrolling-up';
-      const state = window.scrollY < 30 ? 'at-top' : direction;
-      previousScrollY = window.scrollY;
-      setScrollState(state);
-    };
-
-    if (ghost) {
-      addEventListener('scroll', handleScroll, { passive: true });
-    } else {
-      removeEventListener('scroll', handleScroll);
-    }
-
-    handleScroll();
-    return () => removeEventListener('scroll', handleScroll);
-  }, [ghost]);
-
   interface NavItem {
     href: string;
     label: string;
