@@ -5,7 +5,9 @@ export const useInfinityScroll = () => {
     const [top,setTop] = useState(0);
     const handleScroll = useCallback(() => {
         setTop(document.documentElement.scrollTop);
-        if (
+        if(document.body.clientHeight <= window.innerHeight) {
+            reachedBottom || setReachedBottom(true);
+        }else if (
           window.innerHeight + document.documentElement.scrollTop ===
           document.documentElement.offsetHeight
         ) {
@@ -14,16 +16,14 @@ export const useInfinityScroll = () => {
             reachedBottom && setReachedBottom(false);
         }
       }, [reachedBottom]);
-  
     useEffect(() => {
-        const observer = new MutationObserver(() => {
-            // 在DOM变化时重新检查位置?
-            handleScroll()
-          });
+        const interval = setInterval(() => {
+          handleScroll();
+        }, 1000);
         window.addEventListener("scroll", handleScroll);
         return () => {
             window.removeEventListener("scroll", handleScroll);
-            observer.disconnect();
+            clearInterval(interval);
         };
       }, [handleScroll]);
 

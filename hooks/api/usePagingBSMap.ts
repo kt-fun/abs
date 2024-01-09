@@ -184,11 +184,12 @@ export const usePagingBSMap = () => {
         size,
         setSize,
         isValidating,
-        isLoading
+        isLoading,
+        error
       } = useSWRInfinite(
         (index) => buildURL(index, state),
         fetcher,{
-            keepPreviousData: true
+            keepPreviousData: true,
           }
       );
     const maps:BSBeatMap[] = data ? [].concat(...data) : [];

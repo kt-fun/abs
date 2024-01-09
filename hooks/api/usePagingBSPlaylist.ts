@@ -1,12 +1,12 @@
 import { BSBeatMap } from '@/interfaces/beatmap';
 import { BSPlaylist } from '@/interfaces/bs-playlist';
 import { BASE_URL } from '@/lib/constant';
-import { jsonWithCredentialFetcher } from '@/lib/fetcher';
+import { jsonFetcher, jsonWithCredentialFetcher } from '@/lib/fetcher';
 import { use, useCallback, useEffect, useMemo, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 
 const PAGE_SIZE = 20
-const fetcher = (input: RequestInfo,init?: RequestInit) => jsonWithCredentialFetcher(input,init).then((res)=>res.docs)
+const fetcher = (input: RequestInfo,init?: RequestInit) => jsonFetcher(input,init).then((res)=>res.docs)
 
 export interface PlaylistQueryParam {
     queryKey:string,

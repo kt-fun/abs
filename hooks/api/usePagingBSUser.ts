@@ -18,7 +18,12 @@ export const usePagingBSUser = () => {
       (index) => {
         return `${BASE_URL}/api/users/list/${index}?sortOrder=Relevance`
       },
-      jsonFetcher
+      jsonFetcher,
+      {
+        keepPreviousData: true,
+        revalidateFirstPage: false,
+        initialSize: 2,
+      }
     );
       
     const users:BSUserWithStats[] = data ? [].concat(...data) : [];
