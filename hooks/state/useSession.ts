@@ -1,17 +1,10 @@
 
 import { sleep } from '@/interfaces/session'
+import { BASE_URL } from '@/lib/constant';
 import { createContext, use } from 'react'
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 
-
-  
-  
-function initGetSession() {
-    return fetch("https://bs-api.kt-f63.workers.dev/api/users/me", {
-        credentials: "include",
-    }).then((res) => res.json())
-}
 interface SessionState {
         user?: UserInfo;
         isLoading: boolean,
@@ -60,7 +53,7 @@ export const useUserSessionStore = create<SessionActions&SessionState>(
             ))
             // @ts-ignore
             const formBody = Object.keys(arg).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(arg[key])).join('&');
-            const res = await fetch("https://bs-api.kt-f63.workers.dev/login", {
+            const res = await fetch(`${BASE_URL}/login`, {
                 headers: {
                     "content-type": "application/x-www-form-urlencoded",
                 },
@@ -83,7 +76,7 @@ export const useUserSessionStore = create<SessionActions&SessionState>(
                     isLoading: true,
                 }
             ))
-            await fetch("https://bs-api.kt-f63.workers.dev/logout", {
+            await fetch(`${BASE_URL}/logout`, {
                 credentials: "include",
             })
             set((state) => (

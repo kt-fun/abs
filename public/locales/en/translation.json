@@ -1,5 +1,20 @@
 {
-    "duration": "duration",
+    "term": {
+        "AI": "AI",
+        "Chroma": "Chroma",
+        "Cinema": "Cinema",
+        "Noodle Extension": "Noodle Extension",
+        "Mapping Extension": "Mapping Extension",
+        "Ranked": "Ranked",
+        "Curated": "Curated",
+        "Verfiied": "Verfiied",
+        "FullSpread": "Full Spread",
+        "NPS": "NPS",
+        "NJS": "NJS",
+        "BPM": "BPM",
+        "Rating": "Rating",
+        "Duration": "Duration"
+    },
     "title": "title",
     "artist": "artist",
     "album": "album"

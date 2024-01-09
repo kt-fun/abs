@@ -1,12 +1,13 @@
-import { useUserPreferenceStore } from "@/hooks/state/userPrefence";
-import { ThemeMode, useThemeMode } from "@/hooks/state/useThemeMode";
+import { ThemeMode,useUserPreferenceStore } from "@/hooks/state/userPrefence";
 import { IconButton } from "@radix-ui/themes";
 import { useCallback } from "react";
 import { CiLight } from "react-icons/ci";
 import { FaMoon } from "react-icons/fa";
 import { HiComputerDesktop } from "react-icons/hi2";
 export default function ThemeButton(){
-    const {themeMode,updateThemeMode} = useThemeMode()
+    const themeMode = useUserPreferenceStore(state => state.userPreference.themeMode)
+    const updateThemeMode = useUserPreferenceStore(state => state.updateThemeMode)
+    // const {themeMode,updateThemeMode} = useThemeMode()
     const setTheme = useCallback(() => {
         if(themeMode === ThemeMode.Light){
             updateThemeMode(ThemeMode.Dark)

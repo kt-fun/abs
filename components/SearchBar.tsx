@@ -18,7 +18,6 @@ export default function SearchBar(
     }
     return (
         <>
-        
             <form>
                 <div className="flex">
 
