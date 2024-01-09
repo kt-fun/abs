@@ -1,6 +1,6 @@
 import { TextSize } from "@/interfaces/text-size";
 import BSLabel from "./BSLabel";
-import { formatNumber } from "@/utils/format";
+import { formatNumber } from "@/lib/format";
 import { Responsive } from "@radix-ui/themes";
 import { CiMap } from "react-icons/ci";
 export default function BSMapAmountLabel(

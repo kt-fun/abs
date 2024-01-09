@@ -1,5 +1,6 @@
 import { BSMapRankingItem } from "@/interfaces/beatmap-rank";
 import { BSUserWithStats } from "@/interfaces/beatsaver-user";
+import { BASE_URL } from "@/lib/constant";
 import { set } from "date-fns";
 import { use, useCallback, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
@@ -62,7 +63,7 @@ export const usePagingBSMapScoreRank = (
         isLoading
       } = useSWRInfinite(
         (index) => {
-          return `https://bs-api.kt-f63.workers.dev/scores/${hash}/${index+1}?type=${type}&gameMode=${gameModeN}&difficulty=${difficultyN}`
+          return `${BASE_URL}/api/scores/${hash}/${index+1}?type=${type}&gameMode=${gameModeN}&difficulty=${difficultyN}`
         },
         fetcher
       );
@@ -80,11 +81,11 @@ export const usePagingBSMapScoreRank = (
     const isRefreshing = isValidating && data && data.length === size;
     const isEmpty = data?.[0]?.length === 0;
     const loadMore = () => setSize(size + 1);
-    const hasMore = data?.[data.length - 1]?.length === PAGE_SIZE;
+    const hasMore = data?.[data.length - 1]?.["scores"].length === PAGE_SIZE;
     return {
         "id":uid,
         rankingItems:rankingItems as BSMapRankingItem[],
-        isLoadingMore,
+        "isLoadingMore":isLoadingMore?true:false,
         loadMore,
         isEmpty,
         isRefreshing,

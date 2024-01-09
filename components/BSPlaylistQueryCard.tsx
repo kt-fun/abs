@@ -1,10 +1,10 @@
 import { Button, Card, DropdownMenu, Slider, Switch,Text } from "@radix-ui/themes";
 import SearchBar from "./SearchBar";
-import { PlaylistQueryParam } from "@/hooks/usePagingBSPlaylist";
+import { PlaylistQueryParam } from "@/hooks/api/usePagingBSPlaylist";
 import NPSRangePicker from "./NPSRangePicker";
 import Calendar from "./Calendar";
 import { CaretDownIcon } from "@radix-ui/react-icons";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import * as Popover from "@radix-ui/react-popover";
 interface SortMenuProps {
     options: string[];
@@ -68,6 +68,16 @@ export default function BSPlaylistQueryCard(
             sortKey:current
         })
     }
+    const npsRange = useMemo(()=>{
+        return [queryParam.minNps,queryParam.maxNps] as [number|undefined, number|undefined]
+    },[queryParam])
+    const setNpsRange = (range:[number|undefined,number|undefined])=>{
+        updateQuery({
+            ...queryParam,
+            minNps:range[0],
+            maxNps:range[1]
+        })
+    }
     return (
         <Card className={`${className} `} variant="classic">
             <div className="flex flex-col h-full space-y-3">
@@ -104,7 +114,7 @@ export default function BSPlaylistQueryCard(
             </div>
             <div className="flex w-full p-2 justify-between items-center">
                 <div className="relative w-full">
-                    <NPSRangePicker/>
+                    <NPSRangePicker range={npsRange} setRange={setNpsRange}/>
                 </div>
             </div>
             

@@ -1,21 +1,27 @@
 import { BSBeatMap } from '@/interfaces/beatmap';
 import { BSPlaylist } from '@/interfaces/bs-playlist';
+import { BASE_URL } from '@/lib/constant';
 import { use, useCallback, useEffect, useMemo, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 
 const PAGE_SIZE = 20
 // todo error handle
 // @ts-ignore
-const fetcher = (...args) => fetch(...args).then((res) => res.json()).then((res)=>res.docs)
+const fetcher = (resource, init) => fetch(resource, {
+    ...init,
+    credentials: "include",
+  }).then((res) => res.json()).then((res)=>res.docs)
 
 export interface PlaylistQueryParam {
     queryKey:string,
     curated?:boolean,
     verifiedMapper?: boolean,
     sortKey: string,
+    minNps?:number,
+    maxNps?:number,
 }
 const buildURL = (index:number,param:PlaylistQueryParam) => {
-    const baseURL = `https://bs-api.kt-f63.workers.dev/playlists/search/${index}`
+    const baseURL = `${BASE_URL}/api/playlists/search/${index}`
     let paramMap:any = {}
     if (param.verifiedMapper) {
         paramMap["verifiedMapper"] = true
@@ -30,6 +36,12 @@ const buildURL = (index:number,param:PlaylistQueryParam) => {
         paramMap["sortOrder"] = "Relevance"
     }else {
         paramMap["sortOrder"] = param.sortKey
+    }
+    if (param.minNps) {
+        paramMap["minNps"] = param.minNps
+    }
+    if (param.maxNps) {
+        paramMap["maxNps"] = param.maxNps
     }
     let keys = Object.keys(paramMap)
     let queryParam = "?"
@@ -66,9 +78,9 @@ export const usePagingBSPlaylist = () => {
     const isEmpty = data?.[0]?.length === 0;
     const loadMore = () => setSize(size + 1);
     const hasMore = data?.[data.length - 1]?.length === PAGE_SIZE;
-    const refresh = useCallback(()=> {
+    const refresh = ()=> {
         setState(storedState)
-    },[setState,storedState])
+    }
     const updateQuery = useCallback((param:PlaylistQueryParam)=> {
         setStoredState(param)
     },[setStoredState])

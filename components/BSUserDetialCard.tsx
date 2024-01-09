@@ -1,5 +1,5 @@
 import { BSUser } from "@/interfaces/beatsaver-user";
-import { useBSUser } from "@/hooks/useBSUser";
+import { useBSUser } from "@/hooks/api/useBSUser";
 import { useCallback, useEffect, useMemo } from "react";
 import { error } from "console";
 
@@ -8,15 +8,15 @@ const loader = ()=> <div>loading</div>
 export default function BSUserDetailCard(
     {user}:{user:BSUser}
 ) {
-    const {data, isLoading, error} = useBSUser(user.id)
-    const userWithStats:any = data
+    const {bsUserWithStats, isLoading, error} = useBSUser(user.id)
+    const userWithStats:any = bsUserWithStats
     return (
         <>
         {
             isLoading && loader()
         }
         {
-            data && <div>
+            bsUserWithStats && <div>
             <div>
                 <img src={userWithStats.avatar} alt={userWithStats.name}/>
             </div>

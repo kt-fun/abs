@@ -21,7 +21,7 @@ const MenuItems = (
     {link}: {link: LinkProps}
 ) => {
     return (
-        <li className='hover:bg-gray-300 rounded-full px-2 py-0.5'>
+        <li className='hover:bg-gradient-to-r from-red-500 to-blue-500 hover:text-white rounded-full px-2 py-0.5'>
             <Text >
             <Link className="flex space-x-2 items-center text-sm font-semibold" href={link.href}>
                 {link.icon} {link.text}
@@ -48,13 +48,8 @@ const menuList = [
         icon: <FaDiscord className="mr-2" />
     },
     {
-        text: "About",
-        href: "/about",
-        icon: <FaDiscord className="mr-2" />
-    },
-    {
         text: "DMCA Policy",
-        href: "/helper",
+        href: "https://beatsaver.com/dmca",
         icon: <CiLock className="mr-2"/>
     },
     {

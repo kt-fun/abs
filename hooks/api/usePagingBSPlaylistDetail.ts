@@ -1,5 +1,6 @@
 import { BSBeatMap } from "@/interfaces/beatmap";
 import { BSPlaylist } from "@/interfaces/bs-playlist";
+import { BASE_URL } from "@/lib/constant";
 import { useEffect, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 
@@ -22,7 +23,7 @@ export const usePagingBSPlaylistDetail = (playlistId:string) => {
         isLoading,
         error
       } = useSWRInfinite(
-        (index) => `https://beatsaver.com/api/playlists/id/${playlistId}/${index}`,
+        (index) => `${BASE_URL}/api/playlists/id/${playlistId}/${index}`,
         fetcher,
       );
       const [playlist,setPlaylist] = useState<BSPlaylist>()
@@ -31,7 +32,6 @@ export const usePagingBSPlaylistDetail = (playlistId:string) => {
             setPlaylist(data[0]["playlist"])
           }
       },[data])
-    //   const datas = data ? [].concat(...data)
       const maps:BSBeatMap[] = data ? [].concat(...data).flatMap((item)=> {
           return item["maps"]
       }).map((item)=>{return item["map"]}) : [];
@@ -41,7 +41,6 @@ export const usePagingBSPlaylistDetail = (playlistId:string) => {
     const isEmpty = data?.[0]?.maps.length === 0;
     const loadMore = () => setSize(size + 1);
     const hasMore = data?.[data.length - 1]?.maps.length === PAGE_SIZE;
-      console.log("hasMore",hasMore)
     return {
         playlist,
         maps,

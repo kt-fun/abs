@@ -1,5 +1,5 @@
 import BSLabel from "./BSLabel";
-import { formatTime } from "@/utils/format";
+import { formatTime } from "@/lib/format";
 import { CiCalendarDate } from "react-icons/ci";
 import { Responsive, Tooltip } from "@radix-ui/themes";
 import { TextSize } from "@/interfaces/text-size";

@@ -4,13 +4,14 @@ import BSUserLabel from "@/components/labels/BSUserLabel";
 import DurationLabel from "@/components/labels/DurationLabel";
 import NJSLabel from "@/components/labels/NJSLabel";
 import NPSLabel from "@/components/labels/NPSLabel";
-import { useBSMapDetail } from "@/hooks/useBSMapDetail";
-import { BSBeatMap, BSMapDiff } from "@/interfaces/beatmap";
+import { useBSMapDetail } from "@/hooks/api/useBSMapDetail";
+import { BSBeatMap, BSMapDiff, getBSMapCoverURL } from "@/interfaces/beatmap";
 import * as Tabs from "@radix-ui/react-tabs";
-import { Avatar, Card, Select, Table, Text } from "@radix-ui/themes";
+import { Avatar, Button, Card, Link, ScrollArea, Select, Table, Text, Tooltip } from "@radix-ui/themes";
 import { Heading } from "@radix-ui/themes";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import NextLink from 'next/link'
 import { useCallback, useEffect, useMemo, useState } from "react";
 import BSMapTag from '@/components/BSMapTag'
 import {BSMapTag as IBSMapTag } from '@/interfaces/mapTags'
@@ -22,11 +23,27 @@ import BSBombAmountLabel from "@/components/labels/BSBombAmount";
 import BSParityErrorLabel from "@/components/labels/BSParityErrorLabel";
 import BSWarningLabel from "@/components/labels/BSWarningLabel";
 import {BSMapReview} from "@/interfaces/beatmap-review"
-import { usePagingBSMapReview } from "@/hooks/usePagingBSMapReview";
+import { usePagingBSMapReview } from "@/hooks/api/usePagingBSMapReview";
 import { BSMapRankingItem } from "@/interfaces/beatmap-rank";
-import { usePagingBSMapScoreRank } from "@/hooks/usePagingMapScoreRank";
-import Link from "next/link";
+import { usePagingBSMapScoreRank } from "@/hooks/api/usePagingMapScoreRank";
 import { RxExternalLink } from "react-icons/rx";
+import ThumbDownLabel from "@/components/labels/ThumbDownLabel";
+import ThumbUpLabel from "@/components/labels/ThumbUpLabel";
+import RatingLabel from "@/components/labels/RatingLabel";
+import DateLabel from "@/components/labels/DateLabel";
+import { HiCursorClick } from "react-icons/hi";
+import { IoAddOutline, IoCloudDownloadOutline } from "react-icons/io5";
+import { FaTwitch } from "react-icons/fa";
+import { CiBookmark, CiMusicNote1, CiPlay1 } from "react-icons/ci";
+import { AiOutlineLoading } from "react-icons/ai";
+import { PiHeartbeat } from "react-icons/pi";
+import { motion } from "framer-motion";
+import { useSongPreview } from "@/hooks/useSongPreview";
+import CopyIcon from "@/components/CopyIcon";
+import MapPreviewIFrame from "@/components/MapPreviewIFrame";
+import { BsHeartbreak } from "react-icons/bs";
+import { FcLike } from "react-icons/fc";
+import { TbMoodNeutral } from "react-icons/tb";
 function replaceWithBr(str:string) {
 return str.replace(/\n/g, "<br />")
 }
@@ -38,10 +55,29 @@ const ReviewItem = ({
     return (
         <>
         <div>
+            <div className="flex space-x-2 items-center">
+                    <Text>
+                    {
+                    bsMapReview.sentiment == "POSITIVE" && <FcLike/>
+                    }
+                    {
+                    bsMapReview.sentiment == "NEGATIVE" && <BsHeartbreak/>
+                    }
+                    {
+                    bsMapReview.sentiment == "NEUTRAL" && <TbMoodNeutral/>
+                    }
+                    </Text>
+                    <NextLink href={`/mapper/${bsMapReview.creator?.id}`}>
+                    <Link>
+                    <Text>{bsMapReview.creator?.name}</Text>
+                    </Link>
+                    </NextLink>
+                    <DateLabel date={bsMapReview.createdAt}/>
+            </div>
             <div className="flex space-x-2">
                 <Text size={"2"}>{bsMapReview.sentiment}</Text>
                 <Text size={"2"}>{bsMapReview.creator!!.name}</Text>
-                <Text size={"2"}>{bsMapReview.createAt}</Text>
+                <Text size={"2"}>{bsMapReview.createdAt}</Text>
             </div>
             <div>
                 <p className="block" dangerouslySetInnerHTML={{__html: replaceWithBr(bsMapReview.text)}}/>
@@ -90,13 +126,21 @@ const DetialTab = ({
         </div>
         <div className="col-span-2">
             <Heading size={"2"}>Reviews</Heading>
+            <div className="flex flex-col space-y-2 divide-y-[1px]">
+            
             {
-                reviews.map((review)=> (
-                    <>
-                    <ReviewItem bsMapReview={review}/>
-                    </>
-                ))
+                reviews.length > 0 ? (
+                    reviews.map((review)=> (
+                        <>
+                        <ReviewItem bsMapReview={review}/>
+                        </>
+                    ))
+                ):(
+                    <div>no reviews found</div>
+                )
+
             }
+            </div>
         </div>
 
         </div>
@@ -105,9 +149,22 @@ const DetialTab = ({
 }
 
 
-const RankTable = ({rankItems,maxscore}:{rankItems:BSMapRankingItem[],maxscore:number}) => {
+const RankTable = ({
+    rankItems,
+    maxscore,
+    hasMore,
+    isLoading,
+    loadMore,
+}:{
+    rankItems:BSMapRankingItem[],
+    maxscore:number,
+    hasMore:boolean,
+    isLoading:boolean,
+    loadMore:()=>void
+}) => {
     return (
         <>
+        <ScrollArea scrollbars="vertical" style={{ height: 480 }}>
         <Table.Root>
             <Table.Header>
                 <Table.Row>
@@ -133,8 +190,16 @@ const RankTable = ({rankItems,maxscore}:{rankItems:BSMapRankingItem[],maxscore:n
                         </Table.Row>
                     ))
                 }
+
             </Table.Body>
         </Table.Root>
+        <div  className="w-full flex flex-end px-2">
+            <Button variant="ghost" className="ml-auto mr-2 my-4" disabled={!hasMore || isLoading} onClick={loadMore}>{
+                isLoading ? "Loading..." : "Load More"
+            }</Button>
+        </div>
+
+            </ScrollArea>
         </>
     )
 }
@@ -179,7 +244,7 @@ const RankingTab =({
     const [top,setTop] = useState(0);
     const [currentDiff, setCurrentDiff] = useState(bsMap.versions[0].diffs[0])
     const [currentType, setCurrentType] = useState<"BeatLeader"|"ScoreSaber">("BeatLeader")
-    const {rankingItems,id} = usePagingBSMapScoreRank(bsMap.versions[0].hash,currentType, currentDiff.characteristic, currentDiff.difficulty)
+    const {rankingItems,id,hasMore,loadMore,isLoadingMore} = usePagingBSMapScoreRank(bsMap.versions[0].hash,currentType, currentDiff.characteristic, currentDiff.difficulty)
     const link = useMemo(()=>{
         if(currentType === "BeatLeader") {
             return `https://www.beatleader.xyz/leaderboard/global/${id}`
@@ -206,18 +271,26 @@ const RankingTab =({
                 <div className="flex items-center space-x-2">
                     <DiffSelector diffs={bsMap.versions[0].diffs} currentDiff={currentDiff} setCurrentDiff={setCurrentDiff}/>
                     <Text size={"4"} className="hover:text-blue-400">
-                    <Link href={link} target="_blank">
+                    <NextLink href={link} target="_blank">
                         <RxExternalLink/>
-                    </Link>
+                    </NextLink>
                     </Text>
                 </div>
 
             </Tabs.List>
             <Tabs.Content className="TabsContent" value="BeatLeader">
-                <RankTable rankItems={rankingItems} maxscore={currentDiff.maxScore} />
+                {
+                    rankingItems.length > 0 ? 
+                    (<RankTable rankItems={rankingItems} maxscore={currentDiff.maxScore} isLoading={isLoadingMore} hasMore={hasMore} loadMore={loadMore}/>)
+                    :( <div>no score found</div>)
+                }
             </Tabs.Content>
             <Tabs.Content className="TabsContent" value="ScoreSaber">
-                <RankTable rankItems={rankingItems} maxscore={currentDiff.maxScore}/>
+                {
+                    rankingItems.length > 0 ? 
+                    (<RankTable rankItems={rankingItems} maxscore={currentDiff.maxScore} isLoading={isLoadingMore} hasMore={hasMore} loadMore={loadMore}/>):
+                    (<div>no score found</div>)
+                }
             </Tabs.Content>
             </Tabs.Root>
             </Card>
@@ -233,7 +306,27 @@ export default function BSMapDetailPage({ params }: { params: { id: string } }) 
   if(error) {
     router.push("/")
   }
-    const [top,setTop] = useState(0);
+  const {currentSong,state,play,stop} = useSongPreview()
+  const handlePlaySongPreview = () => {
+    if(state.playing && currentSong?.id == bsMap.id){
+      stop()
+    }else{
+      play({
+        id:bsMap.id,
+        previewURL:bsMap.versions[0].previewURL,
+        coverURL:getBSMapCoverURL(bsMap),
+      })
+    }
+  }
+  const current = useMemo(()=>{
+    return currentSong?.id == bsMap?.id
+  },[currentSong,bsMap])
+  const handleBookmark = ()=>{
+
+  }
+  const handleAddToPlaylist = ()=>{
+
+  }
     return isLoading? 
     <div>loading</div>
     :
@@ -249,29 +342,114 @@ export default function BSMapDetailPage({ params }: { params: { id: string } }) 
                 />
                 <div>
                     <Heading>{bsMap.name}</Heading>
-                    <Heading size={"2"} className="text-gray-500">{bsMap.metadata.songSubName}</Heading>
-                    <Heading size={"2"} className="text-gray-500">{bsMap.metadata.songAuthorName}</Heading>
-
-                    <BSUserLabel user={bsMap.uploader} size={"3"}/>
-                    {bsMap.curator && <BSUserLabel user={bsMap.curator} size={"3"}/>}
-                    <div className="flex items-center space-x-1">
+                    <Heading size={"2"} className=" font-semibold">Song Author： {bsMap.metadata.songAuthorName}</Heading>
+                    <Text className="flex space-x-2 font-semibold items-center">Mapper <BSUserLabel user={bsMap.uploader} size={"3"}/></Text>
+                    {bsMap.curator && (
+                        <div className="flex space-x-4 items-center">
+                            <Text className="font-semibold">Curated By </Text> 
+                        <BSUserLabel user={bsMap.curator} size={"3"}/></div>
+                    )}
+                    <div className="flex items-center space-x-4">
+                        <Text className="font-semibold">Created At</Text> <DateLabel date={bsMap.createdAt} size={"3"}/>
+                    </div>
+                    <div className="flex items-center space-x-4">
                         <Text className="font-semibold">Duration</Text> <DurationLabel duration={bsMap.metadata.duration} size={"3"}/>
+                    </div>
+                    <div className="flex items-center space-x-4">
+                        <Text className="font-semibold">BPM</Text> <BSBPMLabel bpm={bsMap.metadata.bpm} size={"3"}/>
+                    </div>
+                    <div className="flex items-center space-x-4">
+                        <Text className="font-semibold">Rating</Text>
+                        <ThumbDownLabel dislikeCnt={bsMap.stats.downvotes} size={"3"}/>
+                        <ThumbUpLabel likeCnt={bsMap.stats.upvotes} size={"3"}/>
+                        <RatingLabel  rate={bsMap.stats.score} size={"3"}/>
                     </div>
                     <div className="flex items-center space-x-1">
                         
                         <Text className="font-semibold">Tags</Text> {
                             
-                            bsMap.tags?.map((tag)=>getMapTag(tag))?.map((tag:IBSMapTag|undefined)=>
-                            <BSMapTag 
-                            className='text-nowrap font-semibold my-0.5 px-2 bg-red-100 rounded-lg' size={"3"}
-                            key={tag!.slug} 
-                            tag={tag!}
-                            />
+                            (bsMap.tags && bsMap.tags?.length > 0) ? (
+                                bsMap.tags?.map((tag)=>getMapTag(tag))?.map((tag:IBSMapTag|undefined)=>
+                                    <BSMapTag 
+                                    className='text-nowrap font-semibold my-0.5 px-2 rounded-lg' size={"3"}
+                                    key={tag!.slug} 
+                                    tag={tag!}
+                                    />
+                                )
+                            ):(
+                                <div>no tags</div>
                             )
                         }
                     </div>
-                    <BSBPMLabel bpm={bsMap.metadata.bpm} size={"3"}/>
-                    <DurationLabel duration={bsMap.metadata.duration} size={"3"}/>
+                    <div>
+
+                    <div className="flex items-center space-x-1 justify-start pb-2">
+                                  <Tooltip content="add to playlist">
+                                    <span onClick={handleAddToPlaylist} className="hover:bg-white hover:text-red-400 p-1 rounded-full cursor-pointer">
+                                        <IoAddOutline />
+                                    </span>
+                                  </Tooltip>
+                                  <Tooltip content="bookmark song">
+                                    <span onClick={handleBookmark} className="hover:bg-white hover:text-red-400 p-1 rounded-full cursor-pointer">
+                                        <CiBookmark />
+                                    </span>
+                                  </Tooltip>
+                                  <Tooltip content="play song preview">
+                                    {
+                                      current?
+                                        state.loading? (
+                                        <motion.span 
+                                            animate={{rotate:360}}
+                                            transition={{duration:1,repeat:Infinity}}
+                                            onClick={handlePlaySongPreview} 
+                                            className={`hover:bg-white ${current?'bg-white text-red-400':''} hover:text-red-400 p-1 rounded-full cursor-pointer`}
+                                        >
+                                            <AiOutlineLoading/>
+                                        </motion.span>
+                                        ):(
+                                        <motion.span 
+                                            animate={{scale:1.05}}
+                                            transition={{duration:.5,repeat:Infinity}}
+                                            onClick={handlePlaySongPreview} 
+                                            className={`hover:bg-white ${current?'bg-white text-red-400':''} hover:text-red-400 p-1 rounded-full cursor-pointer`}
+                                        >
+                                            <PiHeartbeat/>
+                                        </motion.span>
+                                        )
+                                    :
+                                    <span 
+                                    onClick={handlePlaySongPreview} 
+                                    className={`hover:bg-white hover:text-red-400 p-1 rounded-full cursor-pointer`}>
+                                      <CiMusicNote1/>
+                                    </span>
+                                    }
+                                  </Tooltip>
+                                  <Tooltip content="play map preview">
+                                    <MapPreviewIFrame id={bsMap.id}>
+                                    <span  className="hover:bg-white hover:text-red-400 p-1 rounded-full cursor-pointer">
+                                        <CiPlay1 />
+                                    </span>
+                                    </MapPreviewIFrame>
+                                  </Tooltip>
+                                  <Tooltip content="copy twitch request">
+                                    <CopyIcon className="hover:bg-white hover:text-red-400 p-1 rounded-full cursor-pointer" content={`!bsr ${bsMap.id}`}>
+                                      <FaTwitch />
+                                    </CopyIcon>
+                                  </Tooltip>
+                                  <Tooltip content="download zip">
+                                  <NextLink href={bsMap.versions[0].downloadURL}  className="hover:bg-white hover:text-red-400 p-1 rounded-full">
+                                          <IoCloudDownloadOutline  />
+                                  </NextLink>
+                                  </Tooltip>
+                                  <Tooltip content="one click download">
+                                      <NextLink href={`beatsaver://${bsMap.id}`} className="hover:bg-white hover:text-red-400 p-1 rounded-full">
+                                          <HiCursorClick/>
+                                      </NextLink>
+                                  </Tooltip>
+                    </div>
+
+
+                    </div>
                 </div>
             </div>
             <div className="flex grow">

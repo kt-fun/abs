@@ -27,7 +27,7 @@ export default function BSPlaylist(
     const npsRange = `${bsPlaylist.stats.minNps.toFixed(1)} - ${bsPlaylist.stats.maxNps.toFixed(1)}`
     return (
         <>
-            <Card className=" group flex flex-col w-[320px] h-full xl:w-[256px]" >
+            <Card className="mx-auto group flex flex-col w-[320px] h-full xl:w-[256px]" >
                 <Inset clip="padding-box" side="top" pb="current">
                     <div
                     className="relative h-[320px] xl:h-[256px] z-0"

@@ -1,5 +1,5 @@
-import { useUserPreferenceStore } from "@/state/userPrefence";
-import { ThemeMode, useThemeMode } from "@/state/useThemeMode";
+import { useUserPreferenceStore } from "@/hooks/state/userPrefence";
+import { ThemeMode, useThemeMode } from "@/hooks/state/useThemeMode";
 import { IconButton } from "@radix-ui/themes";
 import { useCallback } from "react";
 import { CiLight } from "react-icons/ci";
@@ -29,4 +29,4 @@ export default function ThemeButton(){
             </IconButton>
         </>
     )
-}
+} 

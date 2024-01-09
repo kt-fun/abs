@@ -1,28 +1,17 @@
 'use client'
 import BSMapper from "@/components/BSMapper";
-import { usePagingBSUser } from "@/hooks/usePagingBSUser";
+import { useInfinityScroll } from "@/hooks/useInfinityScroll";
+import { usePagingBSUser } from "@/hooks/api/usePagingBSUser";
 import { useCallback, useEffect } from "react";
 
 export default function MapperPage() {
     const { users,isLoadingMore,isEmpty,hasMore,loadMore} = usePagingBSUser();
-
-    // handler inifinite scroll
-    const handleScroll = useCallback(() => {
-        if (
-          window.innerHeight + document.documentElement.scrollTop ===
-          document.documentElement.offsetHeight
-        ) {
-          if (isLoadingMore || isEmpty || !hasMore) return;
-          loadMore();
-        }
-      }, [isLoadingMore, isEmpty, hasMore,loadMore]);
-
-    // add event listener
-    useEffect(() => {
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-      }, [handleScroll]);
-
+    const {reachedBottom,showScrollToTop, scrollToTop} = useInfinityScroll();
+    useEffect(()=>{
+      if (reachedBottom && !isLoadingMore && !isEmpty && hasMore){
+        loadMore();
+      }
+    },[reachedBottom,isLoadingMore,isEmpty,hasMore,loadMore])
     return (
       <>
       <div className="flex-cols flex max-w-[1200px]  space-x-2">

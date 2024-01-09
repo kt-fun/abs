@@ -2,7 +2,7 @@
 import { TextSize } from "@/interfaces/text-size";
 import BSLabel from "./BSLabel";
 import { IoSpeedometerOutline } from "react-icons/io5";
-import { formatNumber } from "@/utils/format";
+import { formatNumber } from "@/lib/format";
 import { GiBoltBomb } from "react-icons/gi";
 import { PiHeartbeat } from "react-icons/pi";
 import { CiWarning } from "react-icons/ci";

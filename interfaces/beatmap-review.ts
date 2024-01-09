@@ -28,8 +28,8 @@ export interface BSMapReview {
     creator?: BSUser,
     map?:BSBeatMap,
     text:string,
-    sentiment: "POSITIVE" | "NEGATIVE",
-    createAt: string,
-    updateAt: string,
+    sentiment: "POSITIVE" | "NEGATIVE" | "NEUTRAL",
+    createdAt: string,
+    updatedAt: string,
     curatedAt: string
 }

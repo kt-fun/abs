@@ -3,7 +3,7 @@ import RankedIcon from "@/icons/RankedIcon";
 import ThumbDownIcon from "@/icons/ThumbDownIcon";
 import ThumbUpIcon from "@/icons/ThumbUpIcon";
 import { BSUserWithStats } from "@/interfaces/beatsaver-user";
-import { formatNumber } from "@/utils/format";
+import { formatNumber } from "@/lib/format";
 import { FaMapMarkedAlt } from "react-icons/fa";
 import * as Progress from '@radix-ui/react-progress';
 import { Card,Avatar, Text, Link as RLink, Tooltip} from "@radix-ui/themes";

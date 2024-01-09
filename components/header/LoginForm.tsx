@@ -9,8 +9,33 @@ import { Button, Text } from "@radix-ui/themes"
 import NextLink from "next/link"
 import { Link, Theme } from "@radix-ui/themes"
 import { FaDiscord } from "react-icons/fa";
-
-export function LoginForm() {
+import { useState } from "react"
+import { useForm } from "react-hook-form";
+import { useUserSessionStore } from "@/hooks/state/useSession"
+export function LoginForm({
+  onClose
+}:{
+  onClose?:()=>void
+}) {
+  const user = useUserSessionStore((state) => state.user)
+  const isLoading = useUserSessionStore((state) => state.isLoading)
+  const isLoggedIn = useUserSessionStore((state) => state.isLoggedIn)
+  const login = useUserSessionStore((state) => state.login)
+  const { register, handleSubmit, watch, formState } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    }
+  });
+  //@ts-ignore
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    await login({
+      username: watch("email"),
+      password: watch("password"),
+    })
+    onClose?.()
+  }
   return (
         <Tabs className="w-full" defaultValue="signin">
             <Theme appearance="light"  asChild >
@@ -25,10 +50,10 @@ export function LoginForm() {
             </Theme>
 
           <TabsContent className="p-4" value="signin">
-            <form className="space-y-4 w-full">
+            <form className="space-y-4 w-full"  onSubmit={onSubmit}>
               <div className="space-y-2">
                 <Label htmlFor="signin-email">Email</Label>
-                <Input id="signin-email" required type="email" />
+                <Input id="signin-email" {...register("email", { required: true })} />
               </div>
               <div className="space-y-2">
                 <div className="flex justify-between">
@@ -36,15 +61,29 @@ export function LoginForm() {
                 <Text size={"2"}>
                     <NextLink href="#">
                     Forgot Password?
-                    </NextLink>                
+                    </NextLink>
                 </Text>
                 </div>
-                <Input id="signin-password" required type="password" />
+                <Input id="signin-password" type="password" {...register("password", { required: true })} />
               </div>
                 <div className="flex">
-                    <Button type="submit" variant={"soft"} className="ml-auto mr-2">
-                        Sign In
-                    </Button>
+                    {
+                        isLoading ? (
+                            <Button type="submit" variant={"soft"} className="ml-auto mr-2" disabled>
+                                Loading...
+                            </Button>
+                        ) : (
+                            isLoggedIn ? (
+                              <Button type="submit" variant={"soft"} className="ml-auto mr-2" disabled>
+                                  Logged in as {user?.username}
+                              </Button>
+                            ) : (
+                              <Button type="submit" variant={"soft"} className="ml-auto mr-2">
+                                  Sign In
+                              </Button>
+                            )
+                        )
+                    }
                 </div>
               <div className="flex justify-center mt-4 items-center">
                 <FaDiscord className="w-6 h-6" />

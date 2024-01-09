@@ -1,5 +1,5 @@
 'use client'
-import { usePagingBSPlaylist } from "@/hooks/usePagingBSPlaylist";
+import { usePagingBSPlaylist } from "@/hooks/api/usePagingBSPlaylist";
 import { BSPlaylist as IBSPlaylist } from "@/interfaces/bs-playlist";
 import BSPlaylist from "@/components/BSPlaylist";
 import { useCallback, useEffect, useState } from "react";
@@ -10,32 +10,15 @@ import { motion } from "framer-motion";
 import { FaArrowUp } from "react-icons/fa";
 import * as Popover from "@radix-ui/react-popover";
 import BSPlaylistSkeleton from "@/components/BSPlaylistSkeleton";
+import { useInfinityScroll } from "@/hooks/useInfinityScroll";
 export default function Home() {
     const { playlists,isLoadingMore,isEmpty,hasMore,loadMore,refresh,queryParam,updateQuery} = usePagingBSPlaylist();
-    const [top,setTop] = useState(0);
-    // handler inifinite scroll
-    const handleScroll = useCallback(() => {
-        setTop(document.documentElement.scrollTop);
-        if (
-          window.innerHeight + document.documentElement.scrollTop ===
-          document.documentElement.offsetHeight
-        ) {
-          if (isLoadingMore || isEmpty || !hasMore) return;
-          loadMore();
-        }
-      }, [isLoadingMore, isEmpty, hasMore,loadMore]);
-  
-      useEffect(() => {
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-      }, [handleScroll]);
-
-      const handleScrollToTop = useCallback(() => {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-      });
-      }, []);
+    const {reachedBottom,showScrollToTop, scrollToTop} = useInfinityScroll();
+    useEffect(()=>{
+      if (reachedBottom && !isLoadingMore && !isEmpty && hasMore){
+        loadMore();
+      }
+    },[reachedBottom,isLoadingMore,isEmpty,hasMore,loadMore])
       const containerVariants = {
         hidden: { opacity: 0, y: "100vw" },
         visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
@@ -73,13 +56,13 @@ export default function Home() {
                 className="hidden lg:flex sticky top-12 items-center justify-center w-[320px] shadow-md h-full"
               />
 
-              { top > 100 ?( <motion.div
+              { showScrollToTop ?( <motion.div
               variants={containerVariants}
               initial="hidden"
               animate="visible"
               exit="hidden"
               whileHover={{ scale: 1.1 }}
-              className={`fixed ml-auto bottom-2 rounded-full bg-blue-200 p-2 cursor-pointer `} onClick={handleScrollToTop}>
+              className={`fixed ml-auto bottom-2 rounded-full bg-blue-200 p-2 cursor-pointer `} onClick={scrollToTop}>
                 <Text size={"6"}>
                   <FaArrowUp />
                 </Text>

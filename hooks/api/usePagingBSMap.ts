@@ -1,11 +1,15 @@
 import { BSBeatMap } from '@/interfaces/beatmap';
+import { BASE_URL } from '@/lib/constant';
 import { use, useCallback, useEffect, useMemo, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 
 const PAGE_SIZE = 20
 // todo error handle
 // @ts-ignore
-const fetcher = (...args) => fetch(...args).then((res) => res.json()).then((res)=>res.docs)
+const fetcher = (resource, init) => fetch(resource, {
+    ...init,
+    credentials: 'include',
+  }).then((res) => res.json()).then((res)=>res.docs)
 
 export interface MapQueryParam {
     queryKey:string,
@@ -91,7 +95,7 @@ export const options:Option[] = [
 ]
 
 const buildURL = (index:number,param:MapQueryParam) => {
-    const baseURL = `https://bs-api.kt-f63.workers.dev/search/text/${index}`
+    const baseURL = `${BASE_URL}/api/search/text/${index}`
     let paramMap:any = {}
     if (param.options?.autoMapper) {
         paramMap["automapper"] = true

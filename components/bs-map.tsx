@@ -37,6 +37,7 @@ import { motion, useSpring } from 'framer-motion'
 import { useSongPreview, useSongPreviewState } from '@/hooks/useSongPreview'
 import { AiOutlineLoading } from "react-icons/ai";
 import CopyIcon from './CopyIcon'
+import MapPreviewIFrame from './MapPreviewIFrame'
 interface BSMapProps {
     bsMap:BSBeatMap
 }
@@ -75,8 +76,8 @@ type MapDiff = "Easy" | "Normal" | "Hard" | "Expert" | "ExpertPlus"
 export default function BSMap(
     {bsMap}: {bsMap:BSBeatMap}
 ) {
-  const {currentSong,state,play,stop} = useSongPreview()
   const bg = getBSMapCoverURL(bsMap)
+  const {currentSong,state,play,stop} = useSongPreview()
   const handlePlaySongPreview = () => {
     if(state.playing && currentSong?.id == bsMap.id){
       stop()
@@ -133,12 +134,15 @@ export default function BSMap(
                                     <>
                                         <HoverCard.Root key={diff.characteristic+diff.difficulty+bsMap.id}>
                                           <HoverCard.Trigger>
-                                        <Text key={diff.difficulty + diff.characteristic} size={"1"}
+                                            <div  key={diff.difficulty + diff.characteristic}>
+                                            <Text size={"1"}
                                         className='font-semibold m-0.5 px-1 rounded-full cursor-pointer border-white hover:border-red-500 hover:text-red-500 border-solid border flex items-center'
                                         >
                                           {getIcon(diff.characteristic as MapCharacteristic)}
                                           <span className='ml-[2px]'>{diffShort[diff.difficulty as MapDiff]}</span>
                                           </Text>
+                                            </div>
+
                                         </HoverCard.Trigger>
                                         <HoverCard.Content side="top" align="center">
                                           <Text className='cursor-default'>{diff.characteristic}</Text>
@@ -175,25 +179,25 @@ export default function BSMap(
                                   <Tooltip content="play song preview">
                                     {
                                       current?
-                                    <motion.span 
-                                      animate={
-                                        state.loading?
-                                        {rotate:360}:
-                                        {scale:1.05}
-                                      }
-                                      transition={
-                                        state.loading?
-                                        {duration:1,repeat:Infinity}:
-                                        {duration:.5,repeat:Infinity}
-                                      }
-                                      onClick={handlePlaySongPreview} 
-                                      className={`hover:bg-white ${current?'bg-white text-red-400':''} hover:text-red-400 p-1 rounded-full cursor-pointer`}>
-                                        {
-                                          state.loading?
-                                          <AiOutlineLoading/>:
-                                          <PiHeartbeat/>
-                                        }
-                                    </motion.span>:
+                                      state.loading? (
+                                        <motion.span 
+                                            animate={{rotate:360}}
+                                            transition={{duration:1,repeat:Infinity}}
+                                            onClick={handlePlaySongPreview} 
+                                            className={`hover:bg-white ${current?'bg-white text-red-400':''} hover:text-red-400 p-1 rounded-full cursor-pointer`}
+                                        >
+                                            <AiOutlineLoading/>
+                                        </motion.span>
+                                        ):(
+                                        <motion.span 
+                                            animate={{scale:1.05}}
+                                            transition={{duration:.5,repeat:Infinity}}
+                                            onClick={handlePlaySongPreview} 
+                                            className={`hover:bg-white ${current?'bg-white text-red-400':''} hover:text-red-400 p-1 rounded-full cursor-pointer`}
+                                        >
+                                            <PiHeartbeat/>
+                                        </motion.span>
+                                        ):
                                     <span 
                                     onClick={handlePlaySongPreview} 
                                     className={`hover:bg-white hover:text-red-400 p-1 rounded-full cursor-pointer`}>
@@ -202,9 +206,12 @@ export default function BSMap(
                                     }
                                   </Tooltip>
                                   <Tooltip content="play map preview">
-                                    <span onClick={handlePlayMapPreview} className="hover:bg-white hover:text-red-400 p-1 rounded-full cursor-pointer">
+                                    <MapPreviewIFrame id={bsMap.id}>
+
+                                    <span  className="hover:bg-white hover:text-red-400 p-1 rounded-full cursor-pointer">
                                         <CiPlay1 />
                                     </span>
+                                    </MapPreviewIFrame>
                                   </Tooltip>
                                   <Tooltip content="copy twitch request">
                                     <CopyIcon className="hover:bg-white hover:text-red-400 p-1 rounded-full cursor-pointer" content={`!bsr ${bsMap.id}`}>

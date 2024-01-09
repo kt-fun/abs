@@ -17,15 +17,17 @@ import { IoSpeedometerOutline } from "react-icons/io5";
 import { HiCursorClick } from "react-icons/hi";
 import BSLabel from "./labels/BSLabel";
 import { Tooltip } from "@radix-ui/themes";
+import { Rat } from "lucide-react";
+import RatingLabel from "./labels/RatingLabel";
 export default function BSPlaylistSideBar(
     {bsPlaylist}:{bsPlaylist:IBSPlaylist}
 ){
     const score = bsPlaylist.stats.upVotes/(bsPlaylist.stats.upVotes+bsPlaylist.stats.downVotes) * 100.0
-    const bg = `url('${bsPlaylist.playlistImage}')`
+    const bg = `url('${bsPlaylist.playlistImage512}')`
     const npsRange = `${bsPlaylist.stats.minNps.toFixed(1)} - ${bsPlaylist.stats.maxNps.toFixed(1)}`
     return (
         <>
-        <Card className=" group flex flex-col w-[320px] h-full xl:w-[256px]" >
+        <Card className=" group flex flex-col w-[320px] xl:w-[256px]" >
                 <Inset clip="padding-box" side="top" pb="current">
                     <div
                     className="relative h-[320px] xl:h-[256px] z-0"
@@ -42,36 +44,26 @@ export default function BSPlaylistSideBar(
                         <Link>{bsPlaylist.name}</Link>
                         </NextLink>
                     </span>
-                    <BSUserLabel user={bsPlaylist.owner}/>
                 </div>
 
-                <div className="flex items-center justify-between pr-2">
-                        <DateLabel date={bsPlaylist.updatedAt} size={"1"}/>
-                        <div className="flex items-center space-x-1 text-center">
-                            <BSMapAmountLabel amount={bsPlaylist.stats.totalMaps}  size={"1"}/>
-                            <div className="flex items-center">
-                                <CiStar/>
-                                <Text className="pl-1" size="1" weight="medium">{(bsPlaylist.stats.avgScore*100).toFixed(1)}%</Text>
-                            </div>
-                        </div>
-                </div>
-
+                <BSUserLabel user={bsPlaylist.owner}/>
+                <DateLabel date={bsPlaylist.updatedAt} size={"2"}/>
                 <div className="">
                         <div className="flex flex-col justify-between  h-full pt-auto pb-0">
                             <div>
-                                <Text as="p" size="1" className="text-ellipsis overflow-hidden m-2 line-clamp-[7]">
+                                <Text as="p" size="2" className="text-ellipsis overflow-hidden m-2 line-clamp-[7]">
                                     {bsPlaylist.description == "" ? "No description" : bsPlaylist.description}
                                 </Text>
                             </div>
                             <div>
                                 <div>
                                     <div className="flex justify-between px-2">
-                                        <DurationLabel size="5" duration={bsPlaylist.stats.totalDuration} tooltip="total duration"/>
-                                        <BSMapAmountLabel size="5" amount={bsPlaylist.stats.totalMaps} tooltip="total map amount"/>
+                                        <DurationLabel size="2" duration={bsPlaylist.stats.totalDuration} tooltip="total duration"/>
+                                        <BSMapAmountLabel size="2" amount={bsPlaylist.stats.totalMaps} tooltip="total map amount"/>
                                     </div>
                                 <div className="flex justify-between px-2">
-                                    <ThumbUpLabel size="5" likeCnt={bsPlaylist.stats.upVotes} tooptip="total upvote"/>
-                                    <ThumbDownLabel size="5" dislikeCnt={bsPlaylist.stats.downVotes} tooptip="total down vote"/>
+                                    <ThumbUpLabel size="2" likeCnt={bsPlaylist.stats.upVotes} tooptip="total upvote"/>
+                                    <ThumbDownLabel size="2" dislikeCnt={bsPlaylist.stats.downVotes} tooptip="total down vote"/>
                                 </div>
                                 </div>
                                 <div className="flex justify-between px-2 items-center">
@@ -81,12 +73,12 @@ export default function BSPlaylistSideBar(
                                             style={{ transform: `translateX(-${100 - bsPlaylist.stats.avgScore*100}%)` }}
                                         />
                                     </Progress.Root>
-                                    <Text className="pl-1" size="5" weight="medium">{(bsPlaylist.stats.avgScore*100).toFixed(1)}%</Text>
+                                    <Text className="pl-1" size="2" weight="medium">{(bsPlaylist.stats.avgScore*100).toFixed(1)}%</Text>
                                 </div>
 
                                 <div className="py-1 px-3 flex items-center space-x-1 justify-between">
                                     <div>
-                                        <BSLabel label={npsRange} tooltip="min nps to max nps">
+                                        <BSLabel label={npsRange} size={"2"} tooltip="min nps to max nps">
                                             <IoSpeedometerOutline  />
                                         </BSLabel>
                                     </div>

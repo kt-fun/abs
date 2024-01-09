@@ -7,7 +7,7 @@
 
 
 'use client'
-import { usePagingBSPlaylist } from "@/hooks/usePagingBSPlaylist";
+import { usePagingBSPlaylist } from "@/hooks/api/usePagingBSPlaylist";
 import { BSPlaylist as IBSPlaylist } from "@/interfaces/bs-playlist";
 import BSPlaylistSideBar from "@/components/BSPlaylistSideBar";
 import { useCallback, useEffect, useState } from "react";
@@ -18,7 +18,7 @@ import { motion } from "framer-motion";
 import { FaArrowUp } from "react-icons/fa";
 import * as Popover from "@radix-ui/react-popover";
 import BSPlaylistSkeleton from "@/components/BSPlaylistSkeleton";
-import { usePagingBSPlaylistDetail } from "@/hooks/usePagingBSPlaylistDetail";
+import { usePagingBSPlaylistDetail } from "@/hooks/api/usePagingBSPlaylistDetail";
 import BSMapSkeleton from "@/components/BSMapSkeleton";
 import { BSBeatMap } from "@/interfaces/beatmap";
 import BSMap from "@/components/bs-map";
@@ -78,7 +78,7 @@ export default function Home({ params }: { params: { id: string } }) {
               }
               </div>
   
-              <div className="hidden lg:flex sticky top-20 justify-center w-[320px] grow-0 h-[640px]">
+              <div className="hidden lg:flex sticky top-20 justify-center w-[320px] grow-0 h-fit">
                 {
                     playlist && (
                         <BSPlaylistSideBar bsPlaylist={playlist}/>

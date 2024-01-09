@@ -46,7 +46,6 @@ enum CalendarState {
 type DateRange = [Date|null, Date|null];
 //@ts-ignore
 const Calendar = (props) => {
-  const [date, setDate] = useState([null, null]);
 
   const { onSelectDate, value } = props;
   //@ts-ignore
@@ -72,8 +71,8 @@ const Calendar = (props) => {
           end
         </Button>
       </Popover.Trigger>
-      <Popover.Content>
-        <Card className="opacity-100 justify-between w-full z-40">
+      <Popover.Content className="bg-gray-200">
+        <div className="opacity-100 justify-between w-full z-40">
         <div className="flex  items-center px-2 mb-3">
           <p>{format(cursorDate, "MMM yyyy")}</p>
           <div className="flex">
@@ -147,7 +146,7 @@ const Calendar = (props) => {
             </div>
           ))}
         </div>
-        </Card>
+        </div>
       </Popover.Content>
     </Popover.Root>
     </>

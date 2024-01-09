@@ -10,12 +10,29 @@ export interface BSUser {
     playlistUrl: string;
     type: UserType;
 }
+// "diffStats": {
+    // "total": 0,
+    // "easy": 0,
+    // "normal": 0,
+    // "hard": 0,
+    // "expert": 0,
+    // "expertPlus": 0
+// }
 
 export interface BSUserWithStats {
     id: number;
     name: string;
     description: string;
     avatar: string;
+    followData?: {
+        followers: number;
+        follows?: number;
+        // for current user
+        following: boolean;
+        upload: boolean;
+        curation: boolean;
+    }
+    patreon?: string;
     stats: {
         totalUpvotes: number;
         totalDownvotes: number;
@@ -26,6 +43,14 @@ export interface BSUserWithStats {
         avgDuration: number;
         firstUpload: string;
         lastUpload: string;
+        diffStats: {
+            total: number;
+            easy: number;
+            normal: number;
+            hard: number;
+            expert: number;
+            expertPlus: number;
+        }
     };
     type: UserType;
 }

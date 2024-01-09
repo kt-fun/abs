@@ -1,5 +1,6 @@
 import { BSBeatMap } from '@/interfaces/beatmap';
 import { BSPlaylist } from '@/interfaces/bs-playlist';
+import { BASE_URL } from '@/lib/constant';
 import { use, useCallback, useEffect, useMemo, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 
@@ -18,7 +19,7 @@ export const usePagingBSUserPlaylist = (userId:string) => {
         isValidating,
         isLoading
       } = useSWRInfinite(
-        (index) => `https://bs-api.kt-f63.workers.dev/playlists/user/${userId}/${index}`,
+        (index) => `${BASE_URL}/api/playlists/user/${userId}/${index}`,
         fetcher,
       );
     
