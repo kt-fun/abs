@@ -98,9 +98,6 @@ export default function BSMap(
 
   }
 
-  const handlePlayMapPreview = ()=>{
-
-  }
   const handleCopyMapId = ()=>{
     navigator.clipboard.writeText(bsMap.id);
   }

@@ -37,11 +37,14 @@ export default function BSMapper(
     {bsUserWithStats}:{bsUserWithStats:BSUserWithStats}
 ) {
   const computeRating = useCallback((like:number,dislike:number) => {
+    if(like == 0 && dislike == 0){
+        return 50;
+    }
     return (like/(like+dislike))*100.0;
   },[])
   const rating = computeRating(
-    bsUserWithStats.stats.totalUpvotes,
-    bsUserWithStats.stats.totalDownvotes
+    bsUserWithStats.stats.totalUpvotes? bsUserWithStats.stats.totalUpvotes : 0,
+    bsUserWithStats.stats.totalDownvotes? bsUserWithStats.stats.totalDownvotes : 0
   );
     return (
         <>
