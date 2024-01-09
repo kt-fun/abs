@@ -1,15 +1,11 @@
 import { BSBeatMap } from '@/interfaces/beatmap';
 import { BASE_URL } from '@/lib/constant';
+import { jsonFetcher } from '@/lib/fetcher';
 import { use, useCallback, useEffect, useMemo, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 
 const PAGE_SIZE = 20
-// todo error handle
-// @ts-ignore
-const fetcher = (resource, init) => fetch(resource, {
-    ...init,
-    credentials: 'include',
-  }).then((res) => res.json()).then((res)=>res.docs)
+const fetcher = (input: RequestInfo,init?: RequestInit) => jsonFetcher(input,init).then((res)=>res.docs)
 
 export interface MapQueryParam {
     queryKey:string,

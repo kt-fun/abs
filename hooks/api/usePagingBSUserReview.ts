@@ -1,17 +1,13 @@
 import { BSMapReview } from "@/interfaces/beatmap-review";
 import { BSUserWithStats } from "@/interfaces/beatsaver-user";
 import { BASE_URL } from "@/lib/constant";
+import { jsonWithCredentialFetcher } from "@/lib/fetcher";
 import { use, useCallback, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 import useSWRInfinite from "swr/infinite";
 
 const PAGE_SIZE = 20
-// @ts-ignore
-const fetcher = (resource, init) => fetch(resource, {
-  ...init,
-  credentials: 'include',
-}).then(res => res.json()).then((res)=>res.docs)
-
+const fetcher = (input: RequestInfo,init?: RequestInit) => jsonWithCredentialFetcher(input,init).then((res)=>res.docs)
 export const usePagingBSUserReview = (userId:string) => {
     const {
         data,

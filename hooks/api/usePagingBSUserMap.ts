@@ -3,14 +3,14 @@ import { useCallback, useEffect, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 import dayjs from "dayjs";
 import { BASE_URL } from "@/lib/constant";
+import { jsonFetcher } from "@/lib/fetcher";
 export type FetchingType = "Published" | "WIP" | "Curated"
 const PAGE_SIZE = 20
 
 const currentdate = dayjs().toISOString()
-// @ts-ignore
-const fetcher = (...args) => fetch(...args)
-.then((res) => res.json())
-.then((res)=>res.docs)
+
+const fetcher = (input: RequestInfo,init?: RequestInit) => jsonFetcher(input,init).then((res)=>res.docs)
+
 export const usePagingBSUserMap = (
    fetchingType:FetchingType, userId: string
 ) => {

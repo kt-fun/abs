@@ -1,13 +1,11 @@
 import { BSUserWithStats } from "@/interfaces/beatsaver-user";
 import { BASE_URL } from "@/lib/constant";
+import { jsonFetcher } from "@/lib/fetcher";
 import { use, useCallback, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 import useSWRInfinite from "swr/infinite";
 
 const PAGE_SIZE = 20
-// @ts-ignore
-const fetcher = (...args) => fetch(...args).then((res) => res.json())
-
 export const usePagingBSUser = () => {
     const {
         data,
@@ -20,7 +18,7 @@ export const usePagingBSUser = () => {
       (index) => {
         return `${BASE_URL}/api/users/list/${index}?sortOrder=Relevance`
       },
-      fetcher
+      jsonFetcher
     );
       
     const users:BSUserWithStats[] = data ? [].concat(...data) : [];

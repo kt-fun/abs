@@ -1,5 +1,5 @@
 import { BSBeatMap } from "./interfaces/beatmap";
-import { UserType,BSUserWithStats } from "./interfaces/beatsaver-user";
+import { BSUserWithStats } from "./interfaces/beatsaver-user";
 
 export const bsUserWithStats:BSUserWithStats = 
     {
@@ -8,6 +8,7 @@ export const bsUserWithStats:BSUserWithStats =
         "description": "- Rank 1 Beat Saber Community Mapper: http://beatsaver.com/mappers\n- Over 1600 Maps, 1000 Successful Map Requests, 500 Curated Maps & 600,000 Map Likes\n- Hosted/Participated in over 70 Curated Map Packs\n- Leader of the @JLCmapping Group\n\nFeel free to DM me on discord @joetastic for feedback or requests ^^\n\nSocial links:\nBsaber: https://bsaber.com/members/joetastic/\nTwitter:  https://twitter.com/Joetastic_\nDiscord Server: https://discord.gg/CCvrQmx9vF\nYouTube: https://www.youtube.com/@joetastic_",
         "avatar": "https://cdn.beatsaver.com/avatar/91bb7b0510cea647179bc95e032f8a25608b09f1.png",
         "stats": {
+            "diffStats":undefined,
             "totalUpvotes": 657302,
             "totalDownvotes": 25128,
             "totalMaps": 1610,
@@ -29,7 +30,7 @@ export const bsmap:BSBeatMap = {
         "name": "dvdspncr334",
         "hash": "60632874cd73ba00060a5103",
         "avatar": "https://www.gravatar.com/avatar/60632874cd73ba00060a5103?d=retro",
-        "type": UserType.Simple,
+        "type": "SIMPLE",
         "admin": false,
         "curator": false,
         "playlistUrl": "https://api.beatsaver.com/users/id/74331/playlist"

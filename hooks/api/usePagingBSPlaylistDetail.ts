@@ -1,12 +1,11 @@
 import { BSBeatMap } from "@/interfaces/beatmap";
 import { BSPlaylist } from "@/interfaces/bs-playlist";
 import { BASE_URL } from "@/lib/constant";
+import { jsonFetcher } from "@/lib/fetcher";
 import { useEffect, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 
 const PAGE_SIZE = 100
-// @ts-ignore
-const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
 interface BSPlaylistDetail {
     maps:BSBeatMap[],
@@ -24,7 +23,7 @@ export const usePagingBSPlaylistDetail = (playlistId:string) => {
         error
       } = useSWRInfinite(
         (index) => `${BASE_URL}/api/playlists/id/${playlistId}/${index}`,
-        fetcher,
+        jsonFetcher,
       );
       const [playlist,setPlaylist] = useState<BSPlaylist>()
       useEffect(()=> {

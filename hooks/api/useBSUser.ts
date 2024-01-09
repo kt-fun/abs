@@ -1,16 +1,9 @@
 import { BSUserWithStats } from "@/interfaces/beatsaver-user";
 import { BASE_URL } from "@/lib/constant";
-import { use, useCallback, useEffect, useMemo, useState } from "react";
+import { jsonWithCredentialFetcher } from "@/lib/fetcher";
 import useSWR from "swr";
-
-
-const fetcher = (resource:string, init:RequestInit|undefined) => fetch(resource, {
-    ...init,
-    credentials: 'include',
-}).then((res) => res.json())
-
 export const useBSUser = (uid: number) => {
-    const { data, isLoading,error } = useSWR(`${BASE_URL}/api/users/id/${uid}`, fetcher)
+    const { data, isLoading,error } = useSWR(`${BASE_URL}/api/users/id/${uid}`, jsonWithCredentialFetcher)
     return {
         "bsUserWithStats": data as BSUserWithStats,
         isLoading,

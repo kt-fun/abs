@@ -43,7 +43,7 @@ export interface BSUserWithStats {
         avgDuration: number;
         firstUpload: string;
         lastUpload: string;
-        diffStats: {
+        diffStats?: {
             total: number;
             easy: number;
             normal: number;
@@ -55,7 +55,4 @@ export interface BSUserWithStats {
     type: UserType;
 }
 
-export enum UserType {
-    Discord = "DISCORD",
-    Simple = "SIMPLE",
-}
+type UserType = "DISCORD" | "SIMPLE"
