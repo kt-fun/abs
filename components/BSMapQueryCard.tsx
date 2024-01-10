@@ -1,4 +1,4 @@
-import { Button, Card, DropdownMenu, Slider, Switch,Text, Tooltip } from "@radix-ui/themes";
+import { Button, Card, DropdownMenu, Select, Slider, Switch,Text, Tooltip } from "@radix-ui/themes";
 import SearchBar from "./SearchBar";
 import NPSRangePicker from "./NPSRangePicker";
 import Calendar from "./Calendar";
@@ -8,39 +8,13 @@ import * as Popover from "@radix-ui/react-popover";
 import { MapQueryParam, options } from "@/hooks/api/usePagingBSMap";
 import DurationRangePicker from "./DurationRangePicker";
 import RatingRangePicker from "./RatingRangePicker";
-interface SortMenuProps {
-    options: string[];
-    current: string;
-    onUpdateCurrent: (current: string) => void;
-}
-const playlistOptions = [
+import SortMenu from "./SortMenu";
+const mapSortOptions = [
     "Relevance",
     "Latest",
     "Curated",
     "Rating",
 ]
-const SortMenu = (
-    {options,current,onUpdateCurrent}:SortMenuProps) => {
-    return (
-        <DropdownMenu.Root>
-            <DropdownMenu.Trigger>
-                <Button variant="soft">
-                {current}
-                <CaretDownIcon />
-                </Button>
-            </DropdownMenu.Trigger>
-            <DropdownMenu.Content>
-                {
-                    options.map((option:string)=>{
-                        return (
-                            <DropdownMenu.CheckboxItem key={option} onClick={()=>{onUpdateCurrent(option)}}>{option}</DropdownMenu.CheckboxItem>
-                        )
-                    })
-                }
-            </DropdownMenu.Content>
-        </DropdownMenu.Root>
-    )
-}
 
 export default function BSMapQueryCard(
     {queryParam,className, updateQuery, query}:{
@@ -115,7 +89,7 @@ export default function BSMapQueryCard(
             </div>
             <div className="flex justify-between items-center">
                 <Text>Sorted By</Text>
-                <SortMenu options={playlistOptions} current={sortMenuCurrent} onUpdateCurrent={handleSortMenuCurrentChange}/>
+                <SortMenu options={mapSortOptions} current={sortMenuCurrent} onUpdateCurrent={handleSortMenuCurrentChange}/>
             </div>
             <div className="">
                 {

@@ -11,6 +11,7 @@ import { FaArrowUp } from "react-icons/fa";
 import * as Popover from "@radix-ui/react-popover";
 import BSPlaylistSkeleton from "@/components/BSPlaylistSkeleton";
 import { useInfinityScroll } from "@/hooks/useInfinityScroll";
+import Loading from "@/components/Loading";
 export default function Home() {
     const { playlists,isLoadingMore,isEmpty,hasMore,loadMore,refresh,queryParam,updateQuery} = usePagingBSPlaylist();
     const {reachedBottom,showScrollToTop, scrollToTop} = useInfinityScroll();
@@ -36,12 +37,24 @@ export default function Home() {
                   )
                 }
                 {
-                playlists.map((playlist:IBSPlaylist) => {
-                  return (
-                  <BSPlaylist  key={playlist.playlistId} bsPlaylist={playlist}/>
-                  );
-                })
+                  playlists.map((playlist:IBSPlaylist) => {
+                    return (
+                    <BSPlaylist  key={playlist.playlistId} bsPlaylist={playlist}/>
+                    );
+                  })
                 }
+                {
+                !isLoadingMore&&isEmpty && 
+                    <div>
+                        Nothing Here
+                    </div>
+                }
+                {!hasMore && !isLoadingMore &&
+                    <div>
+                        No More Data
+                    </div>
+                }
+                { isLoadingMore && <Loading/> }
               </div>
               <div>
 

@@ -3,8 +3,8 @@ import { useCalendar } from "@h6s/calendar";
 import { format, getDate, isValid } from "date-fns";
 import { useEffect, useState } from "react";
 
-import * as Popover from '@radix-ui/react-popover';
-import { Button, Card } from "@radix-ui/themes";
+import { Avatar, Box, Button, Card,Checkbox,Flex,Popover, Text, TextArea} from "@radix-ui/themes";
+import { ChatBubbleIcon } from "@radix-ui/react-icons";
 //@ts-ignore
 const getColor = (day) => {
   if (day.isWeekend && day.isCurrentDate) {
@@ -63,15 +63,18 @@ const Calendar = (props) => {
   return (
     <>
     <Popover.Root>
-      <Popover.Trigger className="flex items-center justify-between">
+      <Popover.Trigger >
+        <div className="flex items-center justify-between">
         <Button variant="ghost" >
           Start
         </Button>
         <Button variant="ghost">
           end
         </Button>
+          </div>
+
       </Popover.Trigger>
-      <Popover.Content className="bg-gray-200">
+      <Popover.Content>
         <div className="opacity-100 justify-between w-full z-40">
         <div className="flex  items-center px-2 mb-3">
           <p>{format(cursorDate, "MMM yyyy")}</p>

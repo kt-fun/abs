@@ -23,6 +23,7 @@ import BSMapSkeleton from "@/components/BSMapSkeleton";
 import { BSBeatMap } from "@/interfaces/beatmap";
 import BSMap from "@/components/bs-map";
 import { useRouter } from "next/navigation";
+import Loading from "@/components/Loading";
 export default function Home({ params }: { params: { id: string } }) {
     const { playlist,maps,isLoadingMore,error,isEmpty,hasMore,loadMore} = usePagingBSPlaylistDetail(params.id);
     const router = useRouter()
@@ -76,6 +77,18 @@ export default function Home({ params }: { params: { id: string } }) {
                 );
               })
               }
+              {
+                  !isLoadingMore&&isEmpty && 
+                  <div>
+                      Nothing Here
+                  </div>
+              }
+              {!hasMore && !isLoadingMore &&
+                  <div>
+                      No More Data
+                  </div>
+              }
+              { isLoadingMore && <Loading/> }
               </div>
   
               <div className="hidden lg:flex sticky top-20 justify-center w-[320px] grow-0 h-fit">

@@ -32,15 +32,11 @@ import BSObstacleAmountLabel from './labels/BSObstacleAmountLabel'
 import BSBPMLabel from './labels/BSBPMLabel'
 import BSIDLabel from './labels/BSIDLabel'
 import { PiHeartbeat } from "react-icons/pi";
-import { useEffect, useState } from 'react'
 import { motion, useSpring } from 'framer-motion'
 import { useSongPreview, useSongPreviewState } from '@/hooks/useSongPreview'
 import { AiOutlineLoading } from "react-icons/ai";
 import CopyIcon from './CopyIcon'
 import MapPreviewIFrame from './MapPreviewIFrame'
-interface BSMapProps {
-    bsMap:BSBeatMap
-}
 
 const diffShort = {
   "Easy":"Easy",
@@ -281,15 +277,12 @@ export default function BSMap(
               <ThumbDownLabel size={"1"} dislikeCnt={bsMap.stats.upvotes}/>
               </div>
               <Separator orientation="vertical" className="h-4"/>
-            <DateLabel size={"1"} date={bsMap.lastPublishedAt}/>
+              <DateLabel size={"1"} date={bsMap.lastPublishedAt}/>
             </div>
           </div>
         </Box>
       </Flex>
     </Card>
   )
-}
-function useAudio(arg0: { src: string; autoPlay: boolean }): [any, any, any, any] {
-  throw new Error('Function not implemented.')
 }
 

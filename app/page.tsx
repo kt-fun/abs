@@ -2,7 +2,6 @@
 import BSMapQueryCard from "@/components/BSMapQueryCard";
 import BSMapSkeleton from "@/components/BSMapSkeleton";
 import BSMapper from "@/components/BSMapper";
-import NPSRangePicker from "@/components/NPSRangePicker";
 import SearchBar from "@/components/SearchBar";
 import BSMap from "@/components/bs-map";
 import { useInfinityScroll } from "@/hooks/useInfinityScroll";
@@ -12,6 +11,7 @@ import { Card, Slider, Switch,Text} from "@radix-ui/themes";
 import { motion } from "framer-motion";
 import { use, useCallback, useEffect, useRef, useState } from "react";
 import { FaArrowUp } from "react-icons/fa";
+import Loading from "@/components/Loading";
 export default function Home() {
   const contentRef = useRef(null);
   const { maps,isLoadingMore,isEmpty,hasMore,loadMore,queryParam,updateQuery,refresh} = usePagingBSMap();
@@ -38,12 +38,24 @@ export default function Home() {
               
             }
             {
-            maps.map((map:BSBeatMap) => {
-              return (
-                <BSMap key={map.id} bsMap={map}/>
-              );
-            })
+              maps.map((map:BSBeatMap) => {
+                return (
+                  <BSMap key={map.id} bsMap={map}/>
+                );
+              })
             }
+            {
+              !isLoadingMore&&isEmpty && 
+              <div>
+                  Nothing Here
+              </div>
+            }
+            {!hasMore && !isLoadingMore &&
+                <div>
+                    No More Data
+                </div>
+            }
+            { isLoadingMore && <Loading/> }
             </div>
 
             <div className="hidden lg:flex sticky top-20 justify-center w-[320px] grow-0 h-[640px]">

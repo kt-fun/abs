@@ -5,40 +5,12 @@ import NPSRangePicker from "./NPSRangePicker";
 import Calendar from "./Calendar";
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import { useMemo, useState } from "react";
-import * as Popover from "@radix-ui/react-popover";
-interface SortMenuProps {
-    options: string[];
-    current: string;
-    onUpdateCurrent: (current: string) => void;
-}
-const playlistOptions = [
+import SortMenu from "./SortMenu";
+const playlistSortOptions = [
     "Relevance",
     "Latest",
     "Curated",
 ]
-const SortMenu = (
-    {options,current,onUpdateCurrent}:SortMenuProps) => {
-    return (
-        <DropdownMenu.Root>
-            <DropdownMenu.Trigger>
-                <Button variant="soft">
-                {current}
-                <CaretDownIcon />
-                </Button>
-            </DropdownMenu.Trigger>
-            <DropdownMenu.Content>
-                {
-                    options.map((option:string)=>{
-                        return (
-                            <DropdownMenu.CheckboxItem key={option} onClick={()=>{onUpdateCurrent(option)}}>{option}</DropdownMenu.CheckboxItem>
-                        )
-                    })
-                }
-            </DropdownMenu.Content>
-        </DropdownMenu.Root>
-    )
-}
-
 export default function BSPlaylistQueryCard(
     {queryParam,className, updateQuery, query}:{
         className?:string, 
@@ -99,7 +71,7 @@ export default function BSPlaylistQueryCard(
             
             <div className="flex justify-between items-center">
             <Text>Sorted By</Text>
-            <SortMenu options={playlistOptions} current={sortMenuCurrent} onUpdateCurrent={handleSortMenuCurrentChange}/>
+            <SortMenu options={playlistSortOptions} current={sortMenuCurrent} onUpdateCurrent={handleSortMenuCurrentChange}/>
             </div>
             <div className="flex justify-between items-center">
             <Text>Verified Mapper</Text>

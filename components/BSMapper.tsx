@@ -101,22 +101,29 @@ export default function BSMapper(
                 </div>
             </div>
             <div className="flex justify-between">
-            <Tooltip content="First Map Uploaded At">
-                <Text
-                size="1"
-                color="gray"
-                className="flex space-x-2  cursor-default"
-                >Since: {dayjs(bsUserWithStats.stats.firstUpload).format('YYYY-MM-DD')}
-                </Text>
-            </Tooltip>
-            <Tooltip content="Last Map Uploaded At">
-                <Text
-                size="1"
-                color="gray"
-                className="flex space-x-2 cursor-default"
-                >Last: {dayjs(bsUserWithStats.stats.lastUpload).fromNow()}
-                </Text>
-            </Tooltip>
+
+            {
+                bsUserWithStats.stats.firstUpload && 
+                <Tooltip content="First Map Uploaded At">
+                    <Text
+                    size="1"
+                    color="gray"
+                    className="flex space-x-2  cursor-default"
+                    >Since: {dayjs(bsUserWithStats.stats.firstUpload).format('YYYY-MM-DD')}
+                    </Text>
+                </Tooltip>
+            }
+            {
+                bsUserWithStats.stats.lastUpload && 
+                <Tooltip content="Last Map Uploaded At">
+                    <Text
+                    size="1"
+                    color="gray"
+                    className="flex space-x-2 cursor-default"
+                    >Last: {dayjs(bsUserWithStats.stats.lastUpload).fromNow()}
+                    </Text>
+                </Tooltip>
+            }
             </div>
 
         </Card>

@@ -1,10 +1,11 @@
 'use client'
 import { BSUser } from "@/interfaces/beatsaver-user";
-import { Box, Flex, HoverCard, Link, Tooltip,Text, Responsive, Inset } from "@radix-ui/themes";
+import { Box, Flex, Link, Tooltip,Text, Responsive,HoverCard, Inset } from "@radix-ui/themes";
 import MapperAvatar from "@/components/mapper-avatar";
 import { ClientOnly } from "../ClientOnly";
 import BSUserDetailCard from "../BSUserDetialCard";
 import { TextSize } from "@/interfaces/text-size";
+import { motion } from "framer-motion";
 const truncated = (text:string) => {
     if (text.length > 15) {
         return text.substring(0,15) + '...'
@@ -27,9 +28,8 @@ export default function BSUserLabel(
                 </HoverCard.Trigger>
                 <HoverCard.Content>
                     <Inset className="max-w-[320px]">
-                    <BSUserDetailCard user={user} />
+                        <BSUserDetailCard user={user} />
                     </Inset>
-
                 </HoverCard.Content>
             </HoverCard.Root>
         </>
