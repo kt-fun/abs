@@ -31,4 +31,3 @@ please note that you need provide a BASE_URL for it. cause it use a proxy(maybe 
 you can add .env.local file to root directory and add BASE_URL in it.
 
 you also can fork and deploy it on your own server, or other serverless platform.
-
