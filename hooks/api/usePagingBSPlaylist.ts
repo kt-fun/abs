@@ -15,6 +15,8 @@ export interface PlaylistQueryParam {
     sortKey: string,
     minNps?:number,
     maxNps?:number,
+    from?: string,
+    to?: string,
 }
 const buildURL = (index:number,param:PlaylistQueryParam) => {
     const baseURL = `${BASE_URL}/api/playlists/search/${index}`
@@ -38,6 +40,12 @@ const buildURL = (index:number,param:PlaylistQueryParam) => {
     }
     if (param.maxNps) {
         paramMap["maxNps"] = param.maxNps
+    }
+    if (param.from) {
+        paramMap["from"] = param.from
+    }
+    if (param.to) {
+        paramMap["to"] = param.to
     }
     let keys = Object.keys(paramMap)
     let queryParam = "?"

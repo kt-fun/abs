@@ -4,11 +4,9 @@ import { BSPlaylist as IBSPlaylist } from "@/interfaces/bs-playlist";
 import BSPlaylist from "@/components/BSPlaylist";
 import { useCallback, useEffect, useState } from "react";
 import { Card, Slider, Switch,Text} from "@radix-ui/themes";
-import SearchBar from "@/components/SearchBar";
 import BSPlaylistQueryCard from "@/components/BSPlaylistQueryCard";
 import { motion } from "framer-motion";
 import { FaArrowUp } from "react-icons/fa";
-import * as Popover from "@radix-ui/react-popover";
 import BSPlaylistSkeleton from "@/components/BSPlaylistSkeleton";
 import { useInfinityScroll } from "@/hooks/useInfinityScroll";
 import Loading from "@/components/Loading";
@@ -44,7 +42,7 @@ export default function Home() {
                   })
                 }
                 {
-                !isLoadingMore&&isEmpty && 
+                !isLoadingMore&&isEmpty &&
                     <div>
                         Nothing Here
                     </div>

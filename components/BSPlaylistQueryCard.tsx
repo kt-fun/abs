@@ -2,10 +2,11 @@ import { Button, Card, DropdownMenu, Slider, Switch,Text } from "@radix-ui/theme
 import SearchBar from "./SearchBar";
 import { PlaylistQueryParam } from "@/hooks/api/usePagingBSPlaylist";
 import NPSRangePicker from "./NPSRangePicker";
-import Calendar from "./Calendar";
+import DateRangePicker from "./DateRangePicker";
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import { useMemo, useState } from "react";
 import SortMenu from "./SortMenu";
+import dayjs from "dayjs";
 const playlistSortOptions = [
     "Relevance",
     "Latest",
@@ -50,11 +51,22 @@ export default function BSPlaylistQueryCard(
             maxNps:range[1]
         })
     }
+    const dateRange = useMemo(()=>{
+      let range = [undefined,undefined] as [Date?,Date?]
+      if (queryParam.from) range[0] = dayjs(queryParam.from).toDate()
+      if (queryParam.to) range[1] = dayjs(queryParam.to).toDate()
+      return range
+    },[queryParam])
+    const handleDateRangeChange = (range:[Date?,Date?])=>{
+        updateQuery({
+            ...queryParam,
+            from:range[0]? dayjs(range[0]).format("YYYY-MM-DD"):undefined,
+            to:range[1]? dayjs(range[1]).format("YYYY-MM-DD"):undefined
+        })
+    }
     return (
         <Card className={`${className} `} variant="classic">
             <div className="flex flex-col h-full space-y-3">
-
-
             <SearchBar
                 queryKey={queryParam.queryKey}
                 onQuery={query}
@@ -66,9 +78,6 @@ export default function BSPlaylistQueryCard(
                         })
                     }}
             />
-            <div>
-            </div>
-            
             <div className="flex justify-between items-center">
             <Text>Sorted By</Text>
             <SortMenu options={playlistSortOptions} current={sortMenuCurrent} onUpdateCurrent={handleSortMenuCurrentChange}/>
@@ -91,14 +100,12 @@ export default function BSPlaylistQueryCard(
             </div>
             
             <div className="flex flex-col">
-            <Calendar
-                value={""}
-                defaultValue={""}
-                onSelectDate={(date:any) => {
-                }}
+            <DateRangePicker
+              dateRange={dateRange}
+              setDateRange={handleDateRangeChange}
             />
             </div>
-            </div>
+          </div>
         </Card> 
     )
 }

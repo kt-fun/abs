@@ -5,6 +5,12 @@ import { CiLight } from "react-icons/ci";
 import { BiCameraMovie } from "react-icons/bi";
 import { RiRobot2Line } from "react-icons/ri";
 import { GiRank3 } from "react-icons/gi";
+
+
+export function checkIfHasFeature(bsMap:BSBeatMap):boolean {
+  return bsMap.ranked || checkIfAI(bsMap) || checkIfCinema(bsMap) || checkIfChroma(bsMap) || checkIfME(bsMap) || checkIfNE(bsMap)
+}
+
 export default function FeatureIcons(
     {bsMap,className}:{bsMap:BSBeatMap,className?:string}
 ) {

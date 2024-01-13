@@ -1,7 +1,7 @@
 'use client'
 import BSMapper from "@/components/BSMapper";
 import BSPlaylist from "@/components/BSPlaylist";
-import BSMap from "@/components/bs-map";
+import BSMap from "@/components/BSMap";
 import { useBSUser } from "@/hooks/api/useBSUser";
 import { useInfinityScroll } from "@/hooks/useInfinityScroll";
 import { usePagingBSUser } from "@/hooks/api/usePagingBSUser";

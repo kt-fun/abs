@@ -1,7 +1,19 @@
 'use client'
-import Image from 'next/image'
-import { ClockIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons'
-import { Box, Button, Card, Flex, HoverCard, IconButton, Inset, Link, Separator, Text, Theme, Tooltip } from '@radix-ui/themes'
+import {
+  Box,
+  Button,
+  Card,
+  Flex,
+  HoverCard,
+  IconButton,
+  Inset,
+  Link,
+  ScrollArea,
+  Separator,
+  Text,
+  Theme,
+  Tooltip
+} from '@radix-ui/themes'
 import { BSBeatMap, getBSMapCoverURL, getMaxNPS } from '@/interfaces/beatmap'
 import MapperAvatar from '@/components/mapper-avatar'
 import NPSLabel from '@/components/labels/NPSLabel'
@@ -11,7 +23,7 @@ import ThumbDownLabel from '@/components/labels/ThumbDownLabel'
 import RatingLabel from '@/components/labels/RatingLabel'
 import DateLabel from '@/components/labels/DateLabel'
 import BSUserLabel from '@/components/labels/BSUserLabel'
-import FeatureIcons from '@/icons/FeatureIcons'
+import FeatureIcons, {checkIfHasFeature} from '@/components/icons/FeatureIcons'
 import { getMapTag } from '@/interfaces/mapTags'
 import BSMapTag from './BSMapTag'
 import * as Progress from '@radix-ui/react-progress';
@@ -37,6 +49,7 @@ import { useSongPreview, useSongPreviewState } from '@/hooks/useSongPreview'
 import { AiOutlineLoading } from "react-icons/ai";
 import CopyIcon from './CopyIcon'
 import MapPreviewIFrame from './MapPreviewIFrame'
+import {CharacteristicIcon} from "@/components/icons/Characteristic";
 
 const diffShort = {
   "Easy":"Easy",
@@ -47,24 +60,9 @@ const diffShort = {
 }
 
 const getIcon = (characteristic:MapCharacteristic)=>{
-    switch(characteristic){
-      case "Standard":
-        return <IoSpeedometerOutline/>
-      case "NoArrows":
-        return <IoSpeedometerOutline/>
-      case "OneSaber":
-        return <IoSpeedometerOutline/>
-      case "90Degree":
-        return <IoSpeedometerOutline/>
-      case "360Degree":
-        return <IoSpeedometerOutline/>
-      case "Lightshow":
-        return <IoSpeedometerOutline/>
-      case "Lawless":
-        return <IoSpeedometerOutline/>
-      case "Legacy":
-        return <IoSpeedometerOutline/>
-    }
+    return (
+      <CharacteristicIcon characteristic={characteristic} className='w-4 h-4'/>
+    )
 }
 type MapCharacteristic = "Standard" | "NoArrows" | "OneSaber" | "90Degree" | "360Degree" | "Lightshow" | "Lawless" | "Legacy"
 type MapDiff = "Easy" | "Normal" | "Hard" | "Expert" | "ExpertPlus"
@@ -101,7 +99,7 @@ export default function BSMap(
 
   return (
     <Card
-    className='shadow-md max-h-[200px]'
+    className='shadow-md max-h-[200px] min-w-[400px]'
     >
       <Flex className='h-full'>
       <Inset  side="left" className='min-w-[200px] max-w-[200px]'>
@@ -113,7 +111,19 @@ export default function BSMap(
           }}>
               <div className={`z-100 bg-black/[.6] h-full group-hover:visible ${current?'':'invisible'}  bg-blend-darken`}>
                   <Theme appearance="dark" className="bg-transparent h-full">
-                      <div className="flex flex-col justify-between  h-full pt-auto pb-0">
+                      <div className="flex flex-col justify-between  h-full pt-auto pb-0 p-1">
+                          {
+                            bsMap.curator && <div className="flex space-x-1 items-center mx-1">
+                              <Text size="1">Curator:</Text> <BSUserLabel size={"1"} user={bsMap.curator}/>
+                              </div>
+                          }
+                        {
+                          checkIfHasFeature(bsMap) &&
+                          <div className="flex space-x-1 items-center mx-1">
+                              <Text size="1">Features:</Text>
+                              <FeatureIcons bsMap={bsMap}/>
+                          </div>
+                        }
                           <div className='mx-1'>
                               <Text as="p" size="1" className="text-ellipsis overflow-hidden line-clamp-[4]">
                                   {bsMap.description == "" ? "No description" : bsMap.description}
@@ -249,16 +259,18 @@ export default function BSMap(
 
             <BSBPMLabel size={"1"} bpm={bsMap.metadata.bpm}/>
           </div>
-          <FeatureIcons bsMap={bsMap} className='py-1'/>
-          <div className='flex gap-1 overflow-auto flex-wrap'>
+          {/*<FeatureIcons bsMap={bsMap} className='py-1'/>*/}
+          <div className='flex gap-1 flex-wrap p-1'>
             {
-              bsMap.tags?.map((tag)=>getMapTag(tag)!!).map((tag)=>(
-                <BSMapTag className='text-nowrap font-semibold bg-gradient-to-r from-red-500 to-blue-500 bg-clip-text text-transparent' size={"1"} key={tag.slug} tag={tag}/>
-              ))
+              bsMap.tags?.map((tag)=>getMapTag(tag))
+                .filter((tag)=>tag != undefined)
+                .map((tag)=>{
+                  return (
+                    <BSMapTag className='text-nowrap font-semibold' size={"1"} key={tag!.slug} tag={tag!}/>
+                  )
+                })
             }
           </div>
-
-
           <div className="mt-auto">
           
 

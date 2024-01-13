@@ -35,13 +35,13 @@ export interface MapQueryParam {
     },
 }
 
-interface Option {
+export interface FeatureOption {
     value:string,
     label:string,
     tooltip?:string,
 }
 
-export const options:Option[] = [
+export const options:FeatureOption[] = [
     {
         value:"autoMapper",
         label:"AI",
@@ -93,32 +93,10 @@ export const options:Option[] = [
 const buildURL = (index:number,param:MapQueryParam) => {
     const baseURL = `${BASE_URL}/api/search/text/${index}`
     let paramMap:any = {}
-    if (param.options?.autoMapper) {
-        paramMap["automapper"] = true
-    }
-    if (param.options?.chroma) {
-        paramMap["chroma"] = true
-    }
-    if (param.options?.cinema) {
-        paramMap["cinema"] = true
-    }
-    if (param.options?.noodle) {
-        paramMap["noodle"] = true
-    }
-    if (param.options?.me) {
-        paramMap["me"] = true
-    }
-    if (param.options?.ranked) {
-        paramMap["ranked"] = true
-    }
-    if (param.options?.curated) {
-        paramMap["curated"] = true
-    }
-    if (param.options?.verified) {
-        paramMap["verified"] = true
-    }
-    if (param.options?.fullSpread) {
-        paramMap["fullSpread"] = true
+    if (param.options) {
+        for (const item in param.options) {
+            paramMap[item] = param.options[item as keyof typeof param.options]
+        }
     }
     if (param.queryKey!="") {
         paramMap["q"] = param.queryKey
@@ -126,41 +104,10 @@ const buildURL = (index:number,param:MapQueryParam) => {
     if (param.sortOrder!="") {
         paramMap["sortOrder"] = param.sortOrder
     }
-    if (param.minRating) {
-        paramMap["minRating"] = param.minRating
-    }
-    if (param.maxRating) {
-        paramMap["maxRating"] = param.maxRating
-    }
-    if (param.minBpm) {
-        paramMap["minBpm"] = param.minBpm
-    }
-    if (param.maxBpm) {
-        paramMap["maxBpm"] = param.maxBpm
-    }
-    if (param.minDuration) {
-        paramMap["minDuration"] = param.minDuration
-    }
-    if (param.maxDuration) {
-        paramMap["maxDuration"] = param.maxDuration
-    }
-    if (param.minNps) {
-        paramMap["minNps"] = param.minNps
-    }
-    if (param.maxNps) {
-        paramMap["maxNps"] = param.maxNps
-    }
-    if (param.from) {
-        paramMap["from"] = param.from
-    }
-    if (param.to) {
-        paramMap["to"] = param.to
-    }
-    if (param.tags) {
-        paramMap["tags"] = param.tags
-    }
-    if (param.mapper) {
-        paramMap["mapper"] = param.mapper
+    for (const item in param) {
+        if (item!="options" && item!="queryKey" && item!="sortOrder" && param[item as keyof typeof param]) {
+            paramMap[item] = param[item as keyof typeof param]
+        }
     }
     let keys = Object.keys(paramMap)
     let queryParam = "?"

@@ -21,7 +21,7 @@ import BSPlaylistSkeleton from "@/components/BSPlaylistSkeleton";
 import { usePagingBSPlaylistDetail } from "@/hooks/api/usePagingBSPlaylistDetail";
 import BSMapSkeleton from "@/components/BSMapSkeleton";
 import { BSBeatMap } from "@/interfaces/beatmap";
-import BSMap from "@/components/bs-map";
+import BSMap from "@/components/BSMap";
 import { useRouter } from "next/navigation";
 import Loading from "@/components/Loading";
 export default function Home({ params }: { params: { id: string } }) {

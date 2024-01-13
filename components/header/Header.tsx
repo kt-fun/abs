@@ -55,12 +55,14 @@ export const Header = ({gitHubLink, ghost }: HeaderProps) => {
 
           <div className='flex space-x-4 items-center '>
             {/* {<UserNav/>} */}
-            <div className='hidden md:flex'>
+            <div className='hidden md:flex '>
                 <ThemeButton />
             </div>
 
-            <div className='flex md:hidden space-x-4'>
-                <ThemeButton />
+            <div className='flex md:hidden space-x-4 items-center'>
+
+                <ThemeButton/>
+
                 <MobileHeaderDrawer />
             </div>
           </div>

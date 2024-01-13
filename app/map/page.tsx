@@ -1,9 +1,7 @@
 'use client'
 import BSMapQueryCard from "@/components/BSMapQueryCard";
 import BSMapSkeleton from "@/components/BSMapSkeleton";
-import BSMapper from "@/components/BSMapper";
-import SearchBar from "@/components/SearchBar";
-import BSMap from "@/components/bs-map";
+import BSMap from "@/components/BSMap";
 import { useInfinityScroll } from "@/hooks/useInfinityScroll";
 import { usePagingBSMap } from "@/hooks/api/usePagingBSMap";
 import { BSBeatMap } from "@/interfaces/beatmap";

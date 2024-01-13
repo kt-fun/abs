@@ -3,7 +3,7 @@ import BSMapQueryCard from "@/components/BSMapQueryCard";
 import BSMapSkeleton from "@/components/BSMapSkeleton";
 import BSMapper from "@/components/BSMapper";
 import SearchBar from "@/components/SearchBar";
-import BSMap from "@/components/bs-map";
+import BSMap from "@/components/BSMap";
 import { useInfinityScroll } from "@/hooks/useInfinityScroll";
 import { usePagingBSMap } from "@/hooks/api/usePagingBSMap";
 import { BSBeatMap } from "@/interfaces/beatmap";
@@ -58,7 +58,7 @@ export default function Home() {
             { isLoadingMore && <Loading/> }
             </div>
 
-            <div className="hidden lg:flex sticky top-20 justify-center w-[320px] grow-0 h-[640px]">
+            <div className="hidden lg:flex sticky top-20 justify-center w-[320px] grow-0 h-fit">
               <BSMapQueryCard 
                 queryParam={queryParam}
                 updateQuery={updateQuery}

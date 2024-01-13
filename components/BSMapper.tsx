@@ -1,7 +1,7 @@
 'use client'
-import RankedIcon from "@/icons/RankedIcon";
-import ThumbDownIcon from "@/icons/ThumbDownIcon";
-import ThumbUpIcon from "@/icons/ThumbUpIcon";
+import RankedIcon from "@/components/icons/RankedIcon";
+import ThumbDownIcon from "@/components/icons/ThumbDownIcon";
+import ThumbUpIcon from "@/components/icons/ThumbUpIcon";
 import { BSUserWithStats } from "@/interfaces/beatsaver-user";
 import { formatNumber } from "@/lib/format";
 import { FaMapMarkedAlt } from "react-icons/fa";
@@ -50,7 +50,7 @@ export default function BSMapper(
         <>
         <Card className="min-w-64">
             <div className="flex">
-                <Avatar 
+                <Avatar
                     src={bsUserWithStats.avatar}
                     size="4"
                     className="m-2"
@@ -67,9 +67,11 @@ export default function BSMapper(
                     </RLink>
                     <Text
                     size="1"
-                    className="overflow-ellipsis line-clamp-2"
+                    className="overflow-ellipsis line-clamp-2 pr-2"
                     color="gray"
-                    >{getDescription(bsUserWithStats.description)}</Text>
+                    dangerouslySetInnerHTML={{__html:getDescription(bsUserWithStats.description)}}
+                    // todo
+                    />
                 </div>
             </div>
             <div>
@@ -91,7 +93,7 @@ export default function BSMapper(
                     </LabelWithIcon>
                 </div>
                 <div className="flex items-center justify-between">
-                    <Progress.Root className="relative overflow-hidden rounded-full w-full h-2 px-2 bg-gray-100" value={rating}>
+                    <Progress.Root className="relative overflow-hidden rounded-full w-full h-2 bg-gray-100" value={rating}>
                     <Progress.Indicator
                         className=" h-2 rounded-full bg-gradient-to-r from-red-500 to-blue-500"
                         style={{ transform: `translateX(-${100 - rating}%)` }}
