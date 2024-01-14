@@ -8,7 +8,7 @@ import {
     SheetTrigger,
   } from "@/components/ui/sheet"
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
-import { HeaderProductLink, useMobileMenuContext } from "./Header";
+import { HeaderLink, useMobileMenuContext } from "./Header";
 
   
   export default function MobileHeaderDrawer() {
@@ -23,9 +23,9 @@ import { HeaderProductLink, useMobileMenuContext } from "./Header";
         </SheetTrigger>
         <SheetContent>
             <div className="flex flex-col py-2 space-y-2">
-            <HeaderProductLink href="/map" label='beatmap'/>
-            <HeaderProductLink href="/playlist" label='playlist'/>
-            <HeaderProductLink href="/mapper" label='mapper'/>
+            <HeaderLink href="/map" label='beatmap'/>
+            <HeaderLink href="/playlist" label='playlist'/>
+            <HeaderLink href="/mapper" label='mapper'/>
             </div>
         </SheetContent>
         </Sheet>

@@ -1,4 +1,5 @@
-import { Button, Card, DropdownMenu, Select, Slider, Switch,Text, Tooltip } from "@radix-ui/themes";
+import {Tooltip} from "@/components/ui/tooltip";
+import {Card} from "@/components/ui/card";
 import SearchBar from "./SearchBar";
 import NPSRangePicker from "./NPSRangePicker";
 import {useCallback, useMemo, useState} from "react";
@@ -11,6 +12,7 @@ import DateRangePicker from "./DateRangePicker";
 import {BSGenreTags, BSStyleTags} from "@/interfaces/mapTags";
 import { FaCheck } from "react-icons/fa6";
 import BSMapTag from "@/components/BSMapTag";
+import {cn} from "@/lib/utils";
 const mapSortOptions = [
     "Relevance",
     "Latest",
@@ -112,8 +114,8 @@ export default function BSMapQueryCard(
     }
   }
     return (
-        <Card className={`${className}`} variant="classic">
-          <div className="flex flex-col h-full space-y-3">
+        <Card className={cn(' p-2',className)}>
+          <div className="flex flex-col h-full space-y-3 max-w-full">
             <SearchBar
               queryKey={queryParam.queryKey}
               onQuery={query}
@@ -128,9 +130,12 @@ export default function BSMapQueryCard(
             <div>
             </div>
             <div className="flex justify-between items-center">
-              <Text>Sorted By</Text>
-              <SortMenu options={mapSortOptions} current={sortMenuCurrent}
-                        onUpdateCurrent={handleSortMenuCurrentChange}/>
+              <div className="font-medium">Sorted By</div>
+              <SortMenu
+                className={"max-w-28"}
+                options={mapSortOptions}
+                current={sortMenuCurrent}
+                onUpdateCurrent={handleSortMenuCurrentChange}/>
             </div>
 
             <div className="flex  w-full p-2 justify-between items-center">
@@ -154,75 +159,52 @@ export default function BSMapQueryCard(
                 setDateRange={handleDateRangeChange}
               />
             </div>
-            <div>
-              <Text>Feature Selector</Text>
-            </div>
+            <div className="font-medium">Feature Selector</div>
             <div className="flex-wrap flex  gap-1">
               {
                 options.map((option) => {
                   return (
                     <Tooltip content={option.tooltip!} key={option.label}>
-                      <Text
-                        size="1"
+                      <span
                         onClick={() => {
                           handleOptionChange(option)
                         }}
-                        className={`${checkIfOptionChecked(option)?'':'opacity-40'} font-medium px-1 text-white rounded-md p-0.5 bg-green-600 inline-flex items-center justify-center space-x-1 cursor-pointer`}>{option.label}</Text>
+                        className={`${checkIfOptionChecked(option) ? '' : 'opacity-40'}  text-xs px-1 text-white rounded-md p-0.5 bg-green-600 inline-flex items-center justify-center space-x-1 cursor-pointer`}>{option.label}</span>
                     </Tooltip>
                   )
-                  // return (
-                  //   <div key={option.value} className="flex justify-between items-center">
-                  //     {option?.tooltip ?
-                  //       (
-                  //         <Tooltip content={option.tooltip!}>
-                  //           <Text className="cursor-default">{option.label}</Text>
-                  //         </Tooltip>
-                  //       ) : (
-                  //         <Text>{option.label}</Text>
-                  //       )}
-                  //     <Switch
-                  //       size="1"
-                  //       defaultChecked={queryParam.options ? true : false}
-                  //       onCheckedChange={(checked: boolean) => {
-                  //         handleOptionChange(option.value, checked)
-                  //       }}
-                  //     />
-                  //   </div>
-                  // )
                 })
               }
             </div>
-            <div>
-              <Text>Style Tag Selector</Text>
-            </div>
+
+            <div className="font-medium">Style Tag Selector</div>
             <div className="flex flex-wrap gap-1">
               {
                 BSStyleTags.map((tag) =>
-                  <BSMapTag
-                    className={`${selectedStyleTags.includes(tag.slug) ? '' : 'opacity-40'} font-medium px-1`}
-                    size={"1"}
+                  (<span
                     key={tag.slug}
-                    tag={tag}
                     onClick={() => {
                       handleStyleTagChange(tag.slug)
-                    }}/>
+                    }}>
+                  <BSMapTag className={`${selectedStyleTags.includes(tag.slug) ? '' : 'opacity-40'} px-1  text-xs`} tag={tag}/>
+                  </span>)
                 )
               }
             </div>
-            <div>
-              <Text>Genre Tag Selector</Text>
-            </div>
+            <div className="font-medium">Genre Tag Selector</div>
             <div className="flex flex-wrap gap-1">
               {
                 BSGenreTags.map((tag) =>
-                  <BSMapTag
-                    className={`${selectedGenreTags.includes(tag.slug) ? '' : 'opacity-40'} font-medium px-1`}
-                    size={"1"}
+                  <span
                     key={tag.slug}
-                    tag={tag}
                     onClick={() => {
                       handleGenreTagChange(tag.slug)
-                    }}/>
+                    }}>
+                  <BSMapTag
+                    className={`${selectedGenreTags.includes(tag.slug) ? '' : 'opacity-40'}  px-1 text-xs `}
+                    key={tag.slug}
+                    tag={tag}/>
+                  </span>
+
                 )
               }
             </div>

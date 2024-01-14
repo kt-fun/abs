@@ -1,4 +1,4 @@
-import { Slider } from "@radix-ui/themes";
+import { Slider } from "@/components/ui/slider"
 import { useMemo, useState } from "react";
 
 export default function NPSRangePicker(

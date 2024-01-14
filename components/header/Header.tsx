@@ -1,18 +1,11 @@
 'use client'
 import * as React from 'react';
-import { AccessibleIcon, Flex, IconButton, Text, Theme, Tooltip } from '@radix-ui/themes';
-import { GitHubLogoIcon, HamburgerMenuIcon } from '@radix-ui/react-icons';
-import NextLink from 'next/link';
-import { usePathname, useRouter } from 'next/navigation'
+
+import { usePathname } from 'next/navigation'
 import ThemeButton from './ThemeButton';
 import HeaderHelpMenu from './HeaderHelpMenu';
-import UserNav from './UserNav';
 import MobileHeaderDrawer from './MobileHeaderDrawer';
-
-export interface HeaderProps {
-  gitHubLink?: string;
-  ghost?: boolean;
-}
+import Link from "@/components/ui/link";
 
 export const useMobileMenuContext = () => {
   const [open, setOpen] = React.useState(false);
@@ -21,15 +14,9 @@ export const useMobileMenuContext = () => {
 
 type ScrollState = 'at-top' | 'scrolling-up' | 'scrolling-down';
 
-export const Header = ({gitHubLink, ghost }: HeaderProps) => {
+export const Header = () => {
   const mobileMenu = useMobileMenuContext();
-  const pathname = usePathname();
   const [scrollState, setScrollState] = React.useState<ScrollState>('at-top');
-  interface NavItem {
-    href: string;
-    label: string;
-  }
-
   return (
       <header
         data-scroll-state={scrollState}
@@ -38,15 +25,13 @@ export const Header = ({gitHubLink, ghost }: HeaderProps) => {
       >
         <div className='h-full flex justify-between items-center max-w-[1400px] mx-auto'>
           <div className='flex items-center space-x-2'>
-                <NextLink href="/">
-                  <AccessibleIcon label="ABS">
-                    <Text size="6" weight="bold" className="cursor-pointer bg-gradient-to-r bg-clip-text text-transparent from-red-500 to-blue-500">Another BeatSaver</Text>
-                  </AccessibleIcon>
-                </NextLink>
+                <Link href="/" className="hover:no-underline">
+                    <div className="font-bold text-2xl cursor-pointer bg-gradient-to-r bg-clip-text text-transparent from-red-500 to-blue-500">Another BeatSaver</div>
+                </Link>
                 <div className='hidden md:flex items-center space-x-2'>
-                  <HeaderProductLink href="/map" label='beatmap'/>
-                  <HeaderProductLink href="/playlist" label='playlist'/>
-                  <HeaderProductLink href="/mapper" label='mapper'/>
+                  <HeaderLink href="/map" label='beatmap'/>
+                  <HeaderLink href="/playlist" label='playlist'/>
+                  <HeaderLink href="/mapper" label='mapper'/>
                   <div className='hidden md:flex'>
                     <HeaderHelpMenu/>
                   </div>
@@ -74,7 +59,7 @@ export const Header = ({gitHubLink, ghost }: HeaderProps) => {
   );
 };
 
-export const HeaderProductLink = ({
+export const HeaderLink = ({
   children,
   label,
   href = '',  
@@ -82,15 +67,15 @@ export const HeaderProductLink = ({
 }: React.ComponentPropsWithoutRef<'a'> & { label: string }) => {
   const active = usePathname() === href;
   return (
-    <NextLink href={href} passHref legacyBehavior>
+    <Link href={href} passHref legacyBehavior>
   
     <div className={`hover:bg-gradient-to-r ${active?'bg-gradient-to-r text-white':''} cursor-pointer from-red-500 to-blue-500 hover:text-white rounded-full px-2 py-0.5 space-x-2 items-center font-semibold`}>
         <a data-state={active ? 'active' : 'inactive'} {...props}>
-          <span className={`px-2 py-1 rounded-full  from-red-500 to-blue-500`}><Text size={"4"}>{label}</Text></span>
-          <span className="hidden"><Text size={"4"}>{label}</Text></span>
+          <span className={`px-2 py-1 rounded-full  from-red-500 to-blue-500 text-xl`}>{label}</span>
+          <span className="sr-only">{label}</span>
         </a>
       </div>
   
-    </NextLink>
+    </Link>
   );
 }

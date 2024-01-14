@@ -3,10 +3,9 @@ import BSMapper from "@/components/BSMapper";
 import { useInfinityScroll } from "@/hooks/useInfinityScroll";
 import { usePagingBSUser } from "@/hooks/api/usePagingBSUser";
 import { useCallback, useEffect } from "react";
-import { motion } from "framer-motion";
-import { AiOutlineLoading } from "react-icons/ai";
-import { Text } from "@radix-ui/themes";
-import Loading from "@/components/Loading";
+import Loading from "@/components/load-status/Loading";
+import EmptyContent from "@/components/load-status/EmptyContent";
+import ReachListEnd from "@/components/load-status/ReachListEnd";
 
 export default function MapperPage() {
     const { users,isLoadingMore,isEmpty,hasMore,loadMore} = usePagingBSUser();
@@ -23,21 +22,12 @@ export default function MapperPage() {
         <div className="grid gap-2 grid-cols-1 xl:grid-cols-3 md:grid-cols-2">
             {
                 !isEmpty && users.map((it)=> 
-                    <BSMapper key={it.id} bsUserWithStats={it}/>
+                    <BSMapper key={it.id} bsUserWithStats={it} className="sm:w-full"/>
                 )
             }
-        {
-            !isLoadingMore&&isEmpty && 
-            <div>
-                Nothing Here
-            </div>
-        }
-        {!hasMore && !isLoadingMore &&
-            <div>
-                No More Data
-            </div>
-        }
-        { isLoadingMore && <Loading/> }
+          {!isLoadingMore&&isEmpty && <EmptyContent/>}
+          { !isEmpty && !hasMore && !isLoadingMore && <ReachListEnd/> }
+          { isLoadingMore && <Loading/> }
         </div>
         }
       </div>

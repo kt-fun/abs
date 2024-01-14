@@ -1,55 +1,29 @@
 'use client'
-import {
-  Box,
-  Button,
-  Card,
-  Flex,
-  HoverCard,
-  IconButton,
-  Inset,
-  Link,
-  ScrollArea,
-  Separator,
-  Text,
-  Theme,
-  Tooltip
-} from '@radix-ui/themes'
-import { BSBeatMap, getBSMapCoverURL, getMaxNPS } from '@/interfaces/beatmap'
-import MapperAvatar from '@/components/mapper-avatar'
-import NPSLabel from '@/components/labels/NPSLabel'
-import DurationLabel from '@/components/labels/DurationLabel'
-import ThumbUpLabel from '@/components/labels/ThumbUpLabel'
-import ThumbDownLabel from '@/components/labels/ThumbDownLabel'
-import RatingLabel from '@/components/labels/RatingLabel'
-import DateLabel from '@/components/labels/DateLabel'
+import Link from '@/components/ui/link'
+import {IconButton} from "@/components/ui/button";
+import {Card} from "@/components/ui/card";
+import {HoverCard as HoverCardRoot,HoverCardContent,HoverCardTrigger}   from '@/components/ui/hover-card'
+import {Tooltip} from "@/components/ui/tooltip";
+import {BSBeatMap, getBSMapCoverURL, getMaxNPS} from '@/interfaces/beatmap'
+import * as MapDiffLabel from '@/components/labels/BSMapDiffLabels'
+import * as MapMetaLabel from '@/components/labels/BSMapMetaLabels'
 import BSUserLabel from '@/components/labels/BSUserLabel'
 import FeatureIcons, {checkIfHasFeature} from '@/components/icons/FeatureIcons'
-import { getMapTag } from '@/interfaces/mapTags'
+import {BSMapTagType, getMapTag} from '@/interfaces/mapTags'
 import BSMapTag from './BSMapTag'
 import * as Progress from '@radix-ui/react-progress';
-import { IoCloudDownloadOutline, IoSpeedometerOutline } from 'react-icons/io5'
-import BSLabel from './labels/BSLabel'
-import NextLink from 'next/link'
-import { HiCursorClick } from 'react-icons/hi'
-import { FaTwitch } from "react-icons/fa";
-import { CiPlay1 } from "react-icons/ci";
-import { CiMusicNote1 } from "react-icons/ci";
-import { CiBookmark } from "react-icons/ci";
-import { IoAddOutline } from "react-icons/io5";
-import NJSLabel from './labels/NJSLabel'
-import LightAmountLabel from './labels/LightAmountLabel'
-import BSBombAmountLabel from './labels/BSBombAmount'
-import BSNoteAmountLabel from './labels/BSNoteAmountLabel'
-import BSObstacleAmountLabel from './labels/BSObstacleAmountLabel'
-import BSBPMLabel from './labels/BSBPMLabel'
-import BSIDLabel from './labels/BSIDLabel'
-import { PiHeartbeat } from "react-icons/pi";
-import { motion, useSpring } from 'framer-motion'
-import { useSongPreview, useSongPreviewState } from '@/hooks/useSongPreview'
-import { AiOutlineLoading } from "react-icons/ai";
+import {IoAddOutline, IoCloudDownloadOutline} from 'react-icons/io5'
+import {HiCursorClick} from 'react-icons/hi'
+import {FaTwitch} from "react-icons/fa";
+import {CiBookmark, CiMusicNote1, CiPlay1} from "react-icons/ci";
+import {PiHeartbeat} from "react-icons/pi";
+import {useSongPreview} from '@/hooks/useSongPreview'
+import {AiOutlineLoading} from "react-icons/ai";
 import CopyIcon from './CopyIcon'
 import MapPreviewIFrame from './MapPreviewIFrame'
 import {CharacteristicIcon} from "@/components/icons/Characteristic";
+import React from "react";
+import { ThemeProvider } from './ThemeProvider';
 
 const diffShort = {
   "Easy":"Easy",
@@ -59,11 +33,6 @@ const diffShort = {
   "ExpertPlus":"Expert+",
 }
 
-const getIcon = (characteristic:MapCharacteristic)=>{
-    return (
-      <CharacteristicIcon characteristic={characteristic} className='w-4 h-4'/>
-    )
-}
 type MapCharacteristic = "Standard" | "NoArrows" | "OneSaber" | "90Degree" | "360Degree" | "Lightshow" | "Lawless" | "Legacy"
 type MapDiff = "Easy" | "Normal" | "Hard" | "Expert" | "ExpertPlus"
 
@@ -99,201 +68,178 @@ export default function BSMap(
 
   return (
     <Card
-    className='shadow-md max-h-[200px] min-w-[400px]'
+      className='shadow-md h-[162px] sm:h-[202px] min-w-[360px]'
     >
-      <Flex className='h-full'>
-      <Inset  side="left" className='min-w-[200px] max-w-[200px]'>
-      <div
-          className="relative h-[200px] xl:h-[200px] z-0  group"
-          style={{
-              backgroundImage: `url('${bg}')`,
-              backgroundSize: 'cover',
-          }}>
-              <div className={`z-100 bg-black/[.6] h-full group-hover:visible ${current?'':'invisible'}  bg-blend-darken`}>
-                  <Theme appearance="dark" className="bg-transparent h-full">
-                      <div className="flex flex-col justify-between  h-full pt-auto pb-0 p-1">
-                          {
-                            bsMap.curator && <div className="flex space-x-1 items-center mx-1">
-                              <Text size="1">Curator:</Text> <BSUserLabel size={"1"} user={bsMap.curator}/>
-                              </div>
-                          }
-                        {
-                          checkIfHasFeature(bsMap) &&
-                          <div className="flex space-x-1 items-center mx-1">
-                              <Text size="1">Features:</Text>
-                              <FeatureIcons bsMap={bsMap}/>
-                          </div>
-                        }
-                          <div className='mx-1'>
-                              <Text as="p" size="1" className="text-ellipsis overflow-hidden line-clamp-[4]">
-                                  {bsMap.description == "" ? "No description" : bsMap.description}
-                              </Text>
-                          </div>
-                          <div className='mx-1 mt-auto'>
-                            <div className='flex space-x-1 flex-wrap '>
-                              {
-                                bsMap.versions[0].diffs.map((diff)=>{
-                                  return (
-                                    <>
-                                        <HoverCard.Root key={diff.characteristic+diff.difficulty+bsMap.id}>
-                                          <HoverCard.Trigger>
-                                            <div  key={diff.difficulty + diff.characteristic}>
-                                            <Text size={"1"}
-                                        className='font-semibold m-0.5 px-1 rounded-full cursor-pointer border-white hover:border-red-500 hover:text-red-500 border-solid border flex items-center'
-                                        >
-                                          {getIcon(diff.characteristic as MapCharacteristic)}
-                                          <span className='ml-[2px]'>{diffShort[diff.difficulty as MapDiff]}</span>
-                                          </Text>
-                                            </div>
-
-                                        </HoverCard.Trigger>
-                                        <HoverCard.Content side="top" align="center">
-                                          <Text className='cursor-default'>{diff.characteristic}</Text>
-                                          <div className='grid grid-cols-3 gap-1'>
-                                            <NPSLabel size={"1"} nps={diff.nps}/>
-                                            <NJSLabel size={"1"} njs={diff.njs}/>
-                                            <LightAmountLabel size={"1"} amount={diff.events}/>
-                                            <BSNoteAmountLabel size={"1"} amount={diff.notes}/>
-                                            <BSObstacleAmountLabel size={"1"} amount={diff.obstacles}/>
-                                            <BSBombAmountLabel size={"1"} amount={diff.bombs}/>
-                                          </div>
-                                        </HoverCard.Content>
-                                        </HoverCard.Root>                   
-                                    </>
-
-                                  )
-                                })
-                              }
-                            </div>
-                          </div>
-                          <div>
-
-                              <div className="flex items-center space-x-1 mx-auto justify-center pb-2">
-                                  <Tooltip content="add to playlist">
-                                    <span onClick={handleAddToPlaylist} className="hover:bg-white hover:text-red-400 p-1 rounded-full cursor-pointer">
-                                        <IoAddOutline />
-                                    </span>
-                                  </Tooltip>
-                                  <Tooltip content="bookmark song">
-                                    <span onClick={handleBookmark} className="hover:bg-white hover:text-red-400 p-1 rounded-full cursor-pointer">
-                                        <CiBookmark />
-                                    </span>
-                                  </Tooltip>
-                                  <Tooltip content="play song preview">
-                                    {
-                                      current?
-                                      state.loading? (
-                                        <motion.span 
-                                            animate={{rotate:360}}
-                                            transition={{duration:1,repeat:Infinity}}
-                                            onClick={handlePlaySongPreview} 
-                                            className={`hover:bg-white ${current?'bg-white text-red-400':''} hover:text-red-400 p-1 rounded-full cursor-pointer`}
-                                        >
-                                            <AiOutlineLoading/>
-                                        </motion.span>
-                                        ):(
-                                        <motion.span 
-                                            animate={{scale:1.05}}
-                                            transition={{duration:.5,repeat:Infinity}}
-                                            onClick={handlePlaySongPreview} 
-                                            className={`hover:bg-white ${current?'bg-white text-red-400':''} hover:text-red-400 p-1 rounded-full cursor-pointer`}
-                                        >
-                                            <PiHeartbeat/>
-                                        </motion.span>
-                                        ):
-                                    <span 
-                                    onClick={handlePlaySongPreview} 
-                                    className={`hover:bg-white hover:text-red-400 p-1 rounded-full cursor-pointer`}>
-                                      <CiMusicNote1/>
-                                    </span>
-                                    }
-                                  </Tooltip>
-                                  <Tooltip content="play map preview">
-                                    <MapPreviewIFrame id={bsMap.id}>
-
-                                    <span  className="hover:bg-white hover:text-red-400 p-1 rounded-full cursor-pointer">
-                                        <CiPlay1 />
-                                    </span>
-                                    </MapPreviewIFrame>
-                                  </Tooltip>
-                                  <Tooltip content="copy twitch request">
-                                    <CopyIcon className="hover:bg-white hover:text-red-400 p-1 rounded-full cursor-pointer" content={`!bsr ${bsMap.id}`}>
-                                      <FaTwitch />
-                                    </CopyIcon>
-                                  </Tooltip>
-                                  <Tooltip content="download zip">
-                                  <NextLink href={bsMap.versions[0].downloadURL}  className="hover:bg-white hover:text-red-400 p-1 rounded-full">
-                                          <IoCloudDownloadOutline  />
-                                  </NextLink>
-                                  </Tooltip>
-                                  <Tooltip content="one click download">
-                                      <NextLink href={`beatsaver://${bsMap.id}`} className="hover:bg-white hover:text-red-400 p-1 rounded-full">
-                                          <HiCursorClick/>
-                                      </NextLink>
-                                  </Tooltip>
-                              </div>
-                          </div>
+    <div className='flex h-[160px] sm:h-[200px] overflow-hidden'>
+      <div className='w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] rounded-l-lg'>
+        <div
+            className="relative  h-[160px] sm:h-[200px]  group  rounded-l-lg"
+            style={{
+                backgroundImage: `url('${bg}')`,
+                backgroundSize: 'cover',
+            }}>
+            <div className={`z-100 bg-black/[.6] h-full group-hover:visible ${current?'':'invisible'}  bg-blend-darken  rounded-l-lg`}>
+              <div
+                className="flex flex-col justify-between pt-auto pb-0 p-1 bg-transparent h-full z-[200]  rounded-l-lg">
+                {
+                  bsMap.curator && <div className="flex space-x-1 items-center mx-1 text-white">
+                        <span className="text-xs font-medium">Curator:</span> <BSUserLabel user={bsMap.curator} className="font-semibold text-white"/>
+                    </div>
+                }
+                <div onClick={handleCopyMapId} className='text-white flex'>
+                  <MapMetaLabel.BSIDLabel id={bsMap.id} className="cursor-pointer" tooltip="copy map id"/>
+                  {
+                    checkIfHasFeature(bsMap) &&
+                      <div className="flex space-x-1 items-center mx-1 text-white">
+                          <FeatureIcons bsMap={bsMap} className="*:h-6 *:w-6 *:items-center *:flex "/>
                       </div>
+                  }
+                </div>
 
-                  </Theme>
+                <div className='mx-1'>
+                  <p className="text-ellipsis overflow-hidden line-clamp-[4] text-xs dark text-gray-200">
+                    {bsMap.description == "" ? "No description" : bsMap.description}
+                  </p>
+                </div>
+                <div className='mx-1 mt-auto'>
+                  <div className='grid overflow-x-auto grid-rows-2 grid-flow-col no-scrollbar'>
+                    {
+                      bsMap.versions[0].diffs.map((diff) => {
+                        return (
+                            <HoverCardRoot key={diff.characteristic + diff.difficulty + bsMap.id}>
+                              <HoverCardTrigger key={diff.difficulty + diff.characteristic + bsMap.id} className="w-fit">
+                                          <span
+                                            key={diff.difficulty + diff.characteristic + bsMap.id}
+                                            className='relative w-fit text-white hover:text-red-500 font-semibold m-0.5 px-1 rounded-full cursor-pointer border-white hover:border-red-500 border-solid border flex items-center flex-shrink'
+                                          >
+                                            <CharacteristicIcon characteristic={diff.characteristic} className="w-4 h-4"/>
+                                            <span className='ml-[2px] text-xs'>{diffShort[diff.difficulty as MapDiff]}</span>
+                                          </span>
+                              </HoverCardTrigger>
+                              <HoverCardContent side="top" align="center" className="z-[100] shadow-md p-2 border">
+                                <div className='cursor-default'>{diff.characteristic}</div>
+                                <div className='grid grid-cols-3 gap-1'>
+                                  <MapDiffLabel.BSNPSLabel nps={diff.nps}/>
+                                  <MapDiffLabel.BSNJSLabel njs={diff.njs}/>
+                                  <MapDiffLabel.BSLightCountLabel count={diff.events}/>
+                                  <MapDiffLabel.BSNoteCountLabel count={diff.notes}/>
+                                  <MapDiffLabel.BSObstacleCountLabel count={diff.obstacles}/>
+                                  <MapDiffLabel.BSBombCountLabel count={diff.bombs}/>
+                                </div>
+                              </HoverCardContent>
+                            </HoverCardRoot>
+                        )
+                      })
+                    }
+                  </div>
+                </div>
+                <div className="flex items-center space-x-1 mx-auto justify-center py-1">
+                  <Tooltip content="add to playlist" asChild>
+                    <IconButton onClick={handleAddToPlaylist}
+                                className="w-4 h-4  sm:w-6 sm:h-6 hover:bg-white text-white hover:text-red-400 p-1 rounded-full cursor-pointer"
+                                variant="ghost">
+                      <IoAddOutline/>
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip content="bookmark song" asChild>
+                    <IconButton onClick={handleBookmark}
+                                className="w-4 h-4  sm:w-6 sm:h-6 hover:bg-white text-white hover:text-red-400 p-1 rounded-full cursor-pointer"
+                                variant="ghost">
+                      <CiBookmark/>
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip content="play song preview" asChild>
+                    <IconButton onClick={handlePlaySongPreview}
+                                className={`w-4 h-4  sm:w-6 sm:h-6 hover:bg-white ${current ? 'bg-white text-red-400' : ' text-white'} hover:text-red-400 p-1 rounded-full cursor-pointer ${current && state.loading ? 'animate-spin' : ''}`}
+                                variant="ghost">
+                      {current ? state.loading ? <AiOutlineLoading/> : <PiHeartbeat/> : <CiMusicNote1/>}
+                    </IconButton>
+                  </Tooltip>
+                  <MapPreviewIFrame id={bsMap.id}>
+                    <IconButton
+                      className="w-4 h-4  sm:w-6 sm:h-6 hover:bg-white text-white hover:text-red-400 p-1 rounded-full cursor-pointer"
+                      variant="ghost">
+                      <CiPlay1/>
+                    </IconButton>
+                  </MapPreviewIFrame>
+
+                  <Tooltip content="copy twitch request" asChild>
+                    <CopyIcon
+                      className="w-4 h-4  sm:w-6 sm:h-6 hover:bg-white text-white hover:text-red-400 p-1 rounded-full cursor-pointer"
+                      content={`!bsr ${bsMap.id}`}>
+                      <FaTwitch/>
+                    </CopyIcon>
+                  </Tooltip>
+                  <Tooltip content="download zip" asChild>
+                    <IconButton className="w-4 h-4  sm:w-6 sm:h-6 text-white hover:bg-white hover:text-red-400 p-1 rounded-full"
+                                variant="ghost">
+                      <Link href={bsMap.versions[0].downloadURL} className="text-inherit">
+                        <IoCloudDownloadOutline/>
+                      </Link>
+                    </IconButton>
+
+                  </Tooltip>
+                  <Tooltip content="one click download" asChild>
+                    <IconButton className="w-4 h-4  sm:w-6 sm:h-6  p-1 rounded-full  text-white hover:bg-white hover:text-red-400" variant="ghost">
+                      <Link href={`beatsaver://${bsMap.id}`} className="text-inherit">
+                        <HiCursorClick/>
+                      </Link>
+                    </IconButton>
+                  </Tooltip>
+                </div>
+
               </div>
-          </div>
-      </Inset>
-        <Box className='h-full flex flex-col pl-2 '>
-          <Link href={`/map/${bsMap.id}`}>
-            <Text
-              size="4"
-              className="overflow-ellipsis line-clamp-1"
-              >{bsMap.name}</Text>
-          </Link>
-          <div className='flex space-x-2 items-center'>
-            <BSUserLabel size={"1"} user={bsMap.uploader}/>
-            <div onClick={handleCopyMapId} className='cursor-pointer'>
-            <BSIDLabel size={"1"} id={bsMap.id} />
             </div>
+        </div>
+      </div>
 
-          </div>
-          <div className='flex space-x-2'>
-            <NPSLabel size={"1"} nps={getMaxNPS(bsMap)} tooltip='max nps of this map'/>
-            <DurationLabel size={"1"} duration={bsMap.metadata.duration}/>
+      <div className='h-full ml-2 flex flex-col'>
+        <Link href={`/map/${bsMap.id}`} className="overflow-ellipsis line-clamp-1 text-xl font-medium pr-2">
+            {bsMap.name}
+          </Link>
+        <div className='flex items-center'>
+          <BSUserLabel user={bsMap.uploader}/>
 
-            <BSBPMLabel size={"1"} bpm={bsMap.metadata.bpm}/>
+        </div>
+        <div className='flex space-x-2'>
+          <MapDiffLabel.BSNPSLabel nps={getMaxNPS(bsMap)} tooltip='max nps of this map'/>
+          <MapMetaLabel.DurationLabel duration={bsMap.metadata.duration}/>
+          <MapMetaLabel.BSBPMLabel bpm={bsMap.metadata.bpm}/>
           </div>
-          {/*<FeatureIcons bsMap={bsMap} className='py-1'/>*/}
           <div className='flex gap-1 flex-wrap p-1'>
             {
               bsMap.tags?.map((tag)=>getMapTag(tag))
-                .filter((tag)=>tag != undefined)
+                .filter((tag)=>tag != undefined && tag.type == BSMapTagType.Style)
                 .map((tag)=>{
                   return (
-                    <BSMapTag className='text-nowrap font-semibold' size={"1"} key={tag!.slug} tag={tag!}/>
+                    <BSMapTag className='text-nowrap font-semibold' key={tag!.slug} tag={tag!}/>
                   )
                 })
             }
           </div>
-          <div className="mt-auto">
+          <div className="mt-auto mb-2">
           
 
             <div className='flex items-center'>
-              <Progress.Root className="relative overflow-hidden rounded-full w-32 h-2 bg-gray-100" value={score}>
+              <Progress.Root className="relative overflow-hidden rounded-full min-w-24 max-w-32 h-2 bg-gray-100" value={score}>
                 <Progress.Indicator
                     className=" h-2 rounded-full bg-gradient-to-r from-red-500 to-blue-500"
                     style={{ transform: `translateX(-${100 - score}%)` }}
                 />
               </Progress.Root>
-              <Text className="pl-2" size="1" weight="medium">{score.toFixed(1)}%</Text>
+              <div className="pl-2 font-medium text-xs">{score.toFixed(1)}%</div>
             </div>
             <div className='flex items-center  space-x-2'>
               <div className='flex items-center space-x-2'>
-              <ThumbUpLabel size={"1"} likeCnt={bsMap.stats.upvotes}/>
-              <ThumbDownLabel size={"1"} dislikeCnt={bsMap.stats.upvotes}/>
+              <MapMetaLabel.ThumbUpCountLabel count={bsMap.stats.upvotes}/>
+              <MapMetaLabel.ThumbDownCountLabel count={bsMap.stats.downvotes}/>
               </div>
-              <Separator orientation="vertical" className="h-4"/>
-              <DateLabel size={"1"} date={bsMap.lastPublishedAt}/>
+              {/*<Separator orientation="vertical" className="h-4"/>*/}
+              <MapMetaLabel.DateLabel date={bsMap.lastPublishedAt}/>
             </div>
           </div>
-        </Box>
-      </Flex>
+    </div>
+      </div>
     </Card>
   )
 }

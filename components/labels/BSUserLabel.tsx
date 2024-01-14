@@ -1,37 +1,45 @@
 'use client'
 import { BSUser } from "@/interfaces/beatsaver-user";
-import { Box, Flex, Link, Tooltip,Text, Responsive,HoverCard, Inset } from "@radix-ui/themes";
+import Link from "@/components/ui/link";
 import MapperAvatar from "@/components/mapper-avatar";
-import { ClientOnly } from "../ClientOnly";
 import BSUserDetailCard from "../BSUserDetialCard";
-import { TextSize } from "@/interfaces/text-size";
-import { motion } from "framer-motion";
+import {
+    HoverCard,
+    HoverCardContent,
+    HoverCardTrigger,
+} from "@/components/ui/hover-card"
+import {cn} from "@/lib/utils";
+
 const truncated = (text:string) => {
-    if (text.length > 15) {
-        return text.substring(0,15) + '...'
+    if (text.length > 12) {
+        return text.substring(0,12) + '...'
     }
     return text
 }
 export default function BSUserLabel(
-    {user,size,tooltip}:{user:BSUser,size?:TextSize,tooltip?:string}
+    {
+        user,
+        className,
+        avatarClassName
+    }:{
+        user:BSUser,
+        className?:string,
+        avatarClassName?:string
+    }
 ){
     return (
         <>
-            <HoverCard.Root>
-                <HoverCard.Trigger>
-                    <Link href={`/mapper/${user.id}`}>
-                        <Box className="flex items-center  cursor-pointer">
-                            <MapperAvatar src={user.avatar} verified={user.verifiedMapper}/>
-                            <Text className='my-auto' size={size}>{truncated(user.name)}</Text>
-                        </Box>
+            <HoverCard>
+                <HoverCardTrigger asChild>
+                    <Link href={`/mapper/${user.id}`} className={cn("relative flex items-center  cursor-pointer text-xs",className)}>
+                        <MapperAvatar src={user.avatar} verified={user.verifiedMapper} className={avatarClassName}/>
+                        <span className='my-auto text-ellipsis line-clamp-1'>{truncated(user.name)}</span>
                     </Link>
-                </HoverCard.Trigger>
-                <HoverCard.Content>
-                    <Inset className="max-w-[320px]">
+                </HoverCardTrigger>
+                <HoverCardContent className="shadow-md">
                         <BSUserDetailCard user={user} />
-                    </Inset>
-                </HoverCard.Content>
-            </HoverCard.Root>
+                </HoverCardContent>
+            </HoverCard>
         </>
     )
 }

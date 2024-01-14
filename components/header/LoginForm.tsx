@@ -5,13 +5,12 @@
 import { TabsTrigger, TabsList, TabsContent, Tabs } from "@/components/ui/tabs"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
-import { Button, Text } from "@radix-ui/themes"
-import NextLink from "next/link"
-import { Link, Theme } from "@radix-ui/themes"
+import {Button} from "@/components/ui/button";
 import { FaDiscord } from "react-icons/fa";
 import { useState } from "react"
 import { useForm } from "react-hook-form";
 import { useUserSessionStore } from "@/hooks/state/useSession"
+import Link from "@/components/ui/link";
 export function LoginForm({
   onClose
 }:{
@@ -38,7 +37,6 @@ export function LoginForm({
   }
   return (
         <Tabs className="w-full" defaultValue="signin">
-            <Theme appearance="light"  asChild >
             <TabsList className="grid w-full grid-cols-2 bg-slate-100 rounded-lg">
             <TabsTrigger value="signin">
               Sign In
@@ -47,7 +45,6 @@ export function LoginForm({
               Sign Up
             </TabsTrigger>
           </TabsList>
-            </Theme>
 
           <TabsContent className="p-4" value="signin">
             <form className="space-y-4 w-full"  onSubmit={onSubmit}>
@@ -58,27 +55,25 @@ export function LoginForm({
               <div className="space-y-2">
                 <div className="flex justify-between">
                 <Label htmlFor="signin-password">Password</Label>
-                <Text size={"2"}>
-                    <NextLink href="#">
-                    Forgot Password?
-                    </NextLink>
-                </Text>
+                    <Link href="#">
+                      Forgot Password?
+                    </Link>
                 </div>
                 <Input id="signin-password" type="password" {...register("password", { required: true })} />
               </div>
                 <div className="flex">
                     {
                         isLoading ? (
-                            <Button type="submit" variant={"soft"} className="ml-auto mr-2" disabled>
+                            <Button type="submit" variant={"ghost"} className="ml-auto mr-2" disabled>
                                 Loading...
                             </Button>
                         ) : (
                             isLoggedIn ? (
-                              <Button type="submit" variant={"soft"} className="ml-auto mr-2" disabled>
+                              <Button type="submit" variant={"ghost"} className="ml-auto mr-2" disabled>
                                   Logged in as {user?.username}
                               </Button>
                             ) : (
-                              <Button type="submit" variant={"soft"} className="ml-auto mr-2">
+                              <Button type="submit" variant={"ghost"} className="ml-auto mr-2">
                                   Sign In
                               </Button>
                             )
@@ -112,7 +107,7 @@ export function LoginForm({
                 <Input id="signup-repeat-password" required type="password" />
               </div>
               <div className="flex">
-                <Button type="submit" variant={"soft"} className="ml-auto mr-2">
+                <Button type="submit" variant={"ghost"} className="ml-auto mr-2">
                     Sign Up
                 </Button>
               </div>

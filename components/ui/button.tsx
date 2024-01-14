@@ -53,4 +53,15 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 )
 Button.displayName = "Button"
 
-export { Button, buttonVariants }
+const IconButton = React.forwardRef(({
+   children,
+  ...props
+}: ButtonProps,ref)=>{
+  return <Button variant="ghost" size="icon" {...props} ref={ref as any}>
+    {children}
+  </Button>
+})
+
+IconButton.displayName = "IconButton"
+
+export { Button, buttonVariants,IconButton }

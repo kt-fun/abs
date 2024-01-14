@@ -8,8 +8,6 @@ export function ClientOnly({ children }: { children: React.ReactNode }) {
   React.useEffect(() => {
     setIsMounted(true)
   }, [])
-
   if (!isMounted) return null
-
   return children
 }

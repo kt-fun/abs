@@ -1,16 +1,18 @@
 import {useCalendar} from "@h6s/calendar";
 import {format, getDate} from "date-fns";
-import {useCallback, useState} from "react";
+import {useCallback, useMemo, useState} from "react";
 
 import { FaAngleLeft } from "react-icons/fa6";
 import { FaAngleRight } from "react-icons/fa6";
-import {Button, Popover, Select} from "@radix-ui/themes";
+import {Button } from "@/components/ui/button";
+import {Select, SelectItem, SelectContent, SelectTrigger,SelectValue} from "@/components/ui/select";
+import * as Popover from "@/components/ui/popover";
 import dayjs from "dayjs";
 
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import isBetween from 'dayjs/plugin/isBetween';
-
+import { IoIosArrowDropdown } from "react-icons/io";
 dayjs.extend(isBetween)
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
@@ -37,11 +39,11 @@ const DateRangePicker = ({dateRange,setDateRange}:DateRangePickerProps) => {
   const [endOpen, setEndOpen] = useState(false);
   const [startSelectableRange, setStartSelectableRange] = useState([undefined, new Date()] as DateRange);
   const [endSelectableRange, setEndSelectableRange] = useState([undefined, new Date()] as DateRange);
-  const [value, setValue] = useState("none");
+  const [value, setValue] = useState("");
   const [quickSelectOpen, setQuickSelectOpen] = useState(false);
   const handleValueChange = (value: string) => {
     setValue(value)
-    if (value === "none") {
+    if (value === "") {
       return
     }
     let start: Date | undefined = undefined
@@ -63,14 +65,14 @@ const DateRangePicker = ({dateRange,setDateRange}:DateRangePickerProps) => {
   }
   return (
     <div className="flex justify-between items-center">
-    <div className="flex justify-center items-center space-x-4">
-      <Popover.Root open={startOpen} onOpenChange={(open) => setStartOpen(open)}>
-        <Popover.Trigger>
-          <Button variant="ghost">
+    <div className="flex justify-center items-center space-x-1">
+      <Popover.Popover open={startOpen} onOpenChange={(open) => setStartOpen(open)}>
+        <Popover.PopoverTrigger asChild>
+          <Button variant="ghost" className="text-xs p-1">
             {dateRange[0] ? format(dateRange[0], "yyyy-MM-dd") : "Start Date"}
           </Button>
-        </Popover.Trigger>
-        <Popover.Content>
+        </Popover.PopoverTrigger>
+        <Popover.PopoverContent className={"z-[100]"}>
           <Calender
             selectedDate={dateRange}
             onSelectDate={(date: Date) => {
@@ -82,53 +84,58 @@ const DateRangePicker = ({dateRange,setDateRange}:DateRangePickerProps) => {
                 setEndSelectableRange([date, endSelectableRange[1]]);
               }
               setStartOpen(false);
-              setEndOpen(true);
-              setValue("none")
+              if(!dateRange[1]){
+                setEndOpen(true);
+              }
+              setValue("")
             }}
             selectableRange={startSelectableRange}
             type={0}
           />
-        </Popover.Content>
-      </Popover.Root>
-      <Popover.Root open={endOpen} onOpenChange={(open) => setEndOpen(open)}>
-        <Popover.Trigger>
-          <Button variant="ghost">
+        </Popover.PopoverContent>
+      </Popover.Popover>
+      <div>~</div>
+      <Popover.Popover open={endOpen} onOpenChange={(open) => setEndOpen(open)}>
+        <Popover.PopoverTrigger  asChild>
+          <Button variant="ghost" className="text-xs p-1">
             {dateRange[1] ? format(dateRange[1], "yyyy-MM-dd") : "End Date"}
           </Button>
-        </Popover.Trigger>
-        <Popover.Content>
+        </Popover.PopoverTrigger>
+        <Popover.PopoverContent className={"z-[100]"}>
           <Calender
             selectedDate={dateRange}
             onSelectDate={
               (date: Date) => {
                 if (dateRange[1] && dayjs(date).isSame(dayjs(dateRange[1]))) {
                   setDateRange([dateRange[0], undefined]);
-                  setStartSelectableRange([startSelectableRange[0], new Date()]);
+                  setStartSelectableRange([undefined, new Date()]);
                 } else {
                   setDateRange([dateRange[0], date]);
-                  setStartSelectableRange([startSelectableRange[0], date])
+                  setStartSelectableRange([undefined, date])
                 }
                 setEndOpen(false)
-                setValue("none")
+                setValue("")
               }
             }
             selectableRange={endSelectableRange}
             type={1}
           />
-        </Popover.Content>
-      </Popover.Root>
+        </Popover.PopoverContent>
+      </Popover.Popover>
     </div>
     <div>
-      <Select.Root value={value} onValueChange={handleValueChange}>
-        <Select.Trigger placeholder="select"/>
-        <Select.Content>
-          <Select.Item value="all">All</Select.Item>
-          <Select.Item value="7d">1 Week</Select.Item>
-          <Select.Item value="1m">1 Month</Select.Item>
-          <Select.Item value="24h">24h</Select.Item>
-          <Select.Item value="3m">3 Month</Select.Item>
-        </Select.Content>
-      </Select.Root>
+      <Select value={value} onValueChange={handleValueChange}>
+        <SelectTrigger
+        className="border-0 h-6 w-6 rounded-full bg-transparent focus:ring-0 p-0 ring-offset-0 focus:ring-opacity-0"
+        />
+        <SelectContent  className={"z-[100]"}>
+          <SelectItem value="all">All</SelectItem>
+          <SelectItem value="7d">1 Week</SelectItem>
+          <SelectItem value="1m">1 Month</SelectItem>
+          <SelectItem value="24h">24h</SelectItem>
+          <SelectItem value="3m">3 Month</SelectItem>
+        </SelectContent>
+      </Select>
     </div>
   </div>
   )
@@ -166,7 +173,7 @@ const Calender = ({
     <>
         <div className="justify-between w-full">
             <div className="flex justify-between items-center px-2 mb-3">
-          <p>{format(cursorDate, "MMM yyyy")}</p>
+          <p>{type==0?'Start:':'End:'} {format(cursorDate, "MMM yyyy")}</p>
           <div className="flex">
             <Button variant="ghost"
               disabled={!canNavigateToPrev()}
@@ -297,20 +304,20 @@ const Item = ({
   onClick:()=>void,
   className:string
 }) => {
+
   const {
     key,
-    date,
-    isCurrentDate,
-    isCurrentMonth,
-    isWeekend,
     value
   } = day;
+  const isToday = useMemo(() => {
+    return dayjs(value).isSame(dayjs(), 'day');
+  }, [value]);
   return (
     <span
       key={key}
       className={`w-12 h-8 text-center hover:bg-sandrift flex items-center justify-center ${className}`}
       style={{
-        fontWeight: isCurrentDate ? 700 : 400,
+        fontWeight: isToday ? 700 : 400,
       }}
       onClick={onClick}
     >
@@ -318,6 +325,7 @@ const Item = ({
     </span>
   )
 }
+
 
 // a function given a start hex, end hex, total step count
 // query the hex color at a  specific step range

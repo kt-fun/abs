@@ -1,15 +1,13 @@
-'useClient'
-import { Dialog,Text, HoverCard, Separator,AlertDialog } from "@radix-ui/themes";
-import { LoginForm } from "./LoginForm";
+'use client'
+import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card";
 import { UserInfo, useUserSessionStore } from "@/hooks/state/useSession";
-import Image from "next/image";
 import { useState } from "react";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { IoLogOutOutline } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
-import Link from "next/link";
-import { useDebounce } from "@uidotdev/usehooks";
-import NotififyModal from "./NotifyModal";
+import NotifyModal from "./NotifyModal";
+import {Avatar} from "@/components/ui/avatar";
+import Link from "@/components/ui/link";
 export const LoggedinUserNav = ({
     user
 }:{user:UserInfo}) => {
@@ -21,49 +19,45 @@ export const LoggedinUserNav = ({
     return (
         <>
 
-            <HoverCard.Root>
-                <HoverCard.Trigger>
+            <HoverCard>
+                <HoverCardTrigger>
                     <div className='cursor-default hidden md:flex hover:bg-gradient-to-r from-red-500 to-blue-500 hover:text-white rounded-full px-2 py-0.5 space-x-2 items-center font-semibold'>
-                        <Image src= {user!.avatar}
-                        alt="avatar"
-                        width={24}
-                        height={24}
-                        className="rounded-full"
+                        <Avatar src= {user!.avatar}
+                        className="rounded-full w-6 h-6"
+                        fallback={user!.username[0]}
                         />
-                        <Text size={"4"}>{user!.username}</Text>
+                        <span className="text-xl">{user!.username}</span>
                     </div>
-                </HoverCard.Trigger>
+                </HoverCardTrigger>
 
-            <HoverCard.Content>
+            <HoverCardContent>
             <div>
                 <ul>
                     <li className='hover:bg-gradient-to-r from-red-500 to-blue-500 hover:text-white rounded-full px-2 py-0.5  cursor-pointer' onClick={handleDialogOpen}>
-                        <Text  className="flex space-x-2 items-center text-sm font-semibold">
+                        <div  className="flex space-x-2 items-center text-sm font-semibold">
                             <span><IoIosNotificationsOutline/></span>
                             <span>message</span>
-                        </Text>
+                        </div>
                     </li>
                     <li  className='hover:bg-gradient-to-r from-red-500 to-blue-500 hover:text-white rounded-full px-2 py-0.5  cursor-pointer'>
-                        <Text>
-                            <Link className="flex space-x-2 items-center text-sm font-semibold" href={"/profile"}>
-                                <span><CgProfile/></span>
-                                <span>profile</span>
-                            </Link>
-                        </Text>
+                      <Link className="flex space-x-2 items-center text-sm font-semibold" href={"/profile"}>
+                          <span><CgProfile/></span>
+                          <span>profile</span>
+                      </Link>
                     </li>
 
-                    <Separator className="w-full my-2"/>
+                    {/*<Separator className="w-full my-2"/>*/}
                     <li  className='hover:bg-gradient-to-r from-red-500 to-blue-500 hover:text-white rounded-full px-2 py-0.5 cursor-pointer' onClick={logout}>
-                        <Text className="flex space-x-2 items-center text-sm font-semibold">
+                        <div className="flex space-x-2 items-center text-sm font-semibold">
                                 <span><IoLogOutOutline/></span>
                                 <span>logout</span>
-                        </Text>
+                        </div>
                     </li>
                 </ul>
             </div>
-            </HoverCard.Content>
-            </HoverCard.Root> 
-            <NotififyModal open={messageDialogOpen} setOpen={setMessageDialogOpen}/>
+            </HoverCardContent>
+            </HoverCard>
+            <NotifyModal open={messageDialogOpen} setOpen={setMessageDialogOpen}/>
          </>
     )
 }
@@ -77,22 +71,22 @@ export default function UserNav() {
   const [open, setOpen] = useState(false);
     return (
         <div>
-            <AlertDialog.Root  open={open} onOpenChange={setOpen}>
-                <AlertDialog.Trigger>
-                {
-                    isLoggedIn ? (
-                        <LoggedinUserNav user={user!}/>
-                    ):(
-                        <div className='cursor-default hidden md:flex hover:bg-gradient-to-r from-red-500 to-blue-500 hover:text-white rounded-full px-2 py-0.5 space-x-2 items-center font-semibold'>
-                            <Text size={"4"}> Sign in </Text>
-                        </div>
-                    )
-                }
-                </AlertDialog.Trigger>
-                <AlertDialog.Content className="focus:outline-none">
-                    <LoginForm onClose={()=>setOpen(false)}/>
-                </AlertDialog.Content>
-            </AlertDialog.Root>
+            {/*<AlertDialog.Root  open={open} onOpenChange={setOpen}>*/}
+            {/*    <AlertDialog.Trigger>*/}
+            {/*    {*/}
+            {/*        isLoggedIn ? (*/}
+            {/*            <LoggedinUserNav user={user!}/>*/}
+            {/*        ):(*/}
+            {/*            <div className='cursor-default hidden md:flex hover:bg-gradient-to-r from-red-500 to-blue-500 hover:text-white rounded-full px-2 py-0.5 space-x-2 items-center font-semibold'>*/}
+            {/*                <div > Sign in </div>*/}
+            {/*            </div>*/}
+            {/*        )*/}
+            {/*    }*/}
+            {/*    </AlertDialog.Trigger>*/}
+            {/*    <AlertDialog.Content className="focus:outline-none">*/}
+            {/*        <LoginForm onClose={()=>setOpen(false)}/>*/}
+            {/*    </AlertDialog.Content>*/}
+            {/*</AlertDialog.Root>*/}
         </div>
     )
 }

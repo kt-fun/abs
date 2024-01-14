@@ -1,17 +1,13 @@
 
-import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import { CaretDownIcon, DiscIcon } from '@radix-ui/react-icons';
 import React from 'react';
-import Link from 'next/link';
-import { HoverCard } from '@radix-ui/themes';
+import { HoverCard,HoverCardTrigger,HoverCardContent } from '@/components/ui/hover-card';
 import { FaDiscord } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { MdOutlinePrivacyTip } from "react-icons/md";
-import { TbApi } from "react-icons/tb";
 import { CiLock } from "react-icons/ci";
-import { Text } from '@radix-ui/themes';
 import { CiViewList } from "react-icons/ci";
-import { text } from 'stream/consumers';
+import Link from "@/components/ui/link";
 interface LinkProps {
     text: string;
     href: string;
@@ -22,11 +18,9 @@ const MenuItems = (
 ) => {
     return (
         <li className='hover:bg-gradient-to-r from-red-500 to-blue-500 hover:text-white rounded-full px-2 py-0.5'>
-            <Text >
-            <Link className="flex space-x-2 items-center text-sm font-semibold" href={link.href}>
+            <Link className="flex space-x-2 items-center text-sm font-semibold hover:text-white text-inherit hover:no-underline" href={link.href}>
                 {link.icon} {link.text}
             </Link>
-            </Text>
         </li>
     )
 }
@@ -71,14 +65,14 @@ const menuList = [
 
 export default function HeaderHelpMenu() {
 return (
-<HoverCard.Root>
-    <HoverCard.Trigger className="">
-        <Text size={"4"} className='flex space-x-2 font-semibold items-center hover:bg-gradient-to-r from-red-500 to-blue-500 hover:text-white rounded-full px-2 py-0.5 cursor-default'>
+<HoverCard>
+    <HoverCardTrigger className="">
+        <div className='flex text-xl space-x-2 font-semibold items-center hover:bg-gradient-to-r from-red-500 to-blue-500 hover:text-white rounded-full px-2 py-0.5 cursor-default'>
             Help <CaretDownIcon aria-hidden />
-        </Text>
-    </HoverCard.Trigger>
-    <HoverCard.Content>
-        <ul className="Help List">
+        </div>
+    </HoverCardTrigger>
+    <HoverCardContent>
+        <ul className="p-1">
             {
                 menuList.map((link: LinkProps) => {
                     return (
@@ -87,7 +81,7 @@ return (
                 })
             }
         </ul>
-    </HoverCard.Content>
-</HoverCard.Root>
+    </HoverCardContent>
+</HoverCard>
 );
 }

@@ -48,6 +48,16 @@ export const options:FeatureOption[] = [
         tooltip:"Auto Mapper, notice: not all ai maps has such tag",
     },
     {
+        value:"curated",
+        label:"Curated",
+        tooltip:"Curated",
+    },
+    {
+        value:"verified",
+        label:"Verified",
+        tooltip:"Verified",
+    },
+    {
         value:"chroma",
         label:"Chroma",
         tooltip:"Chroma",
@@ -71,16 +81,6 @@ export const options:FeatureOption[] = [
         value:"ranked",
         label:"Ranked",
         tooltip:"only ranked maps",
-    },
-    {
-        value:"curated",
-        label:"Curated",
-        tooltip:"Curated",
-    },
-    {
-        value:"verified",
-        label:"Verified",
-        tooltip:"Verified",
     },
     {
         value:"fullSpread",

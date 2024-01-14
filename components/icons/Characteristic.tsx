@@ -86,7 +86,7 @@ const Degree90Icon = ()=>(
 const characteristicIcons = {
   'Lawless': <LawlessIcon/>,
   'Standard': <StandardIcon/>,
-  'LightShow': <LightShowIcon/>,
+  'Lightshow': <LightShowIcon/>,
   'OneSaber': <OneSaberIcon/>,
   '90Degree': <Degree90Icon/>,
   '360Degree': <Degree360Icon/>,

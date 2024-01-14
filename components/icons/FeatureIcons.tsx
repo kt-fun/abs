@@ -1,10 +1,10 @@
 import { BSBeatMap, checkIfAI, checkIfChroma, checkIfCinema, checkIfME, checkIfNE } from "@/interfaces/beatmap";
-import { Box, Flex } from "@radix-ui/themes";
-import { Tooltip } from "@radix-ui/themes";
+import {Tooltip} from "@/components/ui/tooltip";
 import { CiLight } from "react-icons/ci";
 import { BiCameraMovie } from "react-icons/bi";
 import { RiRobot2Line } from "react-icons/ri";
 import { GiRank3 } from "react-icons/gi";
+import {cn} from "@/lib/utils";
 
 
 export function checkIfHasFeature(bsMap:BSBeatMap):boolean {
@@ -15,51 +15,50 @@ export default function FeatureIcons(
     {bsMap,className}:{bsMap:BSBeatMap,className?:string}
 ) {
     return (
-        <Box className={className}>
-            <Flex gap="3">
+            <div className={cn("flex gap-1",className)}>
                 {
                     bsMap.ranked && (
-                        <Tooltip content="Ranked Map">
-                            <span className="p-0.5"><GiRank3/></span>
+                        <Tooltip content="Ranked Map" asChild>
+                            <span className=""><GiRank3/></span>
                         </Tooltip>
                     )
                 }
                 {
                     checkIfAI(bsMap) && (
-                        <Tooltip content="Auto Mapper, notice, not all AI map has such tag">
-                            <span className="p-0.5"><RiRobot2Line/></span>
+                        <Tooltip content="Auto Mapper, notice, not all AI map has such tag" asChild>
+                            <span className=""><RiRobot2Line/></span>
                         </Tooltip>
                         )
                 }
                 {
                     checkIfCinema(bsMap) && (
-                        <Tooltip content="Cinema Map">
-                            <span className="p-0.5"><BiCameraMovie/></span>
+                        <Tooltip content="Cinema Map" asChild>
+                            <span className=""><BiCameraMovie/></span>
                         </Tooltip>
                     )
                 }
                 {
                     checkIfChroma(bsMap) && (
-                        <Tooltip content="Chroma Map">
-                            <span className="p-0.5"><CiLight/></span>
+                        <Tooltip content="Chroma Map" asChild>
+                            <span className=""><CiLight/></span>
                         </Tooltip>
                     )
                 }
                 {
                     checkIfME(bsMap) && (
-                        <Tooltip content="Mapping Extensions Map">
-                        <span className="p-0.5"><CiLight/></span>
+                        <Tooltip content="Mapping Extensions Map" asChild>
+                        <span className=""><CiLight/></span>
                         </Tooltip>
                     )
                 }
                 {
                     checkIfNE(bsMap) && (
-                        <Tooltip content="Noodle Extensions Map">
-                        <span className="p-0.5"><CiLight/></span>
+                        <Tooltip content="Noodle Extensions Map" asChild>
+                        <span className=""><CiLight/></span>
                         </Tooltip>
                     )
                 }
-            </Flex>
-        </Box>
+              </div>
+
     )
 }

@@ -1,24 +1,32 @@
+'use client'
+import * as Dialog from "@/components/ui/dialog"
+import React, {Ref, use, useMemo} from "react"
+import { Tooltip } from "@/components/ui/tooltip"
 
-import { Dialog } from "@radix-ui/themes"
-import { use, useMemo } from "react"
-
-export default function MapPreviewIFrame({
-    id,children
-}:{id:string, children?:React.ReactNode}) {
+ const MapPreviewIFrame = React.forwardRef(({
+    id,
+  children
+}:{
+    id:string,
+    children:React.ReactNode
+},ref) => {
     const url = useMemo(()=>{
         return `https://allpoland.github.io/ArcViewer/?id=${id}`
     },[id])
     return (
-        <>
-        <Dialog.Root>
-            <Dialog.Trigger>
-                {children}
-            </Dialog.Trigger>
-            <Dialog.Content className="h-[640px] max-w-[1080px] p-0">
-            <iframe title="ArcViewer" src={url} className="w-full h-full" />
-            </Dialog.Content>
-        </Dialog.Root>
-
-        </>
+      <Dialog.Dialog>
+        <Tooltip content="play map preview" asChild>
+          <Dialog.DialogTrigger asChild>
+            {children}
+          </Dialog.DialogTrigger>
+        </Tooltip>
+        <Dialog.DialogContent className="aspect-video max-w-[1080px] border-0  rounded-lg bg-transparent">
+          <iframe title="ArcViewer" src={url} className="w-full h-full  rounded-lg"/>
+        </Dialog.DialogContent>
+      </Dialog.Dialog>
     )
-}
+})
+
+MapPreviewIFrame.displayName = "MapPreviewIFrame"
+
+export default MapPreviewIFrame

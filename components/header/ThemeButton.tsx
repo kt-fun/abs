@@ -1,30 +1,35 @@
-import { ThemeMode,useUserPreferenceStore } from "@/hooks/state/userPrefence";
-import { IconButton } from "@radix-ui/themes";
+
+import { IconButton } from "@/components/ui/button";
 import { useCallback } from "react";
 import { CiLight } from "react-icons/ci";
 import { FaMoon } from "react-icons/fa";
 import { HiComputerDesktop } from "react-icons/hi2";
+import { useTheme } from "next-themes"
+
+enum ThemeMode {
+    Light = 'light',
+    Dark = 'dark',
+    System = 'system'
+}
 export default function ThemeButton(){
-    const themeMode = useUserPreferenceStore(state => state.userPreference.themeMode)
-    const updateThemeMode = useUserPreferenceStore(state => state.updateThemeMode)
-    // const {themeMode,updateThemeMode} = useThemeMode()
-    const setTheme = useCallback(() => {
-        if(themeMode === ThemeMode.Light){
-            updateThemeMode(ThemeMode.Dark)
-        }else if(themeMode === ThemeMode.Dark){
-            updateThemeMode(ThemeMode.System)
-        }else if(themeMode === ThemeMode.System){
-            updateThemeMode(ThemeMode.Light)
+    const { theme,setTheme } = useTheme()
+    const onSetTheme = useCallback(() => {
+        if(theme === ThemeMode.Light){
+            setTheme(ThemeMode.Dark)
+        }else if(theme === ThemeMode.Dark){
+            setTheme(ThemeMode.System)
+        }else if(theme === ThemeMode.System){
+            setTheme(ThemeMode.Light)
         }
-    },[themeMode, updateThemeMode])
+    },[theme, setTheme])
     return (
         <>
-            <IconButton asChild onClick={setTheme} radius="full" variant="ghost">
+            <IconButton asChild onClick={onSetTheme} variant="ghost" className="rounded-full">
                 <span>
                     <span className="sr-only">Toggle theme</span>
-                    {themeMode === ThemeMode.Light && <CiLight/>}
-                    {themeMode === ThemeMode.Dark && <FaMoon/>}
-                    {themeMode === ThemeMode.System && <HiComputerDesktop/>}
+                    {theme === ThemeMode.Light && <CiLight/>}
+                    {theme === ThemeMode.Dark && <FaMoon/>}
+                    {theme === ThemeMode.System && <HiComputerDesktop/>}
                 </span>
 
             </IconButton>

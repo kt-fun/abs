@@ -1,6 +1,7 @@
 import { useNotifyStats, usePagingNotifications } from "@/hooks/api/useNotify";
 import * as Tabs from "@radix-ui/react-tabs";
-import { Button, Dialog, Separator, Text } from "@radix-ui/themes";
+
+import {Dialog,DialogContent,DialogTrigger} from "@/components/ui/dialog";
 import { useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 
@@ -15,15 +16,15 @@ export default function NotififyModal({
     const [notificationType, setNotificationType] = useState<"unread" | "read">("unread")
     const {data} = usePagingNotifications(notificationType)
     return (
-        <Dialog.Root open={open} onOpenChange={setOpen}>
-          <Dialog.Content>
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogContent>
             <div>
                 <div className="flex justify-between">
-                    <Text size={"4"}>Notifications</Text>
-                    <Text className="p-1 cursor-pointer hover:bg-gray-200 rounded-full" size={"4"} onClick={()=>{setOpen(false)}}>
+                    <div className="">Notifications</div>
+                    <div className="p-1 cursor-pointer hover:bg-gray-200 rounded-full" onClick={()=>{setOpen(false)}}>
                         <span className="sr-only">Close</span>
                         <IoCloseOutline />
-                    </Text>
+                    </div>
                 </div>
                 <div>
                 <Tabs.Root defaultValue="unread" orientation="vertical">
@@ -38,7 +39,7 @@ export default function NotififyModal({
                 </Tabs.Root>
                 </div>
             </div>
-          </Dialog.Content>
-      </Dialog.Root>
+          </DialogContent>
+      </Dialog>
     )
 }

@@ -1,26 +1,22 @@
 import {BSMapTag as Tag, BSMapTagType} from "@/interfaces/mapTags";
-import {TextSize} from "@/interfaces/text-size";
-import {Text} from "@radix-ui/themes";
 import React from "react";
+import {cn} from "@/lib/utils";
 
 interface BSMapTagProps {
     tag:Tag
-    size?:TextSize
     className?:string
 }
 export default function BSMapTag(
     {
       tag,
-      size,
       className,
-      ...props
-    }:BSMapTagProps & React.ComponentProps<typeof Text>,
+    }:BSMapTagProps
 ){
     return (
         <>
-            <Text {...props} size={size} className={` ${className} text-white ${tag.type == BSMapTagType.Style ?'bg-red-500':'bg-blue-500'} rounded-md p-0.5  inline-flex items-center justify-center space-x-1 cursor-pointer`} >
+            <span className={cn(` text-xs text-white ${tag.type == BSMapTagType.Style ?'bg-red-500':'bg-blue-500'} rounded-md p-0.5  inline-flex items-center justify-center space-x-1 cursor-default`,className)} >
                 {tag.human}
-            </Text>
+            </span>
         </>
     )
 }

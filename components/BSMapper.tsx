@@ -6,19 +6,21 @@ import { BSUserWithStats } from "@/interfaces/beatsaver-user";
 import { formatNumber } from "@/lib/format";
 import { FaMapMarkedAlt } from "react-icons/fa";
 import * as Progress from '@radix-ui/react-progress';
-import { Card,Avatar, Text, Link as RLink, Tooltip} from "@radix-ui/themes";
+import  {Avatar} from "@/components/ui/avatar";
+import * as Card from "@/components/ui/card";
+import {Tooltip} from "@/components/ui/tooltip";
 import dayjs from "dayjs";
-import Link from "next/link";
+import Link from "@/components/ui/link";
 import { useCallback, useState } from "react";
-import { CiLight } from "react-icons/ci";
 import relativeTime from "dayjs/plugin/relativeTime";
+import {cn} from "@/lib/utils";
 dayjs.extend(relativeTime);
 const LabelWithIcon = ({children, label,tooltip}:{children:React.ReactNode,label:string, tooltip?:string}) => {
     return (
         <Tooltip content={tooltip?tooltip:""}>
             <span className="flex items-center space-x-1 cursor-default">
                 {children}
-                <Text  size="2" weight="medium">{label}</Text>
+              <span className="font-medium">{label}</span>
             </span>
         </Tooltip>
         
@@ -34,7 +36,13 @@ const getDescription = (description:string) => {
 }
 
 export default function BSMapper(
-    {bsUserWithStats}:{bsUserWithStats:BSUserWithStats}
+    {
+      bsUserWithStats,
+      className
+    }:{
+      bsUserWithStats:BSUserWithStats,
+      className?:string
+    }
 ) {
   const computeRating = useCallback((like:number,dislike:number) => {
     if(like == 0 && dislike == 0){
@@ -48,29 +56,23 @@ export default function BSMapper(
   );
     return (
         <>
-        <Card className="min-w-64">
+        <Card.Card className={cn("min-w-64 sm:w-fit max-w-[300px]",className)}>
+          <Card.CardContent className="p-2">
             <div className="flex">
                 <Avatar
                     src={bsUserWithStats.avatar}
-                    size="4"
-                    className="m-2"
-                    radius="full"
+                    className="m-2 w-12 h-12"
                     fallback={bsUserWithStats.name[0]} />
-                <div>
-                    <RLink>
-                        <Link href={`/mapper/${bsUserWithStats.id}`}>
-                        <Text 
-                        size="4"
-                        weight="medium"
-                        >{bsUserWithStats.name}</Text>
-                        </Link>
-                    </RLink>
-                    <Text
-                    size="1"
-                    className="overflow-ellipsis line-clamp-2 pr-2"
-                    color="gray"
+                <div className="overflow-hidden">
+                    <Link href={`/mapper/${bsUserWithStats.id}`} className="overflow-hidden" >
+                      <div  className="text-lg text-ellipsis font-medium">
+                        {bsUserWithStats.name}
+                      </div>
+
+                    </Link>
+                    <div
+                    className="overflow-ellipsis line-clamp-2 pr-2 text-xs text-gray-400"
                     dangerouslySetInnerHTML={{__html:getDescription(bsUserWithStats.description)}}
-                    // todo
                     />
                 </div>
             </div>
@@ -99,7 +101,7 @@ export default function BSMapper(
                         style={{ transform: `translateX(-${100 - rating}%)` }}
                     />
                     </Progress.Root>
-                    <Text className="pl-4" size="2" weight="medium">{rating.toFixed(1)}%</Text>
+                    <div className="pl-4 font-medium text-xs">{rating.toFixed(1)}%</div>
                 </div>
             </div>
             <div className="flex justify-between">
@@ -107,28 +109,24 @@ export default function BSMapper(
             {
                 bsUserWithStats.stats.firstUpload && 
                 <Tooltip content="First Map Uploaded At">
-                    <Text
-                    size="1"
-                    color="gray"
-                    className="flex space-x-2  cursor-default"
+                    <div
+                    className="flex space-x-2  cursor-default text-gray-400 text-xs"
                     >Since: {dayjs(bsUserWithStats.stats.firstUpload).format('YYYY-MM-DD')}
-                    </Text>
+                    </div>
                 </Tooltip>
             }
             {
                 bsUserWithStats.stats.lastUpload && 
-                <Tooltip content="Last Map Uploaded At">
-                    <Text
-                    size="1"
-                    color="gray"
-                    className="flex space-x-2 cursor-default"
+                <Tooltip content="Last Map Uploaded At" asChild>
+                    <div
+                    className="flex space-x-2  cursor-default text-gray-400 text-xs"
                     >Last: {dayjs(bsUserWithStats.stats.lastUpload).fromNow()}
-                    </Text>
+                    </div>
                 </Tooltip>
             }
             </div>
-
-        </Card>
+          </Card.CardContent>
+        </Card.Card>
         </>
     )
 }

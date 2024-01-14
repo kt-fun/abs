@@ -1,6 +1,7 @@
 import { formatDuration } from "@/lib/format";
-import { Slider } from "@radix-ui/themes";
-import { useMemo, useState } from "react";
+import { Slider } from "@/components/ui/slider"
+
+import { useMemo } from "react";
 
 export default function DurationRangePicker({
     range,
@@ -35,7 +36,7 @@ export default function DurationRangePicker({
         return `${formatDuration(min)} - ${formatDuration(max!)}`
     },[range])
     return (
-        <div className="relative">
+        <div className="relative z-[100]">
             <Slider
             defaultValue={covertedRange}
             min={0}
@@ -43,6 +44,7 @@ export default function DurationRangePicker({
             onValueChange={handle}
             onValueCommit={handle}
             step={30}
+            className="z-[100]"
             />
             <div className="flex justify-between">
                 <div>Duration</div>

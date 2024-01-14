@@ -1,12 +1,13 @@
-import { Button, Card, DropdownMenu, Slider, Switch,Text } from "@radix-ui/themes";
+import { Card } from "@/components/ui/card";
+import {Switch } from "@/components/ui/switch";
 import SearchBar from "./SearchBar";
 import { PlaylistQueryParam } from "@/hooks/api/usePagingBSPlaylist";
 import NPSRangePicker from "./NPSRangePicker";
 import DateRangePicker from "./DateRangePicker";
-import { CaretDownIcon } from "@radix-ui/react-icons";
 import { useMemo, useState } from "react";
 import SortMenu from "./SortMenu";
 import dayjs from "dayjs";
+import {cn} from "@/lib/utils";
 const playlistSortOptions = [
     "Relevance",
     "Latest",
@@ -65,8 +66,8 @@ export default function BSPlaylistQueryCard(
         })
     }
     return (
-        <Card className={`${className} `} variant="classic">
-            <div className="flex flex-col h-full space-y-3">
+        <Card className={cn(className)} >
+            <div className=" h-fit w-full space-y-3">
             <SearchBar
                 queryKey={queryParam.queryKey}
                 onQuery={query}
@@ -79,21 +80,21 @@ export default function BSPlaylistQueryCard(
                     }}
             />
             <div className="flex justify-between items-center">
-            <Text>Sorted By</Text>
-            <SortMenu options={playlistSortOptions} current={sortMenuCurrent} onUpdateCurrent={handleSortMenuCurrentChange}/>
+            <div className="font-semibold text-xs">Sorted By</div>
+            <SortMenu className="max-w-28"  options={playlistSortOptions} current={sortMenuCurrent} onUpdateCurrent={handleSortMenuCurrentChange}/>
             </div>
-            <div className="flex justify-between items-center">
-            <Text>Verified Mapper</Text>
-            <Switch size="1" defaultChecked={queryParam.verifiedMapper} 
-            onCheckedChange={handleVerifiedMapperChange}
-            />
-            </div>
-            <div className="flex justify-between items-center">
-            <Text>Curated</Text>
-            <Switch size="1" defaultChecked={queryParam.curated}
-            onCheckedChange={handleCuratedChange}/>
-            </div>
-            <div className="flex w-full p-2 justify-between items-center">
+              <div className="flex justify-between items-center">
+              <div className="font-semibold text-xs">Verified Mapper</div>
+                <Switch defaultChecked={queryParam.verifiedMapper}
+                        onCheckedChange={handleVerifiedMapperChange}
+                />
+              </div>
+              <div className="flex justify-between items-center">
+                <div className="font-semibold text-xs">Curated</div>
+                <Switch defaultChecked={queryParam.curated}
+                        onCheckedChange={handleCuratedChange}/>
+              </div>
+              <div className="flex w-full p-2 justify-between items-center">
                 <div className="relative w-full">
                     <NPSRangePicker range={npsRange} setRange={setNpsRange}/>
                 </div>
