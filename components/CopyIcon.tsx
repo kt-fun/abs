@@ -31,4 +31,5 @@ const CopyIcon = React.forwardRef(({
     </Button>
   )
 })
+CopyIcon.displayName = "CopyIcon"
 export default CopyIcon
