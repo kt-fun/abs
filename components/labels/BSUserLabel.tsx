@@ -20,11 +20,13 @@ export default function BSUserLabel(
     {
         user,
         className,
-        avatarClassName
+        avatarClassName,
+        linkClassName
     }:{
         user:BSUser,
         className?:string,
-        avatarClassName?:string
+        avatarClassName?:string,
+        linkClassName?:string
     }
 ){
     return (
@@ -33,7 +35,7 @@ export default function BSUserLabel(
                 <HoverCardTrigger asChild>
                     <div  className={cn("relative flex items-center  cursor-pointer text-xs",className)}>
                       <MapperAvatar src={user.avatar} verified={user.verifiedMapper} className={avatarClassName}/>
-                      <Link href={`/mapper/${user.id}`}>
+                      <Link href={`/mapper/${user.id}`} className={linkClassName}>
                         <span className='my-auto text-ellipsis line-clamp-1'>{truncated(user.name)}</span>
                       </Link>
                     </div>

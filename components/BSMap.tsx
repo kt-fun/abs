@@ -129,9 +129,6 @@ export default function BSMap(
     navigator.clipboard.writeText(bsMap.id);
   }
   const score = bsMap.stats.score*100
-
-  const [diffHoverCardOpen, setDiffHoverCardOpen] = useState(false)
-  const handleDiffHoverCardClick = () => setDiffHoverCardOpen((prevOpen) => !prevOpen)
   return (
     <Card
       className='shadow-md h-[162px] sm:h-[202px] min-w-[360px]'
@@ -151,7 +148,7 @@ export default function BSMap(
                   bsMap.curator &&
                     <div className="flex space-x-1 items-center mx-1 text-white">
                         <span className="text-xs font-medium hidden sm:inline">Curator:</span>
-                        <BSUserLabel user={bsMap.curator} className="font-light text-white"/>
+                        <BSUserLabel user={bsMap.curator} className="font-light text-white" linkClassName="text-white"/>
                     </div>
                 }
                 <div onClick={handleCopyMapId} className='text-white flex'>
