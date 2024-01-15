@@ -17,12 +17,10 @@ const config = {
         "2xl": "1400px",
       },
     },
-    colors: {
-      //blue
-      ...colors,
-      primary: colors.blue,
-    },
     extend: {
+      colors:{
+        primary: colors.blue,
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

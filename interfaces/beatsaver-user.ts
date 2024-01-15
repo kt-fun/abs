@@ -10,14 +10,6 @@ export interface BSUser {
     playlistUrl: string;
     type: UserType;
 }
-// "diffStats": {
-    // "total": 0,
-    // "easy": 0,
-    // "normal": 0,
-    // "hard": 0,
-    // "expert": 0,
-    // "expertPlus": 0
-// }
 
 export interface BSUserWithStats {
     id: number;
@@ -27,7 +19,6 @@ export interface BSUserWithStats {
     followData?: {
         followers: number;
         follows?: number;
-        // for current user
         following: boolean;
         upload: boolean;
         curation: boolean;

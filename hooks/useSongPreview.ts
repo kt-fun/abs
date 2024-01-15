@@ -1,9 +1,7 @@
-import { error } from 'console';
 import { use, useCallback, useEffect, useMemo, useState } from "react";
-import {useAudio} from 'react-use';
 import { create } from "zustand";
 import { useGlobalAudioPlayer } from 'react-use-audio-player';
-import { set } from "date-fns";
+
 interface SongPreview {
     previewURL: string;
     coverURL?: string;

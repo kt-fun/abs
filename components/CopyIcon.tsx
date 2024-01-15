@@ -4,6 +4,7 @@ import React, {Ref, useState} from "react"
 import { FaCheck } from "react-icons/fa6";
 import {Button} from "@/components/ui/button";
 import {cn} from "@/lib/utils";
+import {useCopyToClipboard} from "react-use";
 
 const CopyIcon = React.forwardRef(({
    content,
@@ -15,10 +16,11 @@ const CopyIcon = React.forwardRef(({
   className?:string,
 },ref) => {
   const [copied, setCopied] = useState(false)
+  const [_, copyToClipboard] = useCopyToClipboard()
   const copy = () => {
     if (copied) return
     setCopied(true)
-    navigator.clipboard.writeText(content)
+    copyToClipboard(content)
     setTimeout(() => {
       setCopied(false)
     }, 1000)

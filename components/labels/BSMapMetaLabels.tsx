@@ -44,7 +44,7 @@ export const BSRatingLabel = (
 }
 
 export const ThumbUpCountLabel = (
-  {count,className,tooltip}:{count:number}& LabelProps
+  {count,className,tooltip= "thumb up count"}:{count:number}& LabelProps
 ) => {
   return (
     <>
@@ -56,7 +56,7 @@ export const ThumbUpCountLabel = (
 }
 
 export const ThumbDownCountLabel = (
-  {count,className,tooltip}:{count:number}& LabelProps
+  {count,className,tooltip = "thumb up count"}:{count:number}& LabelProps
 ) => {
   return (
     <>

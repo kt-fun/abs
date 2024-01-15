@@ -1,10 +1,6 @@
-
-import { sleep } from '@/interfaces/session'
 import { BASE_URL } from '@/lib/constant';
 import { createContext, use } from 'react'
 import { create } from 'zustand'
-import { persist, createJSONStorage } from 'zustand/middleware'
-
 interface SessionState {
         user?: UserInfo;
         isLoading: boolean,
@@ -91,36 +87,44 @@ export const useUserSessionStore = create<SessionActions&SessionState>(
       }),
 )
 const getUserStateAsync = async () => {
-    const res = await fetch("https://bs-api.kt-f63.workers.dev/api/users/me", {
+  try {
+    const res = await fetch(`${BASE_URL}/api/users/me`, {
             credentials: "include",
         }).then((res) => res.json())
-        if (res.error) {
-            return {
-                isLoggedIn: false,
-                isLoading: false,
-                user: undefined,
-            }
-        }
+    if (res.error) {
         return {
+            isLoggedIn: false,
             isLoading: false,
-            isLoggedIn: true,
-            user: {
-                username: res.name,
-                userId: res.id,
-                description: res.description,
-                avatar: res.avatar,
-                followData: {
-                    followers: res.followData.followers,
-                    follows: res.followData.follows,
-                    following: res.followData.following,
-                    upload: res.followData.upload,
-                    curation: res.followData.curation,
-                },
-                type: res.type,
-                admin: res.admin,
-                curator: res.curator,
-            } as UserInfo,
+            user: undefined,
         }
+    }
+    return {
+        isLoading: false,
+        isLoggedIn: true,
+        user: {
+            username: res.name,
+            userId: res.id,
+            description: res.description,
+            avatar: res.avatar,
+            followData: {
+                followers: res.followData.followers,
+                follows: res.followData.follows,
+                following: res.followData.following,
+                upload: res.followData.upload,
+                curation: res.followData.curation,
+            },
+            type: res.type,
+            admin: res.admin,
+            curator: res.curator,
+        } as UserInfo,
+    }
+  }catch (e) {
+    return {
+      isLoggedIn: false,
+      isLoading: false,
+      user: undefined,
+    }
+  }
 }
 
 getUserStateAsync().then((res) => {

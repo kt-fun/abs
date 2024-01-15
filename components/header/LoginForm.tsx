@@ -3,11 +3,8 @@
  * @see https://v0.dev/t/SdbTHJXCyMb
  */
 import { TabsTrigger, TabsList, TabsContent, Tabs } from "@/components/ui/tabs"
-import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import {Button} from "@/components/ui/button";
-import { FaDiscord } from "react-icons/fa";
-import { useState } from "react"
 import { useForm } from "react-hook-form";
 import { useUserSessionStore } from "@/hooks/state/useSession"
 import Link from "@/components/ui/link";
@@ -37,88 +34,61 @@ export function LoginForm({
   }
   return (
         <Tabs className="w-full" defaultValue="signin">
-            <TabsList className="grid w-full grid-cols-2 bg-slate-100 rounded-lg">
-            <TabsTrigger value="signin">
+            <TabsList className="grid w-full grid-cols-2 bg-slate-100 rounded-full">
+            <TabsTrigger value="signin" className="rounded-full">
               Sign In
             </TabsTrigger>
-            <TabsTrigger value="signup">
+            <TabsTrigger value="signup"  className="rounded-full">
               Sign Up
             </TabsTrigger>
           </TabsList>
 
           <TabsContent className="p-4" value="signin">
-            <form className="space-y-4 w-full"  onSubmit={onSubmit}>
+            <form className="space-y-4 w-full" onSubmit={onSubmit}>
               <div className="space-y-2">
-                <Label htmlFor="signin-email">Email</Label>
-                <Input id="signin-email" {...register("email", { required: true })} />
+                <Input id="signin-email" {...register("email", {required: true})} placeholder="Username/Email"/>
               </div>
               <div className="space-y-2">
-                <div className="flex justify-between">
-                <Label htmlFor="signin-password">Password</Label>
-                    <Link href="#">
-                      Forgot Password?
-                    </Link>
-                </div>
-                <Input id="signin-password" type="password" {...register("password", { required: true })} />
+                <Input id="signin-password" type="password" {...register("password", {required: true})} placeholder="Password"/>
               </div>
+              <div className="flex justify-between">
+                <Link href="#" className="text-xs">Forgot Password?</Link>
                 <div className="flex">
-                    {
-                        isLoading ? (
-                            <Button type="submit" variant={"ghost"} className="ml-auto mr-2" disabled>
-                                Loading...
-                            </Button>
-                        ) : (
-                            isLoggedIn ? (
-                              <Button type="submit" variant={"ghost"} className="ml-auto mr-2" disabled>
-                                  Logged in as {user?.username}
-                              </Button>
-                            ) : (
-                              <Button type="submit" variant={"ghost"} className="ml-auto mr-2">
-                                  Sign In
-                              </Button>
-                            )
-                        )
-                    }
-                </div>
-              <div className="flex justify-center mt-4 items-center">
-                <FaDiscord className="w-6 h-6" />
+                {
+                  isLoading ? (
+                    <Button type="submit" variant={"ghost"} className="ml-auto mr-2" disabled>
+                      Loading...
+                    </Button>
+                  ) : (
+                    isLoggedIn ? (
+                      <Button type="submit" variant={"ghost"} className="ml-auto mr-2" disabled>
+                        Logged in as {user?.username}
+                      </Button>
+                    ) : (
+                      <Button type="submit" variant={"ghost"} className="ml-auto mr-2">
+                        Sign In
+                      </Button>
+                    )
+                  )
+                }
               </div>
-              <div className="flex justify-center mt-4">
-
               </div>
             </form>
           </TabsContent>
           <TabsContent className="p-4" value="signup">
             <form className="space-y-4 w-full">
-              <div className="space-y-2">
-                <Label htmlFor="signup-email">Email</Label>
-                <Input id="signup-email" required type="email" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="signup-username">Username</Label>
-                <Input id="signup-username" required type="text" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="signup-password">Password</Label>
-                <Input id="signup-password" required type="password" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="signup-repeat-password">Repeat Password</Label>
-                <Input id="signup-repeat-password" required type="password" />
-              </div>
+              <Input id="signup-username" required type="text" placeholder="username"/>
+              <Input id="signup-email" required type="email" placeholder="email"/>
+              <Input id="signup-password" required type="password" placeholder="password"/>
+              <Input id="signup-repeat-password" required type="password" placeholder="repeat password"/>
               <div className="flex">
                 <Button type="submit" variant={"ghost"} className="ml-auto mr-2">
                     Sign Up
                 </Button>
               </div>
-
-              <div className="flex justify-center mt-4 text-sm text-gray-500">
-                By clicking Register, you agree to beatsaver.com&apos;s
-                <Link className="text-blue-500" href="#">
-                  Terms of Service
-                </Link>
-                .{"\n                          "}
-              </div>
+              <span className="inline-flex justify-center mt-4 text-xs text-gray-500">
+                By clicking Sign Up, you agree to beatsaver.com&apos;s Terms of Service and Privacy Policy.
+              </span>
             </form>
           </TabsContent>
         </Tabs>

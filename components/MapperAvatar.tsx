@@ -1,6 +1,8 @@
 import  {Avatar} from "@/components/ui/avatar";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import {cn} from "@/lib/utils";
+import React from "react";
+import {BadgeCheck} from "lucide-react";
 interface BSMapperAvatarProps {
     src:string
     verified?:boolean,
@@ -18,7 +20,7 @@ export default function MapperAvatar(
         {
           verified &&
             <span className="bottom-0 right-0 absolute text-blue-500 font-bold text-xs w-2 h-2">
-            <RiVerifiedBadgeFill/>
+              <RiVerifiedBadgeFill/>
             </span>
         }
       </span>

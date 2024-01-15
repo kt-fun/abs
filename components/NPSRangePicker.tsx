@@ -1,5 +1,5 @@
 import { Slider } from "@/components/ui/slider"
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 export default function NPSRangePicker(
     {
@@ -20,7 +20,7 @@ export default function NPSRangePicker(
         }
         setRange([min, max]);
     }
-    const covertedRange = useMemo(()=>{
+    const coveredRange = useMemo(()=>{
         return [
             range[0] === undefined ? 0 : range[0],
             range[1] === undefined ? 16 : range[1]
@@ -36,16 +36,16 @@ export default function NPSRangePicker(
     return (
         <div className="relative">
             <Slider
-            defaultValue={covertedRange}
+            defaultValue={coveredRange}
             min={0}
             max={16}
             onValueChange={handle}
             onValueCommit={handle}
             step={0.1}
             />
-            <div className="flex justify-between">
-                <div>NPS</div>
-                <div>{text}</div>
+            <div className="flex justify-between text-sm">
+                <span>NPS</span>
+                <span>{text}</span>
             </div>
         </div>
     )

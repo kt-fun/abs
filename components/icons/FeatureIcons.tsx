@@ -19,42 +19,42 @@ export default function FeatureIcons(
                 {
                     bsMap.ranked && (
                         <Tooltip content="Ranked Map" asChild>
-                            <span className=""><GiRank3/></span>
+                            <span className="flex justify-center items-center"><GiRank3/></span>
                         </Tooltip>
                     )
                 }
                 {
                     checkIfAI(bsMap) && (
                         <Tooltip content="Auto Mapper, notice, not all AI map has such tag" asChild>
-                            <span className=""><RiRobot2Line/></span>
+                            <span className="flex justify-center items-center"><RiRobot2Line/></span>
                         </Tooltip>
                         )
                 }
                 {
                     checkIfCinema(bsMap) && (
                         <Tooltip content="Cinema Map" asChild>
-                            <span className=""><BiCameraMovie/></span>
+                            <span className="flex justify-center items-center"><BiCameraMovie/></span>
                         </Tooltip>
                     )
                 }
                 {
                     checkIfChroma(bsMap) && (
                         <Tooltip content="Chroma Map" asChild>
-                            <span className=""><CiLight/></span>
+                            <span className="flex justify-center items-center"><CiLight/></span>
                         </Tooltip>
                     )
                 }
                 {
                     checkIfME(bsMap) && (
                         <Tooltip content="Mapping Extensions Map" asChild>
-                        <span className=""><CiLight/></span>
+                        <span className="flex justify-center items-center"><CiLight/></span>
                         </Tooltip>
                     )
                 }
                 {
                     checkIfNE(bsMap) && (
                         <Tooltip content="Noodle Extensions Map" asChild>
-                        <span className=""><CiLight/></span>
+                        <span className="flex justify-center items-center"><CiLight/></span>
                         </Tooltip>
                     )
                 }

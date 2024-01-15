@@ -17,8 +17,7 @@ export default function MapperPage() {
     },[reachedBottom,isLoadingMore,isEmpty,hasMore,loadMore])
     return (
       <>
-      <div className="flex-cols flex max-w-[1200px]  space-x-2">
-        {
+      <div className="max-w-[1200px]">
         <div className="grid gap-2 grid-cols-1 xl:grid-cols-3 md:grid-cols-2">
             {
                 !isEmpty && users.map((it)=> 
@@ -28,8 +27,7 @@ export default function MapperPage() {
           {!isLoadingMore&&isEmpty && <EmptyContent/>}
           { !isEmpty && !hasMore && !isLoadingMore && <ReachListEnd/> }
           { isLoadingMore && <Loading/> }
-        </div>
-        }
+      </div>
       </div>
 
       </>

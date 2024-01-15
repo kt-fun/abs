@@ -8,6 +8,9 @@ import { CgProfile } from "react-icons/cg";
 import NotifyModal from "./NotifyModal";
 import {Avatar} from "@/components/ui/avatar";
 import Link from "@/components/ui/link";
+import {LoginForm} from "@/components/header/LoginForm";
+import {AlertDialog, AlertDialogContent, AlertDialogTrigger} from "@/components/ui/alert-dialog";
+import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 export const LoggedinUserNav = ({
     user
 }:{user:UserInfo}) => {
@@ -19,18 +22,18 @@ export const LoggedinUserNav = ({
     return (
         <>
 
-            <HoverCard>
-                <HoverCardTrigger>
-                    <div className='cursor-default hidden md:flex hover:bg-gradient-to-r from-red-500 to-blue-500 hover:text-white rounded-full px-2 py-0.5 space-x-2 items-center font-semibold'>
+            <Popover>
+                <PopoverTrigger>
+                    <div className='cursor-default flex hover:bg-gradient-to-r from-red-500 to-blue-500 hover:text-white rounded-full px-2 py-0.5 space-x-2 items-center font-semibold'>
                         <Avatar src= {user!.avatar}
                         className="rounded-full w-6 h-6"
                         fallback={user!.username[0]}
                         />
-                        <span className="text-xl">{user!.username}</span>
+                        <span className="text-xl hidden sm:inline ">{user!.username}</span>
                     </div>
-                </HoverCardTrigger>
+                </PopoverTrigger>
 
-            <HoverCardContent>
+            <PopoverContent>
             <div>
                 <ul>
                     <li className='hover:bg-gradient-to-r from-red-500 to-blue-500 hover:text-white rounded-full px-2 py-0.5  cursor-pointer' onClick={handleDialogOpen}>
@@ -40,13 +43,11 @@ export const LoggedinUserNav = ({
                         </div>
                     </li>
                     <li  className='hover:bg-gradient-to-r from-red-500 to-blue-500 hover:text-white rounded-full px-2 py-0.5  cursor-pointer'>
-                      <Link className="flex space-x-2 items-center text-sm font-semibold" href={"/profile"}>
+                      <Link className="flex space-x-2 items-center text-sm font-semibold hover:o-underline" href={"/profile"}>
                           <span><CgProfile/></span>
                           <span>profile</span>
                       </Link>
                     </li>
-
-                    {/*<Separator className="w-full my-2"/>*/}
                     <li  className='hover:bg-gradient-to-r from-red-500 to-blue-500 hover:text-white rounded-full px-2 py-0.5 cursor-pointer' onClick={logout}>
                         <div className="flex space-x-2 items-center text-sm font-semibold">
                                 <span><IoLogOutOutline/></span>
@@ -55,8 +56,8 @@ export const LoggedinUserNav = ({
                     </li>
                 </ul>
             </div>
-            </HoverCardContent>
-            </HoverCard>
+            </PopoverContent>
+            </Popover>
             <NotifyModal open={messageDialogOpen} setOpen={setMessageDialogOpen}/>
          </>
     )
@@ -70,23 +71,24 @@ export default function UserNav() {
   const isLoggedIn = useUserSessionStore((state) => state.isLoggedIn)
   const [open, setOpen] = useState(false);
     return (
-        <div>
-            {/*<AlertDialog.Root  open={open} onOpenChange={setOpen}>*/}
-            {/*    <AlertDialog.Trigger>*/}
-            {/*    {*/}
-            {/*        isLoggedIn ? (*/}
-            {/*            <LoggedinUserNav user={user!}/>*/}
-            {/*        ):(*/}
-            {/*            <div className='cursor-default hidden md:flex hover:bg-gradient-to-r from-red-500 to-blue-500 hover:text-white rounded-full px-2 py-0.5 space-x-2 items-center font-semibold'>*/}
-            {/*                <div > Sign in </div>*/}
-            {/*            </div>*/}
-            {/*        )*/}
-            {/*    }*/}
-            {/*    </AlertDialog.Trigger>*/}
-            {/*    <AlertDialog.Content className="focus:outline-none">*/}
-            {/*        <LoginForm onClose={()=>setOpen(false)}/>*/}
-            {/*    </AlertDialog.Content>*/}
-            {/*</AlertDialog.Root>*/}
-        </div>
+      <>
+          {
+            isLoggedIn ? (
+                <LoggedinUserNav user={user!}/>
+            ):(
+              <AlertDialog  open={open} onOpenChange={setOpen}>
+                <AlertDialogTrigger>
+                <Avatar src= ""
+                    className="rounded-full w-10 h-10 text-xs"
+                    fallback={"Login"}
+                />
+                </AlertDialogTrigger>
+                <AlertDialogContent className="focus:outline-none">
+                  <LoginForm onClose={()=>setOpen(false)}/>
+                </AlertDialogContent>
+              </AlertDialog>
+            )
+          }
+      </>
     )
 }

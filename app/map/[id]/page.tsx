@@ -31,7 +31,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { getMapTag } from "@/interfaces/mapTags";
 import {BSMapReview} from "@/interfaces/beatmap-review"
 import { usePagingBSMapReview } from "@/hooks/api/usePagingBSMapReview";
-import { BSMapRankingItem } from "@/interfaces/beatmap-rank";
+import { BSMapRankItem } from "@/interfaces/beatmap-rank";
 import { usePagingBSMapScoreRank } from "@/hooks/api/usePagingMapScoreRank";
 import { RxExternalLink } from "react-icons/rx";
 import { HiCursorClick } from "react-icons/hi";
@@ -163,7 +163,7 @@ const RankTable = ({
     isLoading,
     loadMore,
 }:{
-    rankItems:BSMapRankingItem[],
+    rankItems:BSMapRankItem[],
     maxscore:number,
     hasMore:boolean,
     isLoading:boolean,

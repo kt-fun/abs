@@ -14,7 +14,6 @@ import BSLabel, {BSMapCountLabel} from "./labels/BSLabel";
 export default function BSPlaylistSideBar(
     {bsPlaylist}:{bsPlaylist:IBSPlaylist}
 ){
-    const score = bsPlaylist.stats.upVotes/(bsPlaylist.stats.upVotes+bsPlaylist.stats.downVotes) * 100.0
     const bg = `url('${bsPlaylist.playlistImage512}')`
     const npsRange = `${bsPlaylist.stats.minNps.toFixed(1)} - ${bsPlaylist.stats.maxNps.toFixed(1)}`
     return (
@@ -27,19 +26,14 @@ export default function BSPlaylistSideBar(
                         backgroundSize: 'cover',
                     }}>
                 </div>
-
                 <div className="flex justify-between items-center">
                     <span className="font-semibold text-lg line-clamp-1 text-ellipsis">
-                        {/*<Link href={`/playlist/${bsPlaylist.playlistId}`}>*/}
                         {bsPlaylist.name}
-                        {/*</Link>*/}
                     </span>
                 </div>
-
                 <BSUserLabel user={bsPlaylist.owner}/>
                 <DateLabel date={bsPlaylist.updatedAt}/>
-                <div className="">
-                        <div className="flex flex-col justify-between  h-full pt-auto pb-0">
+                <div className="flex flex-col justify-between  h-full pt-auto pb-0">
                             <p className="text-ellipsis overflow-hidden m-2 line-clamp-[7] text-xs">
                                     {bsPlaylist.description == "" ? "No description" : bsPlaylist.description}
                             </p>
@@ -87,7 +81,6 @@ export default function BSPlaylistSideBar(
                             </div>
                         </div>
 
-                </div>
             </Card>
         </>
     )

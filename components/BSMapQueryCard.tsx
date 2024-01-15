@@ -114,100 +114,99 @@ export default function BSMapQueryCard(
     }
   }
     return (
-        <Card className={cn(' p-2',className)}>
-          <div className="flex flex-col h-full space-y-3 max-w-full">
-            <SearchBar
-              queryKey={queryParam.queryKey}
-              onQuery={query}
-              onQueryKeyChange={
-                (queryKey: string) => {
-                  updateQuery({
-                    ...queryParam,
-                    queryKey: queryKey
-                  })
-                }}
-            />
-            <div>
-            </div>
-            <div className="flex justify-between items-center">
-              <div className="font-medium">Sorted By</div>
-              <SortMenu
-                className={"max-w-28"}
-                options={mapSortOptions}
-                current={sortMenuCurrent}
-                onUpdateCurrent={handleSortMenuCurrentChange}/>
-            </div>
-
-            <div className="flex  w-full p-2 justify-between items-center">
-              <div className="relative w-full">
-                <NPSRangePicker range={npsRange} setRange={setNpsRange}/>
-              </div>
-            </div>
-            <div className="flex w-full p-2 justify-between items-center">
-              <div className="relative w-full">
-                <DurationRangePicker range={durationRange} setRange={setDurationRange}/>
-              </div>
-            </div>
-            <div className="flex w-full p-2 justify-between items-center">
-              <div className="relative w-full">
-                <RatingRangePicker range={ratingRange} setRange={setRatingRange}/>
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <DateRangePicker
-                dateRange={dateRange}
-                setDateRange={handleDateRangeChange}
-              />
-            </div>
-            <div className="font-medium">Feature Selector</div>
-            <div className="flex-wrap flex  gap-1">
-              {
-                options.map((option) => {
-                  return (
-                    <Tooltip content={option.tooltip!} key={option.label}>
-                      <span
-                        onClick={() => {
-                          handleOptionChange(option)
-                        }}
-                        className={`${checkIfOptionChecked(option) ? '' : 'opacity-40'}  text-xs px-1 text-white rounded-md p-0.5 bg-green-600 inline-flex items-center justify-center space-x-1 cursor-pointer`}>{option.label}</span>
-                    </Tooltip>
-                  )
+        <Card className={cn('h-full space-y-3 max-w-full p-2',className)}>
+          <SearchBar
+            queryKey={queryParam.queryKey}
+            onQuery={query}
+            className={"sticky top-0 z-50"}
+            onQueryKeyChange={
+              (queryKey: string) => {
+                updateQuery({
+                  ...queryParam,
+                  queryKey: queryKey
                 })
-              }
-            </div>
+              }}
+          />
+          <div className="flex justify-between items-center">
+            <div className="font-medium">Sorted By</div>
+            <SortMenu
+              className={"max-w-28"}
+              options={mapSortOptions}
+              current={sortMenuCurrent}
+              onUpdateCurrent={handleSortMenuCurrentChange}/>
+          </div>
 
-            <div className="font-medium">Style Tag Selector</div>
-            <div className="flex flex-wrap gap-1">
-              {
-                BSStyleTags.map((tag) =>
-                  (<span
-                    key={tag.slug}
-                    onClick={() => {
-                      handleStyleTagChange(tag.slug)
-                    }}>
-                  <BSMapTag className={`${selectedStyleTags.includes(tag.slug) ? '' : 'opacity-40'} px-1  text-xs`} tag={tag}/>
-                  </span>)
-                )
-              }
+          <div className="flex  w-full p-2 justify-between items-center">
+            <div className="relative w-full">
+              <NPSRangePicker range={npsRange} setRange={setNpsRange}/>
             </div>
-            <div className="font-medium">Genre Tag Selector</div>
-            <div className="flex flex-wrap gap-1">
-              {
-                BSGenreTags.map((tag) =>
-                  <span
-                    key={tag.slug}
-                    onClick={() => {
-                      handleGenreTagChange(tag.slug)
-                    }}>
-                  <BSMapTag
-                    className={`${selectedGenreTags.includes(tag.slug) ? '' : 'opacity-40'}  px-1 text-xs `}
-                    key={tag.slug}
-                    tag={tag}/>
-                  </span>
+          </div>
+          <div className="flex w-full p-2 justify-between items-center">
+            <div className="relative w-full">
+              <DurationRangePicker range={durationRange} setRange={setDurationRange}/>
+            </div>
+          </div>
+          <div className="flex w-full p-2 justify-between items-center">
+            <div className="relative w-full">
+              <RatingRangePicker range={ratingRange} setRange={setRatingRange}/>
+            </div>
+          </div>
 
+          <div className="font-medium">Date Selector</div>
+          <div className="flex flex-col">
+            <DateRangePicker
+              dateRange={dateRange}
+              setDateRange={handleDateRangeChange}
+            />
+          </div>
+          <div className="font-medium">Feature Selector</div>
+          <div className="flex-wrap flex  gap-1">
+            {
+              options.map((option) => {
+                return (
+                  <Tooltip content={option.tooltip!} key={option.label}>
+                    <span
+                      onClick={() => {
+                        handleOptionChange(option)
+                      }}
+                      className={`${checkIfOptionChecked(option) ? '' : 'opacity-40'}  text-xs px-1 text-white rounded-md p-0.5 bg-green-600 inline-flex items-center justify-center space-x-1 cursor-pointer`}>{option.label}</span>
+                  </Tooltip>
                 )
-              }
-            </div>
+              })
+            }
+          </div>
+
+          <div className="font-medium">Style Tag Selector</div>
+          <div className="flex flex-wrap gap-1">
+            {
+              BSStyleTags.map((tag) =>
+                (<span
+                  key={tag.slug}
+                  onClick={() => {
+                    handleStyleTagChange(tag.slug)
+                  }}>
+                <BSMapTag className={`${selectedStyleTags.includes(tag.slug) ? '' : 'opacity-40'} px-1  text-xs`}
+                          tag={tag}/>
+                </span>)
+              )
+            }
+          </div>
+          <div className="font-medium">Genre Tag Selector</div>
+          <div className="flex flex-wrap gap-1">
+            {
+              BSGenreTags.map((tag) =>
+                <span
+                  key={tag.slug}
+                  onClick={() => {
+                    handleGenreTagChange(tag.slug)
+                  }}>
+                <BSMapTag
+                  className={`${selectedGenreTags.includes(tag.slug) ? '' : 'opacity-40'}  px-1 text-xs `}
+                  key={tag.slug}
+                  tag={tag}/>
+                </span>
+              )
+            }
           </div>
         </Card>
     )

@@ -21,7 +21,7 @@ export default function DurationRangePicker({
         }
         setRange([min, max]);
     }
-    const covertedRange = useMemo(()=>{
+    const coveredRange = useMemo(()=>{
         return [
             range[0] === undefined ? 0 : range[0],
             range[1] === undefined ? 330 : range[1]
@@ -38,7 +38,7 @@ export default function DurationRangePicker({
     return (
         <div className="relative z-[100]">
             <Slider
-            defaultValue={covertedRange}
+            defaultValue={coveredRange}
             min={0}
             max={330}
             onValueChange={handle}
@@ -46,9 +46,9 @@ export default function DurationRangePicker({
             step={30}
             className="z-[100]"
             />
-            <div className="flex justify-between">
-                <div>Duration</div>
-                <div>{text}</div>
+            <div className="flex justify-between text-sm">
+                <span>Duration</span>
+                <span>{text}</span>
             </div>
         </div>
     )

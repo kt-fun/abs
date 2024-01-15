@@ -6,7 +6,6 @@ import { persist, createJSONStorage, devtools } from 'zustand/middleware'
 export interface UserPreference {
     userPreference: {
         themeColor: string;
-        themeMode: ThemeMode;
         language: string;
     }
 }
@@ -19,18 +18,17 @@ export enum ThemeMode {
 export interface UserPreferenceAction {
     updateThemeColor: (color:string) => void;
     updateI18N: (i18n:string) => void;
-    updateThemeMode: (mode:ThemeMode) => void;
 }
 
 
 
 export const UserPreferenceContext = createContext<{
     themeColor: string;
-    themeMode: ThemeMode;
     language: string;
 }|null>(null)
 
 
+// todo replace with useContext
 export const useUserPreferenceStore = create<UserPreference & UserPreferenceAction>()(
     devtools(
         persist(
@@ -38,7 +36,6 @@ export const useUserPreferenceStore = create<UserPreference & UserPreferenceActi
                 userPreference: {
                     themeColor: 'blue',
                     language: 'zh-CN',
-                    themeMode: ThemeMode.Light,
                 },
                 updateThemeColor: (color:string) => {
                     set((state) => ({
@@ -56,24 +53,6 @@ export const useUserPreferenceStore = create<UserPreference & UserPreferenceActi
                             }
                     }))
                 },
-                updateThemeMode: (mode:ThemeMode) => {
-                    set((state) => ({
-                            userPreference: {
-                                ...state.userPreference,
-                                themeMode: mode
-                            }
-                    }))
-                    const root = window.document.documentElement;
-                    root.classList.remove("light", "dark");
-                    if (mode === 'system') {
-                    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-                        .matches
-                        ? "dark"
-                        : "light";
-                        root.classList.add(systemTheme);
-                    }
-                    root.classList.add(mode);
-                  },
                 }),
                 {
                   name: 'user-preference',

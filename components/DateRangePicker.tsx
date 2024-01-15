@@ -5,14 +5,14 @@ import {useCallback, useMemo, useState} from "react";
 import { FaAngleLeft } from "react-icons/fa6";
 import { FaAngleRight } from "react-icons/fa6";
 import {Button } from "@/components/ui/button";
-import {Select, SelectItem, SelectContent, SelectTrigger,SelectValue} from "@/components/ui/select";
+import {Select, SelectItem, SelectContent, SelectTrigger} from "@/components/ui/select";
 import * as Popover from "@/components/ui/popover";
 import dayjs from "dayjs";
 
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import isBetween from 'dayjs/plugin/isBetween';
-import { IoIosArrowDropdown } from "react-icons/io";
+
 dayjs.extend(isBetween)
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
@@ -25,8 +25,7 @@ const dayIsBetween = (day: Date, dateRange?:DateRange) => {
   return dayjs(day).isBetween(dayjs(start), dayjs(end), 'day', '[]');
 }
 
-export type DateRange = [Date?, Date?];
-//@ts-ignore
+type DateRange = [Date?, Date?];
 
 interface DateRangePickerProps {
   dateRange: [Date?, Date?];
@@ -40,7 +39,6 @@ const DateRangePicker = ({dateRange,setDateRange}:DateRangePickerProps) => {
   const [startSelectableRange, setStartSelectableRange] = useState([undefined, new Date()] as DateRange);
   const [endSelectableRange, setEndSelectableRange] = useState([undefined, new Date()] as DateRange);
   const [value, setValue] = useState("");
-  const [quickSelectOpen, setQuickSelectOpen] = useState(false);
   const handleValueChange = (value: string) => {
     setValue(value)
     if (value === "") {
@@ -60,7 +58,6 @@ const DateRangePicker = ({dateRange,setDateRange}:DateRangePickerProps) => {
       start = dayjs().subtract(1, "day").toDate()
     }
     setDateRange([start, undefined])
-    setStartSelectableRange([start, new Date()])
     setEndSelectableRange([start, new Date()])
   }
   return (

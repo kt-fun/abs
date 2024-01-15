@@ -1,5 +1,5 @@
 import { Slider } from "@/components/ui/slider"
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 export default function RatingRangePicker(
     {
@@ -43,9 +43,9 @@ export default function RatingRangePicker(
             onValueCommit={handle}
             step={5}
             />
-            <div className="flex justify-between">
-                <div>Rating</div>
-                <div>{text}</div>
+            <div className="flex justify-between text-sm">
+                <span>Rating</span>
+                <span>{text}</span>
             </div>
         </div>
     )

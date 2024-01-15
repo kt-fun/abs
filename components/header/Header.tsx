@@ -6,6 +6,7 @@ import ThemeButton from './ThemeButton';
 import HeaderHelpMenu from './HeaderHelpMenu';
 import MobileHeaderDrawer from './MobileHeaderDrawer';
 import Link from "@/components/ui/link";
+import UserNav from "@/components/header/UserNav";
 
 export const useMobileMenuContext = () => {
   const [open, setOpen] = React.useState(false);
@@ -24,37 +25,31 @@ export const Header = () => {
         className='w-full px-4 md:px-20 h-16 top-0 z-50 sticky backdrop-blur-2xl '
       >
         <div className='h-full flex justify-between items-center max-w-[1400px] mx-auto'>
-          <div className='flex items-center space-x-2'>
-                <Link href="/" className="hover:no-underline">
-                    <div className="font-bold text-2xl cursor-pointer bg-gradient-to-r bg-clip-text text-transparent from-red-500 to-blue-500">Another BeatSaver</div>
-                </Link>
-                <div className='hidden md:flex items-center space-x-2'>
-                  <HeaderLink href="/map" label='beatmap'/>
-                  <HeaderLink href="/playlist" label='playlist'/>
-                  <HeaderLink href="/mapper" label='mapper'/>
-                  <div className='hidden md:flex'>
-                    <HeaderHelpMenu/>
-                  </div>
-          </div>
-          </div>
-
-          <div className='flex space-x-4 items-center '>
-            {/* {<UserNav/>} */}
-            <div className='hidden md:flex '>
-                <ThemeButton />
+            <div className='flex items-center space-x-2'>
+              <Link href="/" className="hover:no-underline">
+                  <div className="font-bold text-2xl cursor-pointer bg-gradient-to-r bg-clip-text text-transparent from-red-500 to-blue-500">Another BeatSaver</div>
+              </Link>
+              <div className='hidden md:flex items-center space-x-2'>
+                <HeaderLink href="/map" label='beatmap'/>
+                <HeaderLink href="/playlist" label='playlist'/>
+                <HeaderLink href="/mapper" label='mapper'/>
+                <div className='hidden md:flex'>
+                  <HeaderHelpMenu/>
+                </div>
+              </div>
             </div>
-
-            <div className='flex md:hidden space-x-4 items-center'>
-
-                <ThemeButton/>
-
-                <MobileHeaderDrawer />
+            <div className='hidden md:flex space-x-2 items-center'>
+              {/*<UserNav/>*/}
+              <ThemeButton />
             </div>
-          </div>
-
+            <div className='flex md:hidden space-x-2 items-center'>
+              {/*<div className="w-10 h-10 ">*/}
+              {/*  <UserNav/>*/}
+              {/*</div>*/}
+              <ThemeButton/>
+              <MobileHeaderDrawer />
+            </div>
         </div>
-
-
       </header>
   );
 };

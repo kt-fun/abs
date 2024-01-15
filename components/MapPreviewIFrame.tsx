@@ -1,6 +1,5 @@
-'use client'
 import * as Dialog from "@/components/ui/dialog"
-import React, {Ref, use, useMemo} from "react"
+import React, {useMemo} from "react"
 import { Tooltip } from "@/components/ui/tooltip"
 
  const MapPreviewIFrame = React.forwardRef(({
@@ -16,12 +15,12 @@ import { Tooltip } from "@/components/ui/tooltip"
     return (
       <Dialog.Dialog>
         <Tooltip content="play map preview" asChild>
-          <Dialog.DialogTrigger asChild>
+          <Dialog.DialogTrigger asChild ref={ref as any}>
             {children}
           </Dialog.DialogTrigger>
         </Tooltip>
-        <Dialog.DialogContent className="aspect-video max-w-[1080px] border-0  rounded-lg bg-transparent">
-          <iframe title="ArcViewer" src={url} className="w-full h-full  rounded-lg"/>
+        <Dialog.DialogContent className="aspect-video max-w-[1080px] border-0  rounded-lg bg-transparent p-2 sm:p-4">
+          <iframe title="ArcViewer" src={url} className="w-full h-full  rounded-lg" allowFullScreen/>
         </Dialog.DialogContent>
       </Dialog.Dialog>
     )

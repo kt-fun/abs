@@ -2,6 +2,8 @@ import { BASE_URL } from "@/lib/constant"
 import { jsonWithCredentialFetcher } from "@/lib/fetcher"
 import useSWR from "swr"
 import useSWRInfinite from "swr/infinite"
+import {BSNotification} from "@/interfaces/bs-notification";
+import {BSPlaylist} from "@/interfaces/bs-playlist";
 
 export interface NotifyStats {
     unread: number,
@@ -39,8 +41,19 @@ export const usePagingNotifications = (
       },
       jsonWithCredentialFetcher
     );
+    const notifications:BSNotification[] = data ? [].concat(...data) : [];
+    const isLoadingMore = isLoading || (size > 0 && data && typeof data[size - 1] === "undefined");
+    const isRefreshing = isValidating && data && data.length === size;
+    const isEmpty = data?.[0]?.length === 0;
+    const loadMore = () => setSize(size + 1);
+    const hasMore = data?.[data.length - 1]?.length === 20;
     return {
-        data,
+        notifications,
+        isLoadingMore,
+        loadMore,
+        isEmpty,
+        isRefreshing,
+        size,
         isLoading,
     }
 }

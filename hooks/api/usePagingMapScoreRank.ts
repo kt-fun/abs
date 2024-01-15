@@ -1,4 +1,4 @@
-import { BSMapRankingItem } from "@/interfaces/beatmap-rank";
+import { BSMapRankItem } from "@/interfaces/beatmap-rank";
 import { BSUserWithStats } from "@/interfaces/beatsaver-user";
 import { BASE_URL } from "@/lib/constant";
 import { jsonFetcher } from "@/lib/fetcher";
@@ -71,7 +71,7 @@ export const usePagingBSMapScoreRank = (
             setUid(data[0]["uid"])
         }
     },[data])
-    const rankingItems:BSMapRankingItem[] = data ? [].concat(...data).flatMap((item)=> {
+    const rankingItems:BSMapRankItem[] = data ? [].concat(...data).flatMap((item)=> {
         return item["scores"]
     }) : [];
     const isLoadingMore =
@@ -82,7 +82,7 @@ export const usePagingBSMapScoreRank = (
     const hasMore = data?.[data.length - 1]?.["scores"].length === PAGE_SIZE;
     return {
         "id":uid,
-        rankingItems:rankingItems as BSMapRankingItem[],
+        rankingItems:rankingItems as BSMapRankItem[],
         "isLoadingMore":isLoadingMore?true:false,
         loadMore,
         isEmpty,

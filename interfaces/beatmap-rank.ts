@@ -1,4 +1,4 @@
-export interface BSMapRankingItem {
+export interface BSMapRankItem {
         name: string,
         playerId: number,
         score: number,

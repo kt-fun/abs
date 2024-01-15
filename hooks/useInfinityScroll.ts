@@ -1,4 +1,4 @@
-import { MutableRefObject, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export const useInfinityScroll = () => {
   // for mobile devices, may have some compatibility issues,not exactly equal,

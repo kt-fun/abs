@@ -23,7 +23,6 @@ const Label = React.forwardRef(({
     label:string,
     className?:string,
 }, forwardedRef) => {
-  // console.log("label",label,forwardedRef)
   return (
     <span className={cn("font-medium inline-flex items-center space-x-1  text-xs cursor-default",className)} ref={forwardedRef as any}>
       <span>{children}</span>
@@ -41,14 +40,14 @@ export default function BSLabel(
     return (
         <>
         {
-            tooltip ?
-              (
-                <Tooltip content={tooltip} asChild>
-                    <Label label={label} className={className}>{children}</Label>
-                </Tooltip>
-              ) : (
+            // tooltip ?
+            //   (
+            //     <Tooltip content={tooltip} >
+            //         <Label label={label} className={className}>{children}</Label>
+            //     </Tooltip>
+            //   ) : (
                 <Label label={label} className={className}>{children}</Label>
-              )
+              // )
         }
 
         </>

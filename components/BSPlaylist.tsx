@@ -16,7 +16,6 @@ import React from "react";
 export default function BSPlaylist(
     {bsPlaylist}:{bsPlaylist:IBSPlaylist}
 ){
-    const score = bsPlaylist.stats.upVotes/(bsPlaylist.stats.upVotes+bsPlaylist.stats.downVotes) * 100.0
     const bg = `url('${bsPlaylist.playlistImage}')`
 
 

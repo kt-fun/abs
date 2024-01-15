@@ -1,4 +1,4 @@
-'use client'
+// 'use client'
 import RankedIcon from "@/components/icons/RankedIcon";
 import ThumbDownIcon from "@/components/icons/ThumbDownIcon";
 import ThumbUpIcon from "@/components/icons/ThumbUpIcon";
@@ -11,7 +11,7 @@ import * as Card from "@/components/ui/card";
 import {Tooltip} from "@/components/ui/tooltip";
 import dayjs from "dayjs";
 import Link from "@/components/ui/link";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import relativeTime from "dayjs/plugin/relativeTime";
 import {cn} from "@/lib/utils";
 dayjs.extend(relativeTime);
