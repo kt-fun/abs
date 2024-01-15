@@ -32,7 +32,7 @@ export const DurationLabel = (
 }
 
 export const BSRatingLabel = (
-  {rate,className,tooltip}:{rate:number}& LabelProps
+  {rate,className,tooltip="rate"}:{rate:number}& LabelProps
 ) => {
   return (
     <>

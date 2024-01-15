@@ -35,9 +35,9 @@ export default function BSMapperSideBar(
                         </span>
                     }
                 </div>
-                <div className="grid grid-cols-2 gap-1">
+                <div className="grid grid-cols-2 gap-1 justify-center">
                     <BSMapCountLabel count={bsMapper.stats!.totalMaps}/>
-                    <MapMetaLabel.BSRatingLabel rate={bsMapper.stats!.avgScore/100}/>
+                    <MapMetaLabel.BSRatingLabel rate={bsMapper.stats!.avgScore/100} tooltip={"rate"}/>
                     <MapMetaLabel.ThumbUpCountLabel count={bsMapper.stats!.totalUpvotes}/>
                     <MapMetaLabel.ThumbDownCountLabel count={bsMapper.stats!.totalDownvotes}/>
                 </div>

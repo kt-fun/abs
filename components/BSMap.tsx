@@ -167,14 +167,14 @@ export default function BSMap(
                   {/*{bsMap.description == "" ? "No description" : escapeHtml(bsMap.description)}*/}
                 </p>
                 <ScrollArea>
-                  <div className='grid  grid-rows-1 sm:grid-rows-2 grid-flow-col '>
+                  <div className='grid  grid-rows-1 sm:grid-rows-2 grid-flow-col'>
                     {
                       bsMap.versions[0].diffs.map((diff) => <DiffCard diff={diff} key={diff.characteristic + diff.difficulty + bsMap.id}/>)
                     }
                   </div>
                   <ScrollBar orientation="horizontal"/>
                 </ScrollArea>
-                <div className="grid grid-cols-4 gap-1 sm:flex items-center mx-auto justify-center py-1">
+                <div className="grid grid-cols-4 gap-1 sm:flex items-center mx-auto justify-center py-0.5">
                   {/*<Tooltip content="add to playlist" asChild>*/}
                   {/*  <IconButton onClick={handleAddToPlaylist}*/}
                   {/*              className="w-6 h-6 hover:bg-white text-white hover:text-red-400 rounded-full cursor-pointer"*/}

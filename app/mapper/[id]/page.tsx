@@ -153,7 +153,7 @@ export default function MapperDetailPage({ params }: { params: { id: number } })
 
     return isLoading?(<Loading/>)
     : (
-        <div className=" max-w-[1200px]">
+        <div className=" max-w-[1200px] w-full">
 
           <div className="block lg:hidden mb-2">
             <div className="flex justify-start">
@@ -182,10 +182,10 @@ export default function MapperDetailPage({ params }: { params: { id: number } })
                   }
                 </div>
                 <div className="grid grid-cols-2 gap-1">
-                  <BSMapCountLabel count={bsUserWithStats.stats!.totalMaps}/>
-                  <MapMetaLabel.BSRatingLabel rate={bsUserWithStats.stats!.avgScore / 100}/>
-                  <MapMetaLabel.ThumbUpCountLabel count={bsUserWithStats.stats!.totalUpvotes}/>
-                  <MapMetaLabel.ThumbDownCountLabel count={bsUserWithStats.stats!.totalDownvotes}/>
+                  <BSMapCountLabel count={bsUserWithStats.stats!.totalMaps} tooltip="total map count"/>
+                  <MapMetaLabel.BSRatingLabel rate={bsUserWithStats.stats!.avgScore / 100} tooltip={"avg rate of this mapper's map"}/>
+                  <MapMetaLabel.ThumbUpCountLabel count={bsUserWithStats.stats!.totalUpvotes} tooltip={"total up vote"}/>
+                  <MapMetaLabel.ThumbDownCountLabel count={bsUserWithStats.stats!.totalDownvotes} tooltip={"total down vote"}/>
                 </div>
 
                 <p
