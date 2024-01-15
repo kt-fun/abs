@@ -33,6 +33,7 @@ import {Tooltip} from "@/components/ui/tooltip";
 import Link from "@/components/ui/link";
 import {HiCursorClick} from "react-icons/hi";
 import * as Progress from "@radix-ui/react-progress";
+import {escapeHtml} from "@/lib/ContentEscape";
 export default function Home({ params }: { params: { id: string } }) {
     const { playlist,maps,isLoadingMore,error,isEmpty,hasMore,loadMore} = usePagingBSPlaylistDetail(params.id);
     const router = useRouter()
@@ -139,15 +140,24 @@ export default function Home({ params }: { params: { id: string } }) {
                         </div>
 
                       </div>
-                      <p className="text-ellipsis overflow-hidden text-xs hidden sm:block">
-                        {playlist?.description == "" ? "No description" : playlist?.description}
-                      </p>
+
+                      <p
+                        className="text-ellipsis overflow-hidden text-xs hidden sm:block"
+                        dangerouslySetInnerHTML={{__html: playlist?.description == "" ? "No description" : escapeHtml(playlist?.description ?? "")}}
+                      />
+                      {/*<p className="text-ellipsis overflow-hidden text-xs hidden sm:block">*/}
+                      {/*  {playlist?.description == "" ? "No description" : playlist?.description}*/}
+                      {/*</p>*/}
                     </div>
 
                   </div>
-                  <p className="text-ellipsis overflow-hidden text-xs block sm:hidden">
-                    {playlist?.description == "" ? "No description" : playlist?.description}
-                  </p>
+                  <p
+                    className="text-ellipsis overflow-hidden text-xs block sm:hidden"
+                    dangerouslySetInnerHTML={{__html: playlist?.description == "" ? "No description" : escapeHtml(playlist?.description ?? "")}}
+                  />
+                  {/*<p className="text-ellipsis overflow-hidden text-xs block sm:hidden">*/}
+                  {/*  {playlist?.description == "" ? "No description" : playlist?.description }*/}
+                  {/*</p>*/}
                 </>
               )
             }

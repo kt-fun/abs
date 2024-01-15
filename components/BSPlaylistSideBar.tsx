@@ -11,6 +11,7 @@ import { IoCloudDownloadOutline } from "react-icons/io5";
 import { IoSpeedometerOutline } from "react-icons/io5";
 import { HiCursorClick } from "react-icons/hi";
 import BSLabel, {BSMapCountLabel} from "./labels/BSLabel";
+import {escapeHtml} from "@/lib/ContentEscape";
 export default function BSPlaylistSideBar(
     {bsPlaylist}:{bsPlaylist:IBSPlaylist}
 ){
@@ -33,55 +34,63 @@ export default function BSPlaylistSideBar(
                 </div>
                 <BSUserLabel user={bsPlaylist.owner}/>
                 <DateLabel date={bsPlaylist.updatedAt}/>
-                <div className="flex flex-col justify-between  h-full pt-auto pb-0">
-                            <p className="text-ellipsis overflow-hidden m-2 line-clamp-[7] text-xs">
-                                    {bsPlaylist.description == "" ? "No description" : bsPlaylist.description}
-                            </p>
-                            <div>
-                                <div>
-                                    <div className="flex justify-between px-2">
-                                        <MapMetaLabel.DurationLabel duration={bsPlaylist.stats.totalDuration} tooltip="total duration"/>
-                                        <BSMapCountLabel count={bsPlaylist.stats.totalMaps} tooltip="total map amount"/>
-                                    </div>
-                                <div className="flex justify-between px-2">
-                                    <MapMetaLabel.ThumbUpCountLabel count={bsPlaylist.stats.upVotes} tooltip="total upvote"/>
-                                    <MapMetaLabel.ThumbDownCountLabel count={bsPlaylist.stats.downVotes} tooltip="total down vote"/>
-                                </div>
-                                </div>
-                                <div className="flex justify-between px-2 items-center">
-                                    <Progress.Root className="relative overflow-hidden rounded-full w-full h-2 mx-2 my-2 bg-gray-100" value={bsPlaylist.stats.avgScore*100}>
-                                        <Progress.Indicator
-                                            className=" h-2 rounded-full bg-gradient-to-r from-red-500 to-blue-500"
-                                            style={{ transform: `translateX(-${100 - bsPlaylist.stats.avgScore*100}%)` }}
-                                        />
-                                    </Progress.Root>
-                                    <p className="pl-1 font-medium text-xs">{(bsPlaylist.stats.avgScore*100).toFixed(1)}%</p>
-                                </div>
+          <div className="flex flex-col justify-between  h-full pt-auto pb-0">
+            <p
+              className="text-ellipsis overflow-hidden m-2 line-clamp-[7] text-xs"
+              dangerouslySetInnerHTML={{__html:escapeHtml(bsPlaylist.description)}}
+            />
 
-                                <div className="py-1 px-3 flex items-center space-x-1 justify-between">
-                                    <div>
-                                        <BSLabel label={npsRange} tooltip="min nps to max nps">
-                                            <IoSpeedometerOutline  />
-                                        </BSLabel>
-                                    </div>
-                                    <div className="flex items-center space-x-1">
-                                        <Tooltip content="download as .bplist">
-                                        <Link href={bsPlaylist.downloadURL}  className="hover:bg-white hover:text-red-400 p-1 rounded-full">
-                                                <IoCloudDownloadOutline  />
-                                        </Link>
-                                        </Tooltip>
-                                        <Tooltip content="one click download">
-                                            <Link href={`bsplaylist://playlist/${bsPlaylist.downloadURL}/beatsaver-${bsPlaylist.playlistId}.bplist`} className="hover:bg-white hover:text-red-400 p-1 rounded-full">
-                                                <HiCursorClick  />
-                                            </Link>
-                                        </Tooltip>
-                                    </div>
+            {/*<p className="text-ellipsis overflow-hidden m-2 line-clamp-[7] text-xs">*/}
+            {/*  {bsPlaylist.description == "" ? "No description" : bsPlaylist.description}*/}
+            {/*</p>*/}
+            <div>
+              <div>
+                <div className="flex justify-between px-2">
+                  <MapMetaLabel.DurationLabel duration={bsPlaylist.stats.totalDuration} tooltip="total duration"/>
+                  <BSMapCountLabel count={bsPlaylist.stats.totalMaps} tooltip="total map amount"/>
+                </div>
+                <div className="flex justify-between px-2">
+                  <MapMetaLabel.ThumbUpCountLabel count={bsPlaylist.stats.upVotes} tooltip="total upvote"/>
+                  <MapMetaLabel.ThumbDownCountLabel count={bsPlaylist.stats.downVotes} tooltip="total down vote"/>
+                </div>
+              </div>
+              <div className="flex justify-between px-2 items-center">
+                <Progress.Root className="relative overflow-hidden rounded-full w-full h-2 mx-2 my-2 bg-gray-100"
+                               value={bsPlaylist.stats.avgScore * 100}>
+                  <Progress.Indicator
+                    className=" h-2 rounded-full bg-gradient-to-r from-red-500 to-blue-500"
+                    style={{transform: `translateX(-${100 - bsPlaylist.stats.avgScore * 100}%)`}}
+                  />
+                </Progress.Root>
+                <p className="pl-1 font-medium text-xs">{(bsPlaylist.stats.avgScore * 100).toFixed(1)}%</p>
+              </div>
 
-                                </div>
-                            </div>
-                        </div>
+              <div className="py-1 px-3 flex items-center space-x-1 justify-between">
+                <div>
+                  <BSLabel label={npsRange} tooltip="min nps to max nps">
+                    <IoSpeedometerOutline/>
+                  </BSLabel>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <Tooltip content="download as .bplist">
+                    <Link href={bsPlaylist.downloadURL} className="hover:bg-white hover:text-red-400 p-1 rounded-full">
+                      <IoCloudDownloadOutline/>
+                    </Link>
+                  </Tooltip>
+                  <Tooltip content="one click download">
+                    <Link
+                      href={`bsplaylist://playlist/${bsPlaylist.downloadURL}/beatsaver-${bsPlaylist.playlistId}.bplist`}
+                      className="hover:bg-white hover:text-red-400 p-1 rounded-full">
+                      <HiCursorClick/>
+                    </Link>
+                  </Tooltip>
+                </div>
 
-            </Card>
+              </div>
+            </div>
+          </div>
+
+        </Card>
         </>
     )
 }

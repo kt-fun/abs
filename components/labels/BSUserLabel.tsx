@@ -31,14 +31,16 @@ export default function BSUserLabel(
         <>
             <HoverCard>
                 <HoverCardTrigger asChild>
-                    <Link href={`/mapper/${user.id}`} className={cn("relative flex items-center  cursor-pointer text-xs",className)}>
-                        <MapperAvatar src={user.avatar} verified={user.verifiedMapper} className={avatarClassName}/>
+                    <div  className={cn("relative flex items-center  cursor-pointer text-xs",className)}>
+                      <MapperAvatar src={user.avatar} verified={user.verifiedMapper} className={avatarClassName}/>
+                      <Link href={`/mapper/${user.id}`}>
                         <span className='my-auto text-ellipsis line-clamp-1'>{truncated(user.name)}</span>
-                    </Link>
+                      </Link>
+                    </div>
                 </HoverCardTrigger>
-                <HoverCardContent className="shadow-md">
-                        <BSUserDetailCard user={user} />
-                </HoverCardContent>
+              <HoverCardContent className="shadow-md">
+                <BSUserDetailCard user={user} />
+              </HoverCardContent>
             </HoverCard>
         </>
     )

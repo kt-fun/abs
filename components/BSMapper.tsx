@@ -14,6 +14,7 @@ import Link from "@/components/ui/link";
 import { useCallback } from "react";
 import relativeTime from "dayjs/plugin/relativeTime";
 import {cn} from "@/lib/utils";
+import {escapeHtml} from "@/lib/ContentEscape";
 dayjs.extend(relativeTime);
 const LabelWithIcon = ({children, label,tooltip}:{children:React.ReactNode,label:string, tooltip?:string}) => {
     return (
@@ -70,9 +71,9 @@ export default function BSMapper(
                       </div>
 
                     </Link>
-                    <div
+                    <p
                     className="overflow-ellipsis line-clamp-2 pr-2 text-xs text-gray-400"
-                    dangerouslySetInnerHTML={{__html:getDescription(bsUserWithStats.description)}}
+                    dangerouslySetInnerHTML={{__html:escapeHtml(getDescription(bsUserWithStats.description))}}
                     />
                 </div>
             </div>

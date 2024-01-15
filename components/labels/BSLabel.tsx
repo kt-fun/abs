@@ -40,14 +40,14 @@ export default function BSLabel(
     return (
         <>
         {
-            // tooltip ?
-            //   (
-            //     <Tooltip content={tooltip} >
-            //         <Label label={label} className={className}>{children}</Label>
-            //     </Tooltip>
-            //   ) : (
+            tooltip ?
+              (
+                <Tooltip content={tooltip} >
+                    <Label label={label} className={className}>{children}</Label>
+                </Tooltip>
+              ) : (
                 <Label label={label} className={className}>{children}</Label>
-              // )
+              )
         }
 
         </>

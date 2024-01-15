@@ -5,6 +5,9 @@ import { BiCameraMovie } from "react-icons/bi";
 import { RiRobot2Line } from "react-icons/ri";
 import { GiRank3 } from "react-icons/gi";
 import {cn} from "@/lib/utils";
+import MEIcon from "@/components/icons/MEIcon";
+import NEIcon from "@/components/icons/NEIcon";
+import ChromaIcon from "@/components/icons/ChromaIcon";
 
 
 export function checkIfHasFeature(bsMap:BSBeatMap):boolean {
@@ -40,21 +43,21 @@ export default function FeatureIcons(
                 {
                     checkIfChroma(bsMap) && (
                         <Tooltip content="Chroma Map" asChild>
-                            <span className="flex justify-center items-center"><CiLight/></span>
+                            <span className="flex justify-center items-center"><ChromaIcon/></span>
                         </Tooltip>
                     )
                 }
                 {
                     checkIfME(bsMap) && (
                         <Tooltip content="Mapping Extensions Map" asChild>
-                        <span className="flex justify-center items-center"><CiLight/></span>
+                        <span className="flex justify-center items-center"><MEIcon/></span>
                         </Tooltip>
                     )
                 }
                 {
                     checkIfNE(bsMap) && (
                         <Tooltip content="Noodle Extensions Map" asChild>
-                        <span className="flex justify-center items-center"><CiLight/></span>
+                        <span className="flex justify-center items-center"><NEIcon/></span>
                         </Tooltip>
                     )
                 }

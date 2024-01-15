@@ -2,6 +2,7 @@ import  {Card} from "@/components/ui/card";
 import * as MapMetaLabel from "@/components/labels/BSMapMetaLabels";
 import {BSMapCountLabel} from "@/components/labels/BSLabel";
 import { BSUserWithStats } from "@/interfaces/beatsaver-user";
+import {escapeHtml} from "@/lib/ContentEscape";
 
 
 export default function BSMapperSideBar(
@@ -40,13 +41,15 @@ export default function BSMapperSideBar(
                     <MapMetaLabel.ThumbUpCountLabel count={bsMapper.stats!.totalUpvotes}/>
                     <MapMetaLabel.ThumbDownCountLabel count={bsMapper.stats!.totalDownvotes}/>
                 </div>
-                <div className="">
-                        <div className="flex flex-col justify-between  h-full pt-auto pb-0">
-                          <p className="text-ellipsis overflow-hidden text-xs">
-                              {bsMapper.description == "" ? "No description" : bsMapper.description}
-                          </p>
-                        </div>
-                </div>
+            <div className="flex flex-col justify-between  h-full pt-auto pb-0">
+              {/*<p className="text-ellipsis overflow-hidden text-xs">*/}
+              {/*  {bsMapper.description == "" ? "No description" : bsMapper.description}*/}
+              {/*</p>*/}
+              <p
+                className="text-ellipsis overflow-hidden text-xs"
+                dangerouslySetInnerHTML={{__html: escapeHtml(bsMapper.description)}}
+              />
+            </div>
           </div>
         </Card>
         </>

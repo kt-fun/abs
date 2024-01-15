@@ -21,6 +21,7 @@ import ReachListEnd from "@/components/load-status/ReachListEnd";
 import EmptyContent from "@/components/load-status/EmptyContent";
 import {BSMapCountLabel} from "@/components/labels/BSLabel";
 import * as MapMetaLabel from "@/components/labels/BSMapMetaLabels";
+import {escapeHtml} from "@/lib/ContentEscape";
 const MapListTab = (
   {
     userId,
@@ -186,21 +187,30 @@ export default function MapperDetailPage({ params }: { params: { id: number } })
                   <MapMetaLabel.ThumbUpCountLabel count={bsUserWithStats.stats!.totalUpvotes}/>
                   <MapMetaLabel.ThumbDownCountLabel count={bsUserWithStats.stats!.totalDownvotes}/>
                 </div>
-                <p className="text-ellipsis overflow-hidden text-xs hidden sm:block">
-                  {bsUserWithStats.description == "" ? "No description" : bsUserWithStats.description}
-                </p>
+
+                <p
+                  className="text-ellipsis overflow-hidden text-xs hidden sm:block"
+                  dangerouslySetInnerHTML={{__html: bsUserWithStats.description == "" ? "No description" : escapeHtml(bsUserWithStats.description)}}
+                />
+                {/*<p className="text-ellipsis overflow-hidden text-xs hidden sm:block">*/}
+                {/*  {bsUserWithStats.description == "" ? "No description" : bsUserWithStats.description}*/}
+                {/*</p>*/}
               </div>
 
             </div>
-            <p className="text-ellipsis overflow-hidden text-xs block sm:hidden">
-              {bsUserWithStats.description == "" ? "No description" : bsUserWithStats.description}
-            </p>
+            <p
+              className="text-ellipsis overflow-hidden text-xs block sm:hidden"
+              dangerouslySetInnerHTML={{__html: bsUserWithStats.description == "" ? "No description" : escapeHtml(bsUserWithStats.description)}}
+            />
+            {/*<p className="text-ellipsis overflow-hidden text-xs block sm:hidden">*/}
+            {/*  {bsUserWithStats.description == "" ? "No description" : bsUserWithStats.description}*/}
+            {/*</p>*/}
           </div>
           <div className="flex grow space-x-2">
 
             <Tabs.Root className="flex flex-col  mx-auto h-full w-full" defaultValue="Published"
                        onValueChange={handleTabChange}>
-            <Tabs.List
+              <Tabs.List
                 className="px-1 py-0.5 bg-gray-100 dark:bg-[#232325] rounded-full flex w-fit mx-auto space-x-2 mb-2"
                 aria-label="">
                 <Tabs.Trigger

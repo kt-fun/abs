@@ -50,6 +50,7 @@ import { TbMoodNeutral } from "react-icons/tb";
 import BSMapTag from "@/components/BSMapTag";
 import BSUserLabel from "@/components/labels/BSUserLabel";
 import Loading from "@/components/load-status/Loading";
+import {escapeHtml} from "@/lib/ContentEscape";
 
 function replaceWithBr(str:string) {
   return str.replace(/\n/g, "<br />")
@@ -101,7 +102,7 @@ const DetailTab = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
         <div>
             <div className="text-xl font-bold">Description</div>
-            <p className="block" dangerouslySetInnerHTML={{__html: replaceWithBr(bsMap.description)}}/>
+            <p className="block" dangerouslySetInnerHTML={{__html: escapeHtml(replaceWithBr(bsMap.description))}}/>
         </div>
           <div>
             <div className="text-xl font-bold">Difficulty</div>

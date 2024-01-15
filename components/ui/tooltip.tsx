@@ -4,6 +4,7 @@ import * as React from "react"
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 
 import { cn } from "@/lib/utils"
+import {useState} from "react";
 
 const TooltipProvider = TooltipPrimitive.Provider
 
@@ -28,14 +29,21 @@ const TooltipContent = React.forwardRef<
 TooltipContent.displayName = TooltipPrimitive.Content.displayName
 
 
-export const Tooltip = ({content,children,asChild=false}:{content:string,children:React.ReactNode,asChild?:boolean})=>(
-  <TooltipProvider>
-    <TooltipRoot>
-      <TooltipTrigger asChild={asChild}>{children}</TooltipTrigger>
-      <TooltipContent>
-        <p>{content}</p>
-      </TooltipContent>
-    </TooltipRoot>
-  </TooltipProvider>
-)
+
+export const Tooltip = ({content,children,asChild=false}:{content:string,children:React.ReactNode,asChild?:boolean}) => {
+  const [open, setOpen] = useState(false)
+  const handleClick = () => setOpen((prevOpen) => !prevOpen)
+
+  return (
+    <TooltipProvider>
+      <TooltipRoot delayDuration={0} open={open} onOpenChange={setOpen}>
+        <TooltipTrigger asChild={asChild} onClick={handleClick}>{children}</TooltipTrigger>
+        <TooltipContent>
+          <p>{content}</p>
+        </TooltipContent>
+      </TooltipRoot>
+    </TooltipProvider>
+  )
+}
+
 // export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }

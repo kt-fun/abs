@@ -4,7 +4,7 @@ import {Button, IconButton} from "@/components/ui/button";
 import {Card} from "@/components/ui/card";
 import {HoverCard as HoverCardRoot,HoverCardContent,HoverCardTrigger}   from '@/components/ui/hover-card'
 import {Tooltip} from "@/components/ui/tooltip";
-import {BSBeatMap, getBSMapCoverURL, getMaxNPS} from '@/interfaces/beatmap'
+import {BSBeatMap, BSMapDiff, getBSMapCoverURL, getMaxNPS} from '@/interfaces/beatmap'
 import * as MapDiffLabel from '@/components/labels/BSMapDiffLabels'
 import * as MapMetaLabel from '@/components/labels/BSMapMetaLabels'
 import BSUserLabel from '@/components/labels/BSUserLabel'
@@ -22,9 +22,10 @@ import {AiOutlineLoading} from "react-icons/ai";
 import CopyIcon from './CopyIcon'
 import MapPreviewIFrame from './MapPreviewIFrame'
 import {CharacteristicIcon} from "@/components/icons/Characteristic";
-import React from "react";
+import React, {useState} from "react";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {ScrollArea,ScrollBar} from "@/components/ui/scroll-area";
+import {escapeHtml} from "@/lib/ContentEscape";
 
 const diffShort = {
   "Easy":"Easy",
@@ -44,6 +45,60 @@ const diffShortest = {
 
 type MapCharacteristic = "Standard" | "NoArrows" | "OneSaber" | "90Degree" | "360Degree" | "Lightshow" | "Lawless" | "Legacy"
 type MapDiff = "Easy" | "Normal" | "Hard" | "Expert" | "ExpertPlus"
+
+
+const DiffCard = ({diff}:{diff:BSMapDiff}) => {
+  const [diffHoverCardOpen, setDiffHoverCardOpen] = useState(false)
+  const handleDiffHoverCardClick = () => setDiffHoverCardOpen((prevOpen) => !prevOpen)
+  return(
+    // popover can't work properly with tooltip, see https://github.com/radix-ui/primitives/issues/2248
+    // and hover card can't work properly trigger by touch event due to radix-ui team's design decision
+    // see https://github.com/radix-ui/primitives/issues/955#issuecomment-960610209
+    // later we need provide a custom component work as hover in desktop and popover in mobile
+    //   <Popover key={diff.characteristic + diff.difficulty + bsMap.id}>
+    //     <PopoverTrigger key={diff.difficulty + diff.characteristic + bsMap.id} className="w-fit">
+    //       <span
+    //         key={diff.difficulty + diff.characteristic + bsMap.id}
+    //         className='relative w-fit text-white hover:text-red-500 font-semibold m-0.5 px-1 rounded-full cursor-pointer border-white hover:border-red-500 border-solid border flex items-center flex-shrink'
+    //       >
+    //         <CharacteristicIcon characteristic={diff.characteristic} className="w-4 h-4"/>
+    //         <span className='ml-[2px] text-xs'>{diffShortest[diff.difficulty as MapDiff]}</span>
+    //       </span>
+    //     </PopoverTrigger>
+    //     <PopoverContent align="center" className="shadow-md p-2 border">
+    //       <div className='cursor-default'>{diff.characteristic}</div>
+    //       <div className='grid grid-cols-3 gap-1'>
+    //         <MapDiffLabel.BSNPSLabel nps={diff.nps}/>
+    //         <MapDiffLabel.BSNJSLabel njs={diff.njs}/>
+    //         <MapDiffLabel.BSLightCountLabel count={diff.events}/>
+    //         <MapDiffLabel.BSNoteCountLabel count={diff.notes}/>
+    //         <MapDiffLabel.BSObstacleCountLabel count={diff.obstacles}/>
+    //         <MapDiffLabel.BSBombCountLabel count={diff.bombs}/>
+    //       </div>
+    //     </PopoverContent>
+    //   </Popover>
+    <HoverCardRoot open={diffHoverCardOpen} onOpenChange={setDiffHoverCardOpen}>
+      <HoverCardTrigger className="w-fit" onClick={handleDiffHoverCardClick}>
+          <span className='relative w-fit text-white hover:text-red-500 font-semibold m-0.5 px-1 rounded-full cursor-pointer border-white hover:border-red-500 border-solid border flex items-center'>
+            <CharacteristicIcon characteristic={diff.characteristic} className="w-4 h-4"/>
+            <span className='ml-[2px] text-xs'>{diffShortest[diff.difficulty as MapDiff]}</span>
+          </span>
+      </HoverCardTrigger>
+      <HoverCardContent align="center" className="shadow-md p-2 border">
+        <div className='cursor-default'>{diff.characteristic}</div>
+        <div className='grid grid-cols-3 gap-1'>
+          <MapDiffLabel.BSNPSLabel nps={diff.nps}/>
+          <MapDiffLabel.BSNJSLabel njs={diff.njs}/>
+          <MapDiffLabel.BSLightCountLabel count={diff.events}/>
+          <MapDiffLabel.BSNoteCountLabel count={diff.notes}/>
+          <MapDiffLabel.BSObstacleCountLabel count={diff.obstacles}/>
+          <MapDiffLabel.BSBombCountLabel count={diff.bombs}/>
+        </div>
+      </HoverCardContent>
+    </HoverCardRoot>
+  )
+}
+
 
 export default function BSMap(
     {bsMap}: {bsMap:BSBeatMap}
@@ -75,6 +130,8 @@ export default function BSMap(
   }
   const score = bsMap.stats.score*100
 
+  const [diffHoverCardOpen, setDiffHoverCardOpen] = useState(false)
+  const handleDiffHoverCardClick = () => setDiffHoverCardOpen((prevOpen) => !prevOpen)
   return (
     <Card
       className='shadow-md h-[162px] sm:h-[202px] min-w-[360px]'
@@ -106,43 +163,17 @@ export default function BSMap(
                       </div>
                   }
                 </div>
-                <p className="text-ellipsis overflow-hidden line-clamp-1 sm:line-clamp-[4] text-xs dark text-gray-200 mx-1">
-                  {bsMap.description == "" ? "No description" : bsMap.description}
+                <p
+                  className="text-ellipsis overflow-hidden flex break-words line-clamp-1 sm:line-clamp-[4] text-xs dark text-gray-200 mx-1"
+                  dangerouslySetInnerHTML={{__html:bsMap.description == "" ? "No description" : escapeHtml(bsMap.description)}}
+                >
+                  {/*{bsMap.description == "" ? "No description" : escapeHtml(bsMap.description)}*/}
                 </p>
                 <ScrollArea>
                   <div className='grid  grid-rows-1 sm:grid-rows-2 grid-flow-col '>
-                      {
-                        bsMap.versions[0].diffs.map((diff) => {
-                          return (
-                            // popover can't work properly with tooltip, see https://github.com/radix-ui/primitives/issues/2248
-                            // and hover card can't work properly trigger by touch event due to radix-ui team's design decision
-                            // see https://github.com/radix-ui/primitives/issues/955#issuecomment-960610209
-                            // later we need provide a custom component work as hover in desktop and popover in mobile
-                              <Popover key={diff.characteristic + diff.difficulty + bsMap.id}>
-                                <PopoverTrigger key={diff.difficulty + diff.characteristic + bsMap.id} className="w-fit">
-                                  <span
-                                    key={diff.difficulty + diff.characteristic + bsMap.id}
-                                    className='relative w-fit text-white hover:text-red-500 font-semibold m-0.5 px-1 rounded-full cursor-pointer border-white hover:border-red-500 border-solid border flex items-center flex-shrink'
-                                  >
-                                    <CharacteristicIcon characteristic={diff.characteristic} className="w-4 h-4"/>
-                                    <span className='ml-[2px] text-xs'>{diffShortest[diff.difficulty as MapDiff]}</span>
-                                  </span>
-                                </PopoverTrigger>
-                                <PopoverContent align="center" className="shadow-md p-2 border">
-                                  <div className='cursor-default'>{diff.characteristic}</div>
-                                  <div className='grid grid-cols-3 gap-1'>
-                                    <MapDiffLabel.BSNPSLabel nps={diff.nps}/>
-                                    <MapDiffLabel.BSNJSLabel njs={diff.njs}/>
-                                    <MapDiffLabel.BSLightCountLabel count={diff.events}/>
-                                    <MapDiffLabel.BSNoteCountLabel count={diff.notes}/>
-                                    <MapDiffLabel.BSObstacleCountLabel count={diff.obstacles}/>
-                                    <MapDiffLabel.BSBombCountLabel count={diff.bombs}/>
-                                  </div>
-                                </PopoverContent>
-                              </Popover>
-                          )
-                        })
-                      }
+                    {
+                      bsMap.versions[0].diffs.map((diff) => <DiffCard diff={diff} key={diff.characteristic + diff.difficulty + bsMap.id}/>)
+                    }
                   </div>
                   <ScrollBar orientation="horizontal"/>
                 </ScrollArea>
