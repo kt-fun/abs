@@ -36,7 +36,7 @@ export const Tooltip = ({content,children,asChild=false}:{content:string,childre
 
   return (
     <TooltipProvider>
-      <TooltipRoot delayDuration={0} open={open} onOpenChange={setOpen}>
+      <TooltipRoot delayDuration={700} open={open} onOpenChange={setOpen}>
         <TooltipTrigger asChild={asChild} onClick={handleClick}>{children}</TooltipTrigger>
         <TooltipContent>
           <p>{content}</p>

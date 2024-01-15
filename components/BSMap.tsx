@@ -177,54 +177,53 @@ export default function BSMap(
                   </div>
                   <ScrollBar orientation="horizontal"/>
                 </ScrollArea>
-                <div className="grid grid-cols-4 gap-1 sm:flex items-center sm:space-x-1 mx-auto justify-center py-1">
-                  <Tooltip content="add to playlist" asChild>
-                    <IconButton onClick={handleAddToPlaylist}
-                                className="w-6 h-6 hover:bg-white text-white hover:text-red-400 p-1 rounded-full cursor-pointer"
-                                variant="ghost">
-                      <IoAddOutline/>
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip content="bookmark song" asChild>
-                    <IconButton onClick={handleBookmark}
-                                className="w-6 h-6 hover:bg-white text-white hover:text-red-400 p-1 rounded-full cursor-pointer"
-                                variant="ghost">
-                      <CiBookmark/>
-                    </IconButton>
-                  </Tooltip>
+                <div className="grid grid-cols-4 gap-1 sm:flex items-center mx-auto justify-center py-1">
+                  {/*<Tooltip content="add to playlist" asChild>*/}
+                  {/*  <IconButton onClick={handleAddToPlaylist}*/}
+                  {/*              className="w-6 h-6 hover:bg-white text-white hover:text-red-400 rounded-full cursor-pointer"*/}
+                  {/*              variant="ghost">*/}
+                  {/*    <IoAddOutline/>*/}
+                  {/*  </IconButton>*/}
+                  {/*</Tooltip>*/}
+                  {/*<Tooltip content="bookmark song" asChild>*/}
+                  {/*  <IconButton onClick={handleBookmark}*/}
+                  {/*              className="w-6 h-6 hover:bg-white text-white hover:text-red-400 rounded-full cursor-pointer"*/}
+                  {/*              variant="ghost">*/}
+                  {/*    <CiBookmark/>*/}
+                  {/*  </IconButton>*/}
+                  {/*</Tooltip>*/}
                   <Tooltip content="play song preview" asChild>
                     <IconButton onClick={handlePlaySongPreview}
-                                className={`w-6 h-6 hover:bg-white ${current ? 'bg-white text-red-400' : ' text-white'} hover:text-red-400 p-1 rounded-full cursor-pointer ${current && state.loading ? 'animate-spin' : ''}`}
+                                className={`w-6 h-6 hover:bg-white ${current ? 'bg-white text-red-400' : ' text-white'} hover:text-red-400 rounded-full cursor-pointer ${current && state.loading ? 'animate-spin' : ''}`}
                                 variant="ghost">
                       {current ? state.loading ? <AiOutlineLoading/> : <PiHeartbeat/> : <CiMusicNote1/>}
                     </IconButton>
                   </Tooltip>
                   <MapPreviewIFrame id={bsMap.id}>
                     <IconButton
-                      className="w-6 h-6 hover:bg-white text-white hover:text-red-400 p-1 rounded-full cursor-pointer"
+                      className="w-6 h-6 hover:bg-white text-white hover:text-red-400 rounded-full cursor-pointer"
                       variant="ghost">
                       <CiPlay1/>
                     </IconButton>
                   </MapPreviewIFrame>
 
-                  <Tooltip content="copy twitch request" asChild>
+                  <Tooltip content="copy twitch request" >
                     <CopyIcon
-                      className="w-6 h-6 hover:bg-white text-white hover:text-red-400 p-1 rounded-full cursor-pointer"
+                      className="w-6 h-6 hover:bg-white text-white hover:text-red-400 rounded-full cursor-pointer"
                       content={`!bsr ${bsMap.id}`}>
                       <FaTwitch/>
                     </CopyIcon>
                   </Tooltip>
                   <Tooltip content="download zip" asChild>
-                    <IconButton className="w-6 h-6 text-white hover:bg-white hover:text-red-400 p-1 rounded-full"
+                    <IconButton className="w-6 h-6 text-white hover:bg-white hover:text-red-400 rounded-full"
                                 variant="ghost">
                       <Link href={bsMap.versions[0].downloadURL} className="text-inherit">
                         <IoCloudDownloadOutline/>
                       </Link>
                     </IconButton>
-
                   </Tooltip>
                   <Tooltip content="one click download" asChild>
-                    <IconButton className="w-6 h-6  p-1 rounded-full  text-white hover:bg-white hover:text-red-400" variant="ghost">
+                    <IconButton className="w-6 h-6  rounded-full  text-white hover:bg-white hover:text-red-400" variant="ghost">
                       <Link href={`beatsaver://${bsMap.id}`} className="text-inherit">
                         <HiCursorClick/>
                       </Link>

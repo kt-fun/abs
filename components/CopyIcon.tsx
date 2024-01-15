@@ -26,7 +26,7 @@ const CopyIcon = React.forwardRef(({
     }, 1000)
   }
   return(
-    <Button size={"icon"} className={cn("rounded-full",className)} onClick={copy} variant="ghost" ref={ref as (Ref<HTMLButtonElement> | undefined)}>
+    <Button size={"icon"} className={cn("rounded-full",className)} onClick={copy} variant="ghost" ref={ref as any}>
       {
         copied ? <FaCheck/>: <>{children}</>
       }
