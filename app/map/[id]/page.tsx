@@ -51,6 +51,7 @@ import BSMapTag from "@/components/BSMapTag";
 import BSUserLabel from "@/components/labels/BSUserLabel";
 import Loading from "@/components/load-status/Loading";
 import {escapeHtml} from "@/lib/ContentEscape";
+import {ExternalLink} from "lucide-react";
 
 function replaceWithBr(str:string) {
   return str.replace(/\n/g, "<br />")
@@ -282,7 +283,8 @@ const RankingTab =({
                               setCurrentDiff={setCurrentDiff}/>
                 <div className="hover:text-blue-400">
                   <Link href={link} target="_blank">
-                    <RxExternalLink/>
+                    {/*<RxExternalLink/>*/}
+                    <ExternalLink/>
                   </Link>
                 </div>
               </div>
@@ -311,21 +313,13 @@ const RankingTab =({
 
           </Tabs.List>
           <Tabs.Content className="" value="BeatLeader">
-            {
-              rankingItems.length > 0 ?
-                    (<RankTable rankItems={rankingItems} maxscore={currentDiff.maxScore} isLoading={isLoadingMore} hasMore={hasMore} loadMore={loadMore}/>)
-                    :( <div>no score found</div>)
-                }
-            </Tabs.Content>
-            <Tabs.Content className="" value="ScoreSaber">
-                {
-                    rankingItems.length > 0 ?
-                    (<RankTable rankItems={rankingItems} maxscore={currentDiff.maxScore} isLoading={isLoadingMore} hasMore={hasMore} loadMore={loadMore}/>):
-                    (<div>no score found</div>)
-                }
-            </Tabs.Content>
-            </Tabs.Root>
-            </div>
+          <RankTable rankItems={rankingItems} maxscore={currentDiff.maxScore} isLoading={isLoadingMore} hasMore={hasMore} loadMore={loadMore}/>
+          </Tabs.Content>
+          <Tabs.Content className="" value="ScoreSaber">
+            <RankTable rankItems={rankingItems} maxscore={currentDiff.maxScore} isLoading={isLoadingMore} hasMore={hasMore} loadMore={loadMore}/>
+          </Tabs.Content>
+        </Tabs.Root>
+      </div>
         </>
     )
 }

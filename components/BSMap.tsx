@@ -12,7 +12,7 @@ import FeatureIcons, {checkIfHasFeature} from '@/components/icons/FeatureIcons'
 import {BSMapTagType, getMapTag} from '@/interfaces/mapTags'
 import BSMapTag from './BSMapTag'
 import * as Progress from '@radix-ui/react-progress';
-import {IoAddOutline, IoCloudDownloadOutline} from 'react-icons/io5'
+import {IoCloudDownloadOutline} from 'react-icons/io5'
 import {HiCursorClick} from 'react-icons/hi'
 import {FaTwitch} from "react-icons/fa";
 import {CiBookmark, CiMusicNote1, CiPlay1} from "react-icons/ci";
@@ -25,7 +25,6 @@ import {CharacteristicIcon} from "@/components/icons/Characteristic";
 import React, {useState} from "react";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {ScrollArea,ScrollBar} from "@/components/ui/scroll-area";
-import {escapeHtml} from "@/lib/ContentEscape";
 
 const diffShort = {
   "Easy":"Easy",
@@ -136,14 +135,14 @@ export default function BSMap(
     <div className='flex h-[160px] sm:h-[200px] overflow-hidden'>
       <div className='w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] rounded-l-lg'>
         <div
-            className="relative  h-[160px] sm:h-[200px] w-[160px] sm:w-[200px] group  rounded-l-lg"
+            className=" h-[160px] sm:h-[200px] w-[160px] sm:w-[200px] group  rounded-l-lg"
             style={{
                 backgroundImage: `url('${bg}')`,
                 backgroundSize: 'cover',
             }}>
             <div className={`z-100 bg-black/[.6] h-full group-hover:visible ${current?'':'invisible'}  bg-blend-darken  rounded-l-lg`}>
               <div
-                className="flex flex-col justify-between pt-auto pb-0 p-1 bg-transparent h-full z-[200]  rounded-l-lg">
+                className="flex flex-col justify-between pt-auto px-1 bg-transparent h-full z-[200]  rounded-l-lg">
                 {
                   bsMap.curator &&
                     <div className="flex space-x-1 items-center mx-1 text-white">
@@ -161,10 +160,9 @@ export default function BSMap(
                   }
                 </div>
                 <p
-                  className="text-ellipsis overflow-hidden flex break-words line-clamp-1 sm:line-clamp-[4] text-xs dark text-gray-200 mx-1"
-                  dangerouslySetInnerHTML={{__html:bsMap.description == "" ? "No description" : escapeHtml(bsMap.description)}}
+                  className="text-ellipsis overflow-hidden  line-clamp-1 sm:line-clamp-4 text-xs dark text-gray-200 mx-1"
                 >
-                  {/*{bsMap.description == "" ? "No description" : escapeHtml(bsMap.description)}*/}
+                  {bsMap.description == "" ? "No description" : bsMap.description}
                 </p>
                 <ScrollArea>
                   <div className='grid  grid-rows-1 sm:grid-rows-2 grid-flow-col'>
@@ -174,7 +172,7 @@ export default function BSMap(
                   </div>
                   <ScrollBar orientation="horizontal"/>
                 </ScrollArea>
-                <div className="grid grid-cols-4 gap-1 sm:flex items-center mx-auto justify-center py-0.5">
+                <div className="grid grid-cols-4 gap-1 sm:flex items-center mx-auto justify-center pb-0.5">
                   {/*<Tooltip content="add to playlist" asChild>*/}
                   {/*  <IconButton onClick={handleAddToPlaylist}*/}
                   {/*              className="w-6 h-6 hover:bg-white text-white hover:text-red-400 rounded-full cursor-pointer"*/}
@@ -253,7 +251,7 @@ export default function BSMap(
                 .filter((tag) => tag != undefined && tag.type == BSMapTagType.Style)
                 .map((tag) => {
                   return (
-                    <BSMapTag className='text-nowrap font-semibold' key={tag!.slug} tag={tag!}/>
+                    <BSMapTag className='text-nowrap font-medium text-xs' key={tag!.slug} tag={tag!}/>
                   )
                 })
             }

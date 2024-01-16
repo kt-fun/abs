@@ -1,10 +1,8 @@
 
 import { IconButton } from "@/components/ui/button";
 import { useCallback } from "react";
-import { CiLight } from "react-icons/ci";
-import { FaMoon } from "react-icons/fa";
-import { HiComputerDesktop } from "react-icons/hi2";
 import { useTheme } from "next-themes"
+import {Laptop, Moon, Sun} from "lucide-react";
 
 enum ThemeMode {
     Light = 'light',
@@ -27,9 +25,9 @@ export default function ThemeButton(){
             <IconButton asChild onClick={onSetTheme} variant="ghost" className="rounded-full">
                 <span>
                     <span className="sr-only">Toggle theme</span>
-                    {theme === ThemeMode.Light && <CiLight/>}
-                    {theme === ThemeMode.Dark && <FaMoon/>}
-                    {theme === ThemeMode.System && <HiComputerDesktop/>}
+                    {theme === ThemeMode.Light && <Sun />}
+                    {theme === ThemeMode.Dark && <Moon/>}
+                    {theme === ThemeMode.System && <Laptop />}
                 </span>
 
             </IconButton>

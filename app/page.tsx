@@ -7,22 +7,18 @@ import { usePagingBSMap } from "@/hooks/api/usePagingBSMap";
 import { BSBeatMap } from "@/interfaces/beatmap";
 import {ScrollArea, ScrollBar} from "@/components/ui/scroll-area";
 import { motion } from "framer-motion";
-import { use, useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { FaArrowUp } from "react-icons/fa";
 import Loading from "@/components/load-status/Loading";
 import { IoSearch } from "react-icons/io5";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
 import EmptyContent from "@/components/load-status/EmptyContent";
 import ReachListEnd from "@/components/load-status/ReachListEnd";
 export default function Home() {
-  const contentRef = useRef(null);
   const { maps,isLoadingMore,isEmpty,hasMore,loadMore,queryParam,updateQuery,refresh} = usePagingBSMap();
   const {reachedBottom,showScrollToTop, scrollToTop} = useInfinityScroll();
   useEffect(()=>{
@@ -63,17 +59,18 @@ export default function Home() {
                 query={refresh}
                 className="hidden lg:block sticky top-16 items-center grow-0 justify-center w-[250px] shadow-md "
               />
-              { showScrollToTop ?( <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-                exit="hidden"
-                whileHover={{ scale: 1.1 }}
-                className={`fixed ml-auto bottom-2 rounded-full bg-gray-200 dark:bg-gray-700 p-2 cursor-pointer animate`} onClick={scrollToTop}>
-                  <div className="text-lg">
-                    <FaArrowUp />
-                  </div>
-                </motion.div>):(<></>)
+              { showScrollToTop &&
+                <motion.div
+                  variants={containerVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="hidden"
+                  whileHover={{ scale: 1.1 }}
+                  className={`fixed ml-auto bottom-2 rounded-full bg-gray-200 dark:bg-gray-700 p-2 cursor-pointer animate`} onClick={scrollToTop}>
+                    <div className="text-lg">
+                      <FaArrowUp />
+                    </div>
+                </motion.div>
               }
             </div>
 
