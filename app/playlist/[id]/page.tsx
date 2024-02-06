@@ -1,11 +1,3 @@
-// const {bsMap, isLoading, error} = useBSMapDetail(params.id)
-
-// const router = useRouter()
-// if(error) {
-//   router.push("/")
-// }
-
-
 'use client'
 import { usePagingBSPlaylist } from "@/hooks/api/usePagingBSPlaylist";
 import { BSPlaylist as IBSPlaylist } from "@/interfaces/bs-playlist";
@@ -73,10 +65,7 @@ export default function Home({ params }: { params: { id: string } }) {
         <div className="max-w-[1200px]">
           <div  className="block lg:hidden mb-2">
             {
-              isLoadingMore && isEmpty ? (
-                <>
-                </>
-              ):(
+              !isLoadingMore && !isEmpty && playlist && (
                 <>
                   <div className="flex justify-start">
                     <div

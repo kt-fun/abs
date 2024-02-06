@@ -173,7 +173,6 @@ const RankTable = ({
 }) => {
     return (
         <>
-        {/*<ScrollArea scrollbars="vertical" style={{ height: 480 }}>*/}
         <Table className="overflow-hidden">
             <TableHeader>
                 <TableRow>
