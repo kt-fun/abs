@@ -185,7 +185,7 @@ export default function Home({ params }: { params: { id: string } }) {
                 )
               }
 
-              {top > 100 ? (<motion.div
+              {top > 100 && (<motion.div
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
@@ -196,7 +196,7 @@ export default function Home({ params }: { params: { id: string } }) {
                 <div>
                   <FaArrowUp/>
                 </div>
-              </motion.div>) : (<></>)
+              </motion.div>)
               }</div>
 
           </div>

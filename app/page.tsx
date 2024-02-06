@@ -34,7 +34,7 @@ export default function Home() {
     return (
       <>
         <div className="flex max-w-[1200px] grow  space-x-2">
-          <div className="grid gap-2 grid-cols-1 xl:grid-cols-2 md:grid-cols-2 grow" >
+          <div className="grid gap-2 grid-cols-1 xl:grid-cols-2 md:grid-cols-2 grow">
             {
               maps.length == 0 && isLoadingMore  && (
                 skeleton.map((i:number)=>

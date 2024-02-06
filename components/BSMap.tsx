@@ -202,27 +202,33 @@ export default function BSMap(
                     </IconButton>
                   </MapPreviewIFrame>
 
-                  <Tooltip content="copy twitch request" >
-                    <CopyIcon
-                      className="w-6 h-6 hover:bg-white text-white hover:text-red-400 rounded-full cursor-pointer"
-                      content={`!bsr ${bsMap.id}`}>
-                      <FaTwitch/>
-                    </CopyIcon>
+                  <Tooltip content="copy twitch request" asChild>
+                    <div>
+                      <CopyIcon
+                        className="w-6 h-6 hover:bg-white text-white hover:text-red-400 rounded-full cursor-pointer"
+                        content={`!bsr ${bsMap.id}`}>
+                        <FaTwitch/>
+                      </CopyIcon>
+                    </div>
                   </Tooltip>
                   <Tooltip content="download zip" asChild>
-                    <IconButton className="w-6 h-6 text-white hover:bg-white hover:text-red-400 rounded-full"
-                                variant="ghost">
-                      <Link href={bsMap.versions[0].downloadURL} className="text-inherit">
-                        <IoCloudDownloadOutline/>
-                      </Link>
-                    </IconButton>
+                    <div>
+                      <IconButton className="w-6 h-6 text-white hover:bg-white hover:text-red-400 rounded-full"
+                                  variant="ghost">
+                        <Link href={bsMap.versions[0].downloadURL} className="text-inherit">
+                          <IoCloudDownloadOutline/>
+                        </Link>
+                      </IconButton>
+                    </div>
                   </Tooltip>
                   <Tooltip content="one click download" asChild>
-                    <IconButton className="w-6 h-6  rounded-full  text-white hover:bg-white hover:text-red-400" variant="ghost">
-                      <Link href={`beatsaver://${bsMap.id}`} className="text-inherit">
-                        <HiCursorClick/>
-                      </Link>
-                    </IconButton>
+                    <div>
+                      <IconButton className="w-6 h-6  rounded-full  text-white hover:bg-white hover:text-red-400" variant="ghost">
+                        <Link href={`beatsaver://${bsMap.id}`} className="text-inherit">
+                          <HiCursorClick/>
+                        </Link>
+                      </IconButton>
+                    </div>
                   </Tooltip>
                 </div>
 
@@ -272,8 +278,8 @@ export default function BSMap(
             </div>
           <div className='flex items-center  space-x-2'>
               <div className='flex items-center space-x-2'>
-              <MapMetaLabel.ThumbUpCountLabel count={bsMap.stats.upvotes} tooltip="up vote count"/>
-              <MapMetaLabel.ThumbDownCountLabel count={bsMap.stats.downvotes}/>
+                <MapMetaLabel.ThumbUpCountLabel count={bsMap.stats.upvotes} tooltip="up vote count"/>
+                <MapMetaLabel.ThumbDownCountLabel count={bsMap.stats.downvotes}/>
               </div>
               {/*<Separator orientation="vertical" className="h-4"/>*/}
               <MapMetaLabel.DateLabel date={bsMap.lastPublishedAt}/>

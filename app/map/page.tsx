@@ -7,7 +7,7 @@ import { usePagingBSMap } from "@/hooks/api/usePagingBSMap";
 import { BSBeatMap } from "@/interfaces/beatmap";
 import {ScrollArea, ScrollBar} from "@/components/ui/scroll-area";
 import { motion } from "framer-motion";
-import { use, useCallback, useEffect, useRef, useState } from "react";
+import {useEffect, useRef } from "react";
 import { FaArrowUp } from "react-icons/fa";
 import Loading from "@/components/load-status/Loading";
 import { IoSearch } from "react-icons/io5";

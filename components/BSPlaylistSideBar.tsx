@@ -21,7 +21,7 @@ export default function BSPlaylistSideBar(
         <>
         <Card className=" group flex flex-col w-[256px] xl:w-[256px] rounded-lg">
                 <div
-                    className="h-[256px] xl:h-[256px] z-0 rounded-t-lg"
+                    className="w-[256px] xl:w-[256px] max-h-[512px] min-h-[256px] z-0 rounded-t-lg"
                     style={{
                         backgroundImage: bg,
                         backgroundSize: 'cover',
@@ -72,12 +72,12 @@ export default function BSPlaylistSideBar(
                   </BSLabel>
                 </div>
                 <div className="flex items-center space-x-1">
-                  <Tooltip content="download as .bplist">
+                  <Tooltip content="download as .bplist"  asChild>
                     <Link href={bsPlaylist.downloadURL} className="hover:bg-white hover:text-red-400 p-1 rounded-full">
                       <IoCloudDownloadOutline/>
                     </Link>
                   </Tooltip>
-                  <Tooltip content="one click download">
+                  <Tooltip content="one click download" asChild>
                     <Link
                       href={`bsplaylist://playlist/${bsPlaylist.downloadURL}/beatsaver-${bsPlaylist.playlistId}.bplist`}
                       className="hover:bg-white hover:text-red-400 p-1 rounded-full">

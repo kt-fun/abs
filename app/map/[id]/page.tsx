@@ -103,7 +103,7 @@ const DetailTab = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
         <div>
             <div className="text-xl font-bold">Description</div>
-            <p className="block" dangerouslySetInnerHTML={{__html: escapeHtml(replaceWithBr(bsMap.description))}}/>
+            <p className="block" dangerouslySetInnerHTML={{__html: escapeHtml(replaceWithBr(bsMap.description == ""?"no description":bsMap.description))}}/>
         </div>
           <div>
             <div className="text-xl font-bold">Difficulty</div>
@@ -275,7 +275,7 @@ const RankingTab =({
           <Tabs.List className=" items-center" aria-label="">
             <div className="flex  w-full justify-between items-center">
               <div className="my-2 md:hidden">
-                <div className="text-xl font-bold">Ranking</div>
+                <div className="text-xl font-bold">Rank</div>
               </div>
               <div className="md:flex items-center space-x-2 justify-end hidden">
                 <DiffSelector diffs={bsMap.versions[0].diffs} currentDiff={currentDiff}
@@ -455,32 +455,33 @@ export default function BSMapDetailPage({params}: { params: { id: string } }) {
           />
           <div>
             <div className="text-xl font-bold">{bsMap.name}</div>
-            <div className="text-xl font-semibold md:block hidden">Song
-              Author： {bsMap.metadata.songAuthorName}</div>
+            {
+              bsMap.metadata.songAuthorName.length > 0 && (
+                <div className="text-md font-semibold md:block hidden">Song Author {bsMap.metadata.songAuthorName}</div>
+              )
+            }
             <div className="flex items-center md:space-x-4">
-              <div className=" space-x-2 font-semibold items-center md:block hidden">
-                Mapper
-              </div>
+              <div className=" space-x-2 font-semibold items-center md:block hidden text-xs">Mapper</div>
               <BSUserLabel user={bsMap.uploader}/>
             </div>
             {bsMap.curator && (
               <div className="flex md:space-x-4 items-center">
-                <div className="font-semibold md:block hidden">Curated By </div>
+                <div className="font-semibold md:block hidden text-md">Curated By </div>
                 <BSUserLabel user={bsMap.curator}/></div>
             )}
             <div className="flex items-center md:space-x-4">
-              <div className="font-semibold md:block hidden">Created At</div> <MapMetaLabel.DateLabel date={bsMap.createdAt}/>
+              <div className="font-semibold md:block hidden text-xs">Created At</div> <MapMetaLabel.DateLabel date={bsMap.createdAt}/>
             </div>
-            <div className="flex md:block space-x-1">
+            <div className="flex md:block">
               <div className="flex items-center md:space-x-4">
-                <div className="font-semibold md:block hidden">Duration</div> <MapMetaLabel.DurationLabel duration={bsMap.metadata.duration}/>
+                <div className="font-semibold md:block hidden text-xs">Duration</div> <MapMetaLabel.DurationLabel duration={bsMap.metadata.duration}/>
               </div>
               <div className="flex items-center md:space-x-4">
-                <div className="font-semibold md:block hidden">BPM</div> <MapMetaLabel.BSBPMLabel bpm={bsMap.metadata.bpm}/>
+                <div className="font-semibold md:block hidden text-xs">BPM</div> <MapMetaLabel.BSBPMLabel bpm={bsMap.metadata.bpm}/>
               </div>
             </div>
             <div className="flex items-center md:space-x-4">
-              <div className="font-semibold md:block hidden">Rating</div>
+              <div className="font-semibold md:block hidden text-xs">Rating</div>
               <MapMetaLabel.ThumbDownCountLabel count={bsMap.stats.downvotes} />
               <MapMetaLabel.ThumbUpCountLabel count={bsMap.stats.upvotes}/>
               <MapMetaLabel.BSRatingLabel rate={bsMap.stats.score} />
