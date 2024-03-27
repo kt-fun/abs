@@ -10,7 +10,7 @@ import Link from "@/components/ui/link";
 import { IoCloudDownloadOutline } from "react-icons/io5";
 import { IoSpeedometerOutline } from "react-icons/io5";
 import { HiCursorClick } from "react-icons/hi";
-import BSLabel, {BSMapCountLabel} from "./labels/BSLabel";
+import BSLabel, {BSMapCountLabel} from "@/components/labels/BSLabel";
 import {IconButton} from "@/components/ui/button";
 import React from "react";
 export default function BSPlaylistV1(

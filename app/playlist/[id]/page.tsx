@@ -1,14 +1,8 @@
 'use client'
-import { usePagingBSPlaylist } from "@/hooks/api/usePagingBSPlaylist";
-import { BSPlaylist as IBSPlaylist } from "@/interfaces/bs-playlist";
 import BSPlaylistSideBar from "@/components/BSPlaylistSideBar";
 import { useCallback, useEffect, useState } from "react";
-import SearchBar from "@/components/SearchBar";
-import BSPlaylistQueryCard from "@/components/BSPlaylistQueryCard";
 import { motion } from "framer-motion";
 import { FaArrowUp } from "react-icons/fa";
-import * as Popover from "@radix-ui/react-popover";
-import BSPlaylistSkeleton from "@/components/BSPlaylistSkeleton";
 import { usePagingBSPlaylistDetail } from "@/hooks/api/usePagingBSPlaylistDetail";
 import BSMapSkeleton from "@/components/BSMapSkeleton";
 import { BSBeatMap } from "@/interfaces/beatmap";

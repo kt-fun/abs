@@ -19,7 +19,7 @@ const WrappedBSPlaylist =(
 
   const cardRef = useRef(null);
   const [isSelected,setIsSelected] = useState(false)
-  const constraints = useScrollConstraints(cardRef, isSelected??false);
+  const {constraints} = useScrollConstraints(cardRef, isSelected??false);
   const containerRef = useRef(null);
   const y = useMotionValue(0);
   useEffect(()=>{

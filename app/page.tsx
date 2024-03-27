@@ -35,10 +35,11 @@ export default function Home({
             <span className={"text-zinc-400 dark:text-zinc-300 text-xs"}>search maps that you want</span>
           </div>
         </div>
+        {/*todo if scroll down and query new content, will cause height change*/}
         {
           <MapFilter
             className={'sticky top-16 z-10 flex left-0 right-0 w-full bg-base-light dark:bg-base-dark py-2'}
-            layout
+            // layout
             queryParam={queryParam}
             onUpdateQueryParam={updateQuery}
             onQuery={()=>{refresh()}}
