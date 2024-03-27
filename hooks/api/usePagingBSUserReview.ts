@@ -1,9 +1,5 @@
 import { BSMapReview } from "@/interfaces/beatmap-review";
-import { BSUserWithStats } from "@/interfaces/beatsaver-user";
-import { BASE_URL } from "@/lib/constant";
 import { jsonWithCredentialFetcher } from "@/lib/fetcher";
-import { use, useCallback, useEffect, useMemo, useState } from "react";
-import useSWR from "swr";
 import useSWRInfinite from "swr/infinite";
 
 const PAGE_SIZE = 20
@@ -18,7 +14,7 @@ export const usePagingBSUserReview = (userId:string) => {
         isLoading
       } = useSWRInfinite(
         (index) => {
-          return `${BASE_URL}/api/review/user/${userId}/${index}`
+          return `/api/review/user/${userId}/${index}`
         },
         fetcher,
         

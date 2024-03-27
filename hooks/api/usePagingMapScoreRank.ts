@@ -1,10 +1,6 @@
 import { BSMapRankItem } from "@/interfaces/beatmap-rank";
-import { BSUserWithStats } from "@/interfaces/beatsaver-user";
-import { BASE_URL } from "@/lib/constant";
 import { jsonFetcher } from "@/lib/fetcher";
-import { set } from "date-fns";
 import { use, useCallback, useEffect, useMemo, useState } from "react";
-import useSWR from "swr";
 import useSWRInfinite from "swr/infinite";
 
 const PAGE_SIZE = 12
@@ -61,7 +57,7 @@ export const usePagingBSMapScoreRank = (
         isLoading
       } = useSWRInfinite(
         (index) => {
-          return `${BASE_URL}/api/scores/${hash}/${index+1}?type=${type}&gameMode=${gameModeN}&difficulty=${difficultyN}`
+          return `/api/scores/${hash}/${index+1}?type=${type}&gameMode=${gameModeN}&difficulty=${difficultyN}`
         },
         jsonFetcher
       );

@@ -88,6 +88,7 @@ export interface BSMapStats {
     plays: number;
     score: number;
     upvotes: number;
+    reviews?: number;
     [property: string]: any;
 }
 

@@ -12,7 +12,7 @@ import BSPlaylistSkeleton from "@/components/BSPlaylistSkeleton";
 import { usePagingBSPlaylistDetail } from "@/hooks/api/usePagingBSPlaylistDetail";
 import BSMapSkeleton from "@/components/BSMapSkeleton";
 import { BSBeatMap } from "@/interfaces/beatmap";
-import BSMap from "@/components/BSMap";
+import BSMap from "@/components/bsmap";
 import { useRouter } from "next/navigation";
 import Loading from "@/components/load-status/Loading";
 import ReachListEnd from "@/components/load-status/ReachListEnd";
@@ -180,9 +180,7 @@ export default function Home({ params }: { params: { id: string } }) {
 
               }
               {
-                !playlist && (
-                  <div>loading</div>
-                )
+                !playlist && (<div>loading</div>)
               }
 
               {top > 100 && (<motion.div

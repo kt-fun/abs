@@ -1,16 +1,15 @@
 import {Tooltip} from "@/components/ui/tooltip";
 import {Card} from "@/components/ui/card";
-import SearchBar from "./SearchBar";
-import NPSRangePicker from "./NPSRangePicker";
+import SearchBar from "@/components/filter/base/SearchBar";
+import NPSRangePicker from "@/components/filter/base/NPSRangePicker";
 import {useCallback, useMemo, useState} from "react";
 import {FeatureOption, MapQueryParam, options} from "@/hooks/api/usePagingBSMap";
-import DurationRangePicker from "./DurationRangePicker";
-import RatingRangePicker from "./RatingRangePicker";
-import SortMenu from "./SortMenu";
+import DurationRangePicker from "@/components/filter/base/DurationRangePicker";
+import RatingRangePicker from "@/components/filter/base/RatingRangePicker";
+import SortMenu from "@/components/filter/base/SortMenu";
 import dayjs from "dayjs";
-import DateRangePicker from "./DateRangePicker";
+import DateRangePicker from "@/components/filter/base/DateRangePicker";
 import {BSGenreTags, BSStyleTags} from "@/interfaces/mapTags";
-import { FaCheck } from "react-icons/fa6";
 import BSMapTag from "@/components/BSMapTag";
 import {cn} from "@/lib/utils";
 const mapSortOptions = [
@@ -169,7 +168,9 @@ export default function BSMapQueryCard(
                       onClick={() => {
                         handleOptionChange(option)
                       }}
-                      className={`${checkIfOptionChecked(option) ? '' : 'opacity-40'}  text-xs px-1 text-white rounded-md p-0.5 bg-green-600 inline-flex items-center justify-center space-x-1 cursor-pointer`}>{option.label}</span>
+                      className={`${checkIfOptionChecked(option) ? '' : 'opacity-40'}  text-xs px-1 text-white rounded-md p-0.5 bg-green-600 inline-flex items-center justify-center space-x-1 cursor-pointer`}>
+                      {option.label}
+                    </span>
                   </Tooltip>
                 )
               })

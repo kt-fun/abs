@@ -4,7 +4,7 @@ import {cn} from "@/lib/utils";
 import {formatNumber} from "@/lib/format";
 import {CiMap} from "react-icons/ci";
 import {GiRank3} from "react-icons/gi";
-
+import  {motion} from 'framer-motion'
 interface BSLabelProps {
     label:string,
   className?:string
@@ -24,10 +24,28 @@ const Label = React.forwardRef(({
     className?:string,
 }, forwardedRef) => {
   return (
-    <span className={cn("font-medium inline-flex items-center space-x-1  text-xs cursor-default",className)} ref={forwardedRef as any}>
+  <motion.span
+    layout
+    initial={{
+      opacity: 0,
+    }}
+    animate={{
+      opacity: 1,
+      transition:{
+        duration: 1
+      }
+    }}
+    exit={{
+      opacity: 0,
+      transition:{
+        duration: 1
+      }
+    }}
+    className={cn("font-medium inline-flex items-center space-x-1  text-xs cursor-default",className)} ref={forwardedRef as any}
+  >
       <span>{children}</span>
       <span>{label}</span>
-  </span>
+  </motion.span>
   )
   }
 )

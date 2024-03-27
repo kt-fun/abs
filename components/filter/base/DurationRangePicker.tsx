@@ -36,17 +36,16 @@ export default function DurationRangePicker({
         return `${formatDuration(min)} - ${formatDuration(max!)}`
     },[range])
     return (
-        <div className="relative z-[100]">
+        <div className="relative">
             <Slider
-            defaultValue={coveredRange}
-            min={0}
-            max={330}
-            onValueChange={handle}
-            onValueCommit={handle}
-            step={30}
-            className="z-[100]"
+                defaultValue={coveredRange}
+                min={0}
+                max={330}
+                onValueChange={handle}
+                onValueCommit={handle}
+                step={30}
             />
-            <div className="flex justify-between text-sm">
+            <div className="flex justify-between ">
                 <span>Duration</span>
                 <span>{text}</span>
             </div>

@@ -1,6 +1,6 @@
 'use client'
-import BSPlaylist from "@/components/BSPlaylist";
-import BSMap from "@/components/BSMap";
+import BSPlaylist from "@/components/bsplaylist";
+import BSMap from "@/components/bsmap";
 import { useBSUser } from "@/hooks/api/useBSUser";
 import { useInfinityScroll } from "@/hooks/useInfinityScroll";
 import { FetchingType, usePagingBSUserMap } from "@/hooks/api/usePagingBSUserMap";
@@ -10,7 +10,7 @@ import  {Card} from "@/components/ui/card";
 import Link from "@/components/ui/link";
 import * as Tabs from "@radix-ui/react-tabs";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
 import BSMapperSideBar from "@/components/BSMapperSideBar";
 import {DateLabel} from "@/components/labels/BSMapMetaLabels";
 import { FcLike } from "react-icons/fc";
@@ -157,12 +157,9 @@ export default function MapperDetailPage({ params }: { params: { id: number } })
 
           <div className="block lg:hidden mb-2">
             <div className="flex justify-start">
-              <div
+              <img
                 className="h-[144px] w-[144px] sm:h-[256px] sm:w-[256px] aspect-square rounded-lg"
-                style={{
-                  backgroundImage: `url('${bsUserWithStats.avatar}')`,
-                  backgroundSize: 'cover',
-                }}
+                src={bsUserWithStats.avatar}
               />
               <div className="pl-2">
                 <div className="flex justify-between items-center">

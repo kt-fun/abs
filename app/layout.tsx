@@ -23,7 +23,7 @@ export default function RootLayout({
       >
         <main className="flex min-h-screen flex-col">
           <Header/>
-          <section className='grow justify-center flex px-2 py-4'>
+          <section className='grow justify-center flex px-2'>
             {children}
           </section>
         </main>

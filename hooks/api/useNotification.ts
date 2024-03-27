@@ -1,9 +1,7 @@
-import { BASE_URL } from "@/lib/constant"
 import { jsonWithCredentialFetcher } from "@/lib/fetcher"
 import useSWR from "swr"
 import useSWRInfinite from "swr/infinite"
 import {BSNotification} from "@/interfaces/bs-notification";
-import {BSPlaylist} from "@/interfaces/bs-playlist";
 
 export interface NotifyStats {
     unread: number,
@@ -15,7 +13,7 @@ export interface NotifyStats {
 
 export const useNotifyStats = () => {
     //@ts-ignore
-    const { data, isLoading,error } = useSWR(`${BASE_URL}/api/alerts/stats`, jsonWithCredentialFetcher)
+    const { data, isLoading,error } = useSWR(`/api/alerts/stats`, jsonWithCredentialFetcher)
     return {
         data:data as NotifyStats,
         isLoading,
@@ -37,7 +35,7 @@ export const usePagingNotifications = (
         isLoading
     } = useSWRInfinite(
       (index) => {
-        return `${BASE_URL}/api/alerts/${type}/${index}`
+        return `/api/alerts/${type}/${index}`
       },
       jsonWithCredentialFetcher
     );

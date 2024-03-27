@@ -12,12 +12,8 @@ export default function NPSRangePicker(
 ) {
     const handle = (value: number[]) => {
         let [min, max]:[number|undefined, number|undefined] = value as [number, number];
-        if (value[0] === 0) {
-            min = undefined;
-        }
-        if (value[1] === 16) {
-            max = undefined;
-        }
+        if (value[0] === 0) {min = undefined;}
+        if (value[1] === 16) {max = undefined;}
         setRange([min, max]);
     }
     const coveredRange = useMemo(()=>{
@@ -43,7 +39,7 @@ export default function NPSRangePicker(
             onValueCommit={handle}
             step={0.1}
             />
-            <div className="flex justify-between text-sm">
+            <div className="flex justify-between">
                 <span>NPS</span>
                 <span>{text}</span>
             </div>

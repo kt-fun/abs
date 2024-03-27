@@ -1,6 +1,4 @@
-import { BSBeatMap } from '@/interfaces/beatmap';
 import { BSPlaylist } from '@/interfaces/bs-playlist';
-import { BASE_URL } from '@/lib/constant';
 import { jsonFetcher, jsonWithCredentialFetcher } from '@/lib/fetcher';
 import { use, useCallback, useEffect, useMemo, useState } from "react";
 import useSWRInfinite from "swr/infinite";
@@ -19,7 +17,7 @@ export interface PlaylistQueryParam {
     to?: string,
 }
 const buildURL = (index:number,param:PlaylistQueryParam) => {
-    const baseURL = `${BASE_URL}/api/playlists/search/${index}`
+    const baseURL = `/api/playlists/search/${index}`
     let paramMap:any = {}
     if (param.verifiedMapper) {
         paramMap["verifiedMapper"] = true
@@ -56,7 +54,7 @@ const buildURL = (index:number,param:PlaylistQueryParam) => {
 }
 
 const defaultParam:PlaylistQueryParam = {
-    sortKey:"",
+    sortKey:"Relevance",
     queryKey:""
 }
 

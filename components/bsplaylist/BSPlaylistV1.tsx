@@ -13,7 +13,7 @@ import { HiCursorClick } from "react-icons/hi";
 import BSLabel, {BSMapCountLabel} from "./labels/BSLabel";
 import {IconButton} from "@/components/ui/button";
 import React from "react";
-export default function BSPlaylist(
+export default function BSPlaylistV1(
     {bsPlaylist}:{bsPlaylist:IBSPlaylist}
 ){
     const bg = `url('${bsPlaylist.playlistImage}')`
@@ -32,9 +32,9 @@ export default function BSPlaylist(
                     <div className="z-100 bg-black/[.6] h-full group-hover:visible invisible rounded-t-lg bg-blend-darken">
                         <div className="flex flex-col justify-between  h-full pt-auto pb-0 dark bg-transparent rounded-t-lg text-white">
                                 <div>
-                                    <p className="text-xs text-ellipsis overflow-hidden m-2 line-clamp-[7]">
-                                        {bsPlaylist.description == "" ? "No description" : bsPlaylist.description}
-                                    </p>
+                                <p className="text-xs text-ellipsis overflow-hidden m-2 line-clamp-[7]">
+                                    {bsPlaylist.description == "" ? "No description" : bsPlaylist.description}
+                                </p>
                                 </div>
                                 <div>
                                     <div>
@@ -108,7 +108,6 @@ export default function BSPlaylist(
                         </div>
                 </div>
             </Card>
-
         </>
     )
 }

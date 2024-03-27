@@ -18,7 +18,7 @@ const Link = React.forwardRef((
   ref
 )=> {
   return(
-    <NextLink {...props} className={cn("text-primary-600 hover:underline", className)} target={target} ref={ref as any}>
+    <NextLink {...props} className={cn("hover:underline", className)} target={target} ref={ref as any}>
       {children}
     </NextLink>
   )

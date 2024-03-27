@@ -1,6 +1,6 @@
 import { BSUser } from "@/interfaces/beatsaver-user";
 import { useBSUser } from "@/hooks/api/useBSUser";
-import BSMapper from "./BSMapper";
+import BSMapper from "@/components/bsmapper/BSMapper";
 import { MdOutlineErrorOutline } from "react-icons/md";
 import Loading from "@/components/load-status/Loading";
 
@@ -21,7 +21,7 @@ export default function BSUserDetailCard(
             <>
             {
                 isLoading ? <Loading /> :
-                bsUserWithStats ? <BSMapper bsUserWithStats={bsUserWithStats} className="shadow-none"/> :
+                bsUserWithStats ? <BSMapper bsUserWithStats={bsUserWithStats} className="shadow-none bg-zinc-100/70 dark:bg-zinc-700/70 backdrop-blur"/> :
                 <Error error={error.toString()}/>
             }
             </>

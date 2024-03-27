@@ -1,8 +1,6 @@
 import { BSBeatMap } from "@/interfaces/beatmap";
-import { useCallback, useEffect, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 import dayjs from "dayjs";
-import { BASE_URL } from "@/lib/constant";
 import { jsonFetcher } from "@/lib/fetcher";
 export type FetchingType = "Published" | "WIP" | "Curated"
 const PAGE_SIZE = 20
@@ -19,15 +17,15 @@ export const usePagingBSUserMap = (
             return (pageIndex:number, previousPageData:any) => {
                 if (previousPageData){
                     const prevLast = previousPageData[previousPageData.length - 1]
-                    return `${BASE_URL}/api/maps/collaborations/${userId}?&before=${prevLast.createdAt}`
+                    return `/api/maps/collaborations/${userId}?&before=${prevLast.createdAt}`
                 }
-                return `${BASE_URL}/api/maps/collaborations/${userId}?&before=${currentdate}`
+                return `/api/maps/collaborations/${userId}?&before=${currentdate}`
             }
         }
         if (fetchingType === "WIP") {
-            return (index:number) => `${BASE_URL}/api/maps/wip/${index}`
+            return (index:number) => `/api/maps/wip/${index}`
         }
-        return (index:number) => `${BASE_URL}/api/search/text/${index}?sortOrder=Curated&curator=${userId}&automapper=true`
+        return (index:number) => `/api/search/text/${index}?sortOrder=Curated&curator=${userId}&automapper=true`
         
     }
 

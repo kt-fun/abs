@@ -4,7 +4,7 @@ import { jsonFetcher } from "@/lib/fetcher";
 import useSWR from "swr";
 
 export const useBSMapDetail = (mapId: string) => {
-    const { data, isLoading,error } = useSWR(`${BASE_URL}/api/maps/id/${mapId}`, jsonFetcher)
+    const { data, isLoading,error } = useSWR(`/api/maps/id/${mapId}`, jsonFetcher)
     return {
         "bsMap": data as BSBeatMap,
         isLoading,

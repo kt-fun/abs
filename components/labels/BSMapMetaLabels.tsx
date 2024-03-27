@@ -24,7 +24,7 @@ export const DurationLabel = (
 )=> {
   return (
     <>
-      <BSLabel label={dayjs.duration(duration,'seconds').format('mm:ss')} className={className}  tooltip={tooltip}>
+      <BSLabel label={dayjs.duration(duration,'seconds').format('mm[m]ss[s]')} className={className}  tooltip={tooltip}>
         <CiTimer/>
       </BSLabel>
     </>

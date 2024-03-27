@@ -325,17 +325,13 @@ const RankingTab =({
 
 
 const OpsPanel = ({bsMap}:{bsMap:BSBeatMap})=>{
-  const {currentSong,state,play,stop} = useSongPreview()
+  const {currentSong,state,play,stop , playPreview} = useSongPreview()
   const handlePlaySongPreview = () => {
-    if(state.playing && currentSong?.id == bsMap.id){
-      stop()
-    }else{
-      play({
-        id:bsMap.id,
-        previewURL:bsMap.versions[0].previewURL,
-        coverURL:getBSMapCoverURL(bsMap),
-      })
-    }
+    playPreview({
+      id:bsMap.id,
+      previewURL:bsMap.versions[0].previewURL,
+      coverURL:getBSMapCoverURL(bsMap),
+    })
   }
   const current = useMemo(()=>{
     return currentSong?.id == bsMap?.id
@@ -413,7 +409,6 @@ const TagList = ({tags,className}:{tags:string[],className?:string})=>{
         (tags && tags.length > 0) ? (
           tags?.map((tag) => getMapTag(tag)).filter((it) => it !== undefined)
             .map((tag) => {
-                console.log(tag)
                 return (
                   <>
                     <BSMapTag

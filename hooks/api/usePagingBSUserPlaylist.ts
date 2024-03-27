@@ -1,8 +1,5 @@
-import { BSBeatMap } from '@/interfaces/beatmap';
 import { BSPlaylist } from '@/interfaces/bs-playlist';
-import { BASE_URL } from '@/lib/constant';
 import { jsonFetcher } from '@/lib/fetcher';
-import { use, useCallback, useEffect, useMemo, useState } from "react";
 import useSWRInfinite from "swr/infinite";
 
 const PAGE_SIZE = 20
@@ -19,7 +16,7 @@ export const usePagingBSUserPlaylist = (userId:string) => {
         isValidating,
         isLoading
       } = useSWRInfinite(
-        (index) => `${BASE_URL}/api/playlists/user/${userId}/${index}`,
+        (index) => `/api/playlists/user/${userId}/${index}`,
         fetcher,
       );
     

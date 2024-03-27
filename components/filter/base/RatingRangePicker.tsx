@@ -43,7 +43,7 @@ export default function RatingRangePicker(
             onValueCommit={handle}
             step={5}
             />
-            <div className="flex justify-between text-sm">
+            <div className="flex justify-between">
                 <span>Rating</span>
                 <span>{text}</span>
             </div>

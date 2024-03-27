@@ -1,34 +1,56 @@
 'use client'
-import BSMapper from "@/components/BSMapper";
+import BSMapper from "@/components/bsmapper";
 import { useInfinityScroll } from "@/hooks/useInfinityScroll";
 import { usePagingBSUser } from "@/hooks/api/usePagingBSUser";
-import { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import Loading from "@/components/load-status/Loading";
 import EmptyContent from "@/components/load-status/EmptyContent";
 import ReachListEnd from "@/components/load-status/ReachListEnd";
+import { motion } from "framer-motion";
+import {BSBeatMap} from "@/interfaces/beatmap";
+import BSMap from "@/components/bsmap";
+import {containerVariants, listItemVariants} from "@/components/variants";
+import {useWindowScrollEndCallback} from "@/hooks/ui/useWindowScrollCallback";
 
 export default function MapperPage() {
-    const { users,isLoadingMore,isEmpty,hasMore,loadMore} = usePagingBSUser();
-    const {reachedBottom,showScrollToTop, scrollToTop} = useInfinityScroll();
-    useEffect(()=>{
-      if (reachedBottom && !isLoadingMore && !isEmpty && hasMore){
-        loadMore();
-      }
-    },[reachedBottom,isLoadingMore,isEmpty,hasMore,loadMore])
+  const { users,isLoadingMore,isEmpty,hasMore,loadMore} = usePagingBSUser();
+  const reachEndCallback = useCallback(() => {
+    !isLoadingMore && !isEmpty && hasMore && loadMore()
+  },[hasMore, isEmpty, isLoadingMore, loadMore])
+  useWindowScrollEndCallback(reachEndCallback)
     return (
       <>
-      <div className="max-w-[1200px]">
-        <div className="grid gap-2 grid-cols-1 xl:grid-cols-3 md:grid-cols-2">
+        <div className="max-w-[1024px] w-full">
+          <div className={"bg-base flex items-center mb-2"}>
+            <div>
+              <h1 className={"text-3xl font-bold"}>Mappers</h1>
+            </div>
+            {/*<SearchBar queryKey={''} onQueryKeyChange={()=>{}} onQuery={()=>{}}/>*/}
+          </div>
+          <motion.ul
+            variants={containerVariants}
+            initial={'hidden'}
+            animate={'show'}
+            className="grid gap-2 grid-cols-1 xl:grid-cols-3 md:grid-cols-2 lg:grid-cols-3"
+          >
             {
-                !isEmpty && users.map((it)=> 
-                    <BSMapper key={it.id} bsUserWithStats={it} className="sm:w-full"/>
-                )
+              !isEmpty &&  users.map((it, i:number) => {
+                return (
+                  <motion.li
+                    variants={listItemVariants}
+                    custom={i}
+                    key={it.id}
+                  >
+                    <BSMapper bsUserWithStats={it} className="w-full"/>
+                  </motion.li>
+                );
+              })
             }
-          {!isLoadingMore&&isEmpty && <EmptyContent/>}
-          { !isEmpty && !hasMore && !isLoadingMore && <ReachListEnd/> }
-          { isLoadingMore && <Loading/> }
-      </div>
-      </div>
+            {!isLoadingMore && isEmpty && <EmptyContent/>}
+            {!isEmpty && !hasMore && !isLoadingMore && <ReachListEnd/>}
+            {isLoadingMore && <Loading/>}
+          </motion.ul>
+        </div>
 
       </>
     )

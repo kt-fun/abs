@@ -20,6 +20,10 @@ const config = {
     extend: {
       colors:{
         primary: colors.blue,
+        base: {
+          light: colors.white,
+          dark: colors.black
+        }
       },
       keyframes: {
         "accordion-down": {

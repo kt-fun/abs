@@ -1,7 +1,5 @@
 // 'use client'
 import RankedIcon from "@/components/icons/RankedIcon";
-import ThumbDownIcon from "@/components/icons/ThumbDownIcon";
-import ThumbUpIcon from "@/components/icons/ThumbUpIcon";
 import { BSUserWithStats } from "@/interfaces/beatsaver-user";
 import { formatNumber } from "@/lib/format";
 import { FaMapMarkedAlt } from "react-icons/fa";
@@ -10,21 +8,23 @@ import  {Avatar} from "@/components/ui/avatar";
 import * as Card from "@/components/ui/card";
 import {Tooltip} from "@/components/ui/tooltip";
 import dayjs from "dayjs";
-import Link from "@/components/ui/link";
 import { useCallback } from "react";
 import relativeTime from "dayjs/plugin/relativeTime";
 import {cn} from "@/lib/utils";
 import {escapeHtml} from "@/lib/ContentEscape";
+
+import {motion} from 'framer-motion'
+import {ThumbDownCountLabel, ThumbUpCountLabel} from "@/components/labels/BSMapMetaLabels";
+import Link from "next/link";
 dayjs.extend(relativeTime);
 const LabelWithIcon = ({children, label,tooltip}:{children:React.ReactNode,label:string, tooltip?:string}) => {
     return (
         <Tooltip content={tooltip?tooltip:""}>
-            <span className="flex items-center space-x-1 cursor-default">
+            <span className="flex items-center text-xs space-x-1 cursor-default">
                 {children}
-              <span className="font-medium">{label}</span>
+              <span className="">{label}</span>
             </span>
         </Tooltip>
-        
     )
 
 }
@@ -46,9 +46,7 @@ export default function BSMapper(
     }
 ) {
   const computeRating = useCallback((like:number,dislike:number) => {
-    if(like == 0 && dislike == 0){
-        return 50;
-    }
+    if(like == 0 && dislike == 0){return 50}
     return (like/(like+dislike))*100.0;
   },[])
   const rating = computeRating(
@@ -57,29 +55,29 @@ export default function BSMapper(
   );
     return (
         <>
-        <Card.Card className={cn("min-w-64 sm:w-fit max-w-[300px]",className)}>
+        <Card.Card className={cn("min-w-64 max-w-[300px]",className)}>
           <Card.CardContent className="p-2">
-            <div className="flex">
+            <motion.div className="flex">
                 <Avatar
                     src={bsUserWithStats.avatar}
                     className="m-2 w-12 h-12"
                     fallback={bsUserWithStats.name[0]} />
                 <div className="overflow-hidden">
-                    <Link href={`/mapper/${bsUserWithStats.id}`} className="overflow-hidden" >
+                    <Link href={`/mapper/${bsUserWithStats.id}`}  className="overflow-hidden" >
                       <div  className="text-lg text-ellipsis font-medium">
                         {bsUserWithStats.name}
                       </div>
-
                     </Link>
                     <p
                     className="overflow-ellipsis line-clamp-2 pr-2 text-xs text-gray-400"
                     dangerouslySetInnerHTML={{__html:escapeHtml(getDescription(bsUserWithStats.description))}}
                     />
                 </div>
-            </div>
-            <div>
+            </motion.div>
+            <motion.div>
                 <div className="flex justify-between">
-                    <LabelWithIcon tooltip="ranked map amount" label={formatNumber(bsUserWithStats.stats?.rankedMaps? bsUserWithStats.stats.rankedMaps : 0)}>
+
+                    <LabelWithIcon tooltip="ranked map amount" label={formatNumber(bsUserWithStats.stats?.rankedMaps?? 0)}>
                         <RankedIcon/>
                     </LabelWithIcon>
                     <LabelWithIcon tooltip="total map amount" label={formatNumber(bsUserWithStats.stats.totalMaps)}>
@@ -87,13 +85,8 @@ export default function BSMapper(
                     </LabelWithIcon>
                 </div>
                 <div className="flex justify-between">
-                    <LabelWithIcon tooltip="total up vote" label={formatNumber(bsUserWithStats.stats.totalUpvotes)}>
-                        <ThumbUpIcon/>
-                    </LabelWithIcon>
-
-                    <LabelWithIcon  tooltip="total down vote" label={formatNumber(bsUserWithStats.stats.totalDownvotes)}>
-                        <ThumbDownIcon/>
-                    </LabelWithIcon>
+                  <ThumbUpCountLabel count={bsUserWithStats.stats.totalUpvotes} tooltip="total up vote"/>
+                  <ThumbDownCountLabel count={bsUserWithStats.stats.totalDownvotes} tooltip="total down vote"/>
                 </div>
                 <div className="flex items-center justify-between">
                     <Progress.Root className="relative overflow-hidden rounded-full w-full h-2 bg-gray-100" value={rating}>
@@ -104,8 +97,8 @@ export default function BSMapper(
                     </Progress.Root>
                     <div className="pl-4 font-medium text-xs">{rating.toFixed(1)}%</div>
                 </div>
-            </div>
-            <div className="flex justify-between">
+            </motion.div>
+            <motion.div className="flex justify-between">
 
             {
                 bsUserWithStats.stats.firstUpload && 
@@ -125,7 +118,7 @@ export default function BSMapper(
                     </div>
                 </Tooltip>
             }
-            </div>
+            </motion.div>
           </Card.CardContent>
         </Card.Card>
         </>
