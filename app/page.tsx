@@ -1,26 +1,28 @@
 'use client'
-import BSMap from "@/components/bsmap";
-import {buildMapQueryParam, usePagingBSMap} from "@/hooks/api/usePagingBSMap";
+import { usePagingBSMap} from "@/hooks/api/usePagingBSMap";
 import { BSBeatMap } from "@/interfaces/beatmap";
 import {motion} from "framer-motion";
 import React, {useCallback} from "react";
 import Loading from "@/components/load-status/Loading";
-
 import ReachListEnd from "@/components/load-status/ReachListEnd";
 import {containerVariants, listItemVariants} from "@/components/variants";
 import MapFilter from "@/components/filter/map-filter";
 import {useWindowScrollEndCallback} from "@/hooks/ui/useWindowScrollCallback";
 import EmptyContent from "@/components/load-status/EmptyContent";
+import BSMapQueryParam from "@/interfaces/bsmap-query-param";
+import {useBeatmaps} from "@/hooks/api/query/usePagingMap";
+import {ClientOnly} from "@/components/ClientOnly";
+import BSMap from "@/components/bsmap";
 
 type SearchParam = { [key: string]: string | string[] | undefined }
 
 
 export default function Home({
-  searchParams,
-}:{
+                               searchParams,
+                             }:{
   searchParams:SearchParam
 }) {
-  const mapQueryParam = buildMapQueryParam(searchParams)
+  const mapQueryParam = BSMapQueryParam.buildMapQueryParamFromSearchParam(searchParams)
   const { maps,isLoadingMore,isEmpty,hasMore,loadMore,queryParam,updateQuery,refresh} = usePagingBSMap(mapQueryParam);
   const reachEndCallback = useCallback(() => {
     !isLoadingMore && !isEmpty && hasMore && loadMore()
@@ -35,11 +37,10 @@ export default function Home({
             <span className={"text-zinc-400 dark:text-zinc-300 text-xs"}>search maps that you want</span>
           </div>
         </div>
-        {/*todo if scroll down and query new content, will cause height change*/}
         {
           <MapFilter
             className={'sticky top-16 z-10 flex left-0 right-0 w-full bg-base-light dark:bg-base-dark py-2'}
-            // layout
+            layout
             queryParam={queryParam}
             onUpdateQueryParam={updateQuery}
             onQuery={()=>{refresh()}}
@@ -52,19 +53,21 @@ export default function Home({
           animate={'show'}
           className="grid gap-2 grid-cols-1 md:grid-cols-2 grow px-2"
         >
-          {
-            maps.map((map:BSBeatMap, i:number) => {
-              return (
-                <BSMap
-                  // todo fix key issue, cause by data repeat
-                  key={map.id}
-                  variants={listItemVariants}
-                  custom={i}
-                  bsMap={map}
-                />
-              );
-            })
-          }
+          <ClientOnly>
+            {
+              maps.map((map:BSBeatMap, i:number) => {
+                return (
+                  <BSMap
+                    // todo fix key issue, cause by data repeat
+                    key={map.id}
+                    variants={listItemVariants}
+                    custom={i}
+                    bsMap={map}
+                  />
+                );
+              })
+            }
+          </ClientOnly>
           { !isEmpty && !hasMore && !isLoadingMore && <ReachListEnd/> }
           { isEmpty && !hasMore && !isLoadingMore && <EmptyContent className={'col-span-2'}/> }
           {  isLoadingMore && <Loading className={'col-span-2'}/> }

@@ -21,7 +21,7 @@ app.get('/beatleader/*', async (c)=> {
   const res = await fetch(afterUrl, {
     ...req,
     headers: {
-      "User-Agent": "Apifox/1.0.0 (https://apifox.com)"
+      "User-Agent": "ABS/0.0.3 (https://abs.ktlab.io)"
     }
   })
   return res

@@ -1,6 +1,6 @@
 'use client'
 
-import React, {Ref, useState} from "react"
+import React, {useState} from "react"
 import { FaCheck } from "react-icons/fa6";
 import {Button} from "@/components/ui/button";
 import {cn} from "@/lib/utils";

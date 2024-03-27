@@ -3,7 +3,6 @@ import {Card} from "@/components/ui/card";
 import SearchBar from "@/components/filter/base/SearchBar";
 import NPSRangePicker from "@/components/filter/base/NPSRangePicker";
 import {useCallback, useMemo, useState} from "react";
-import {FeatureOption, MapQueryParam, options} from "@/hooks/api/usePagingBSMap";
 import DurationRangePicker from "@/components/filter/base/DurationRangePicker";
 import RatingRangePicker from "@/components/filter/base/RatingRangePicker";
 import SortMenu from "@/components/filter/base/SortMenu";
@@ -12,6 +11,7 @@ import DateRangePicker from "@/components/filter/base/DateRangePicker";
 import {BSGenreTags, BSStyleTags} from "@/interfaces/mapTags";
 import BSMapTag from "@/components/BSMapTag";
 import {cn} from "@/lib/utils";
+import {BSMapQueryOptions, FeatureOption, MapQueryParam} from "@/interfaces/bsmap-query-param";
 const mapSortOptions = [
     "Relevance",
     "Latest",
@@ -161,7 +161,7 @@ export default function BSMapQueryCard(
           <div className="font-medium">Feature Selector</div>
           <div className="flex-wrap flex  gap-1">
             {
-              options.map((option) => {
+              BSMapQueryOptions.map((option) => {
                 return (
                   <Tooltip content={option.tooltip!} key={option.label}>
                     <span

@@ -1,8 +1,8 @@
 import {AnimatePresence, motion, useAnimationControls, Variants} from "framer-motion";
 import React, {useEffect, useMemo, useRef, useState} from "react";
 import {useTranslation} from "@/hooks/useTranslation";
-import {ArrowUpDown, ListFilter} from "lucide-react";
-import {MapQueryParam, options} from "@/hooks/api/usePagingBSMap";
+import {ListFilter} from "lucide-react";
+import {MapQueryParam} from "@/interfaces/bsmap-query-param";
 import {useDimensions} from "@/hooks/ui/useDimensions";
 import NPSRangePicker from "@/components/filter/base/NPSRangePicker";
 import DurationRangePicker from "@/components/filter/base/DurationRangePicker";

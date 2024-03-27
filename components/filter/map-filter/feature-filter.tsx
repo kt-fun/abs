@@ -2,11 +2,11 @@ import {AnimatePresence, motion, useAnimationControls, Variants} from "framer-mo
 import React, {useCallback, useEffect, useRef, useState} from "react";
 import {useTranslation} from "@/hooks/useTranslation";
 import {ListFilter} from "lucide-react";
-import {FeatureOption, MapQueryParam, options} from "@/hooks/api/usePagingBSMap";
 import {BSGenreTags, BSStyleTags} from "@/interfaces/mapTags";
 import BSMapTag from "@/components/BSMapTag";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {cn} from "@/lib/utils";
+import {BSMapQueryOptions, FeatureOption, MapQueryParam} from "@/interfaces/bsmap-query-param";
 
 type FeatureFilterProps = {
   queryParam: MapQueryParam,
@@ -188,7 +188,7 @@ const FeatureFilter = React.forwardRef<HTMLDivElement, FeatureFilterProps>((
 
                             <div className={"flex flex-row flex-wrap gap-1"}>
                               {
-                                options.map((option) => {
+                                BSMapQueryOptions.map((option) => {
                                   return (
                                     <motion.span
                                       key={option.label}
