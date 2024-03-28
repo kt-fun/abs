@@ -24,7 +24,7 @@ const PreviewIFrame = React.forwardRef(({
       </Dialog.Dialog>
     )
 })
-
+PreviewIFrame.displayName="PreviewIFrame"
 
 export const BLReplayPreviewIFrame = React.forwardRef(({
   id,
@@ -37,7 +37,9 @@ export const BLReplayPreviewIFrame = React.forwardRef(({
     return `https://replay.beatleader.xyz/?scoreId=${id}`
   },[id])
   return (
-    <PreviewIFrame url={url} ref={ref} children={children}/>
+    <PreviewIFrame url={url} ref={ref}>
+      {children}
+    </PreviewIFrame>
   )
 })
 BLReplayPreviewIFrame.displayName = "BLReplayPreviewIFrame"
@@ -55,7 +57,9 @@ export const MapPreviewIFrame = React.forwardRef(({
     return `https://allpoland.github.io/ArcViewer/?id=${id}`
   },[id])
   return (
-    <PreviewIFrame url={url} ref={ref} children={children}/>
+    <PreviewIFrame url={url} ref={ref}>
+      {children}
+    </PreviewIFrame>
   )
 })
 MapPreviewIFrame.displayName = "MapPreviewIFrame"

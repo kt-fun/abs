@@ -252,6 +252,7 @@ const BSMap = (
                         {
                           bsMap.versions[0].diffs.map(diff=>
                             <div
+                              key={diff.difficulty+diff.characteristic}
                               onClick={()=>{setDiff(diff)}}
                               className={currentDiff == diff ? 'bg-zinc-200/70 rounded-full':''}
                             >
