@@ -3,8 +3,9 @@ import './globals.css'
 
 import { Header } from '@/components/header/Header'
 import * as React from "react";
-import {ThemeProvider} from "@/components/ThemeProvider";
-import {UserPreferenceProvider} from "@/components/UserPreferenceProvider";
+import {ThemeProvider} from "@/components/providers/ThemeProvider";
+import {UserPreferenceProvider} from "@/components/providers/UserPreferenceProvider";
+import {getLocale} from "@/app/i18n/server";
 const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({
@@ -12,16 +13,17 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const locale = getLocale();
   return (
     <UserPreferenceProvider>
-      <html lang={"en"}>
+      <html lang={locale}>
       <body className={inter.className}>
       <ThemeProvider
         attribute="class"
         defaultTheme="system"
         enableSystem
       >
-        <main className="flex min-h-screen flex-col">
+        <main className="flex min-h-screen flex-col bg-base-light dark:bg-base-dark">
           <Header/>
           <section className='grow justify-center flex px-2'>
             {children}

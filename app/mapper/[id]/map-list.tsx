@@ -1,14 +1,11 @@
-import {BSUserWithStats} from "@/interfaces/beatsaver-user";
-import {usePagingBSUserReview} from "@/hooks/api/usePagingBSUserReview";
+
 import {motion} from "framer-motion";
-import {containerVariants, listItemVariants} from "@/components/variants";
-import Loading from "@/components/load-status/Loading";
+import {containerVariants, listItemVariants} from "@/components/shared/variants";
+import {EmptyContent, Loading, ReachListEnd} from "@/components/shared/load-status";
 import React, {useEffect} from "react";
 import {FetchingType, usePagingBSUserMap} from "@/hooks/api/usePagingBSUserMap";
 import {useInfinityScroll} from "@/hooks/useInfinityScroll";
 import BSMap from "@/components/bsmap";
-import EmptyContent from "@/components/load-status/EmptyContent";
-import ReachListEnd from "@/components/load-status/ReachListEnd";
 import {BSBeatMap} from "@/interfaces/beatmap";
 
 const MapList = (

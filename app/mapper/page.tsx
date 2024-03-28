@@ -1,15 +1,10 @@
 'use client'
 import BSMapper from "@/components/bsmapper";
-import { useInfinityScroll } from "@/hooks/useInfinityScroll";
 import { usePagingBSUser } from "@/hooks/api/usePagingBSUser";
-import React, { useCallback, useEffect } from "react";
-import Loading from "@/components/load-status/Loading";
-import EmptyContent from "@/components/load-status/EmptyContent";
-import ReachListEnd from "@/components/load-status/ReachListEnd";
 import { motion } from "framer-motion";
-import {BSBeatMap} from "@/interfaces/beatmap";
-import BSMap from "@/components/bsmap";
-import {containerVariants, listItemVariants} from "@/components/variants";
+import React, { useCallback, useEffect } from "react";
+import {ReachListEnd, EmptyContent, Loading} from "@/components/shared/load-status";
+import {containerVariants, listItemVariants} from "@/components/shared/variants";
 import {useWindowScrollEndCallback} from "@/hooks/ui/useWindowScrollCallback";
 
 export default function MapperPage() {

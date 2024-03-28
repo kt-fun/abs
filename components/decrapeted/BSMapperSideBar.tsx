@@ -1,6 +1,6 @@
 import  {Card} from "@/components/ui/card";
-import * as MapMetaLabel from "@/components/labels/BSMapMetaLabels";
-import {BSMapCountLabel} from "@/components/labels/BSLabel";
+import * as MapMetaLabel from "@/components/shared/labels/BSMapMetaLabels";
+import {BSMapCountLabel} from "@/components/shared/labels/BSLabel";
 import { BSUserWithStats } from "@/interfaces/beatsaver-user";
 import {escapeHtml} from "@/lib/ContentEscape";
 

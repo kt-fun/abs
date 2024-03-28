@@ -2,14 +2,11 @@
 import { usePagingBSPlaylist } from "@/hooks/api/usePagingBSPlaylist";
 import { BSPlaylist as IBSPlaylist } from "@/interfaces/bs-playlist";
 import BSPlaylist from "@/components/bsplaylist";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useInfinityScroll } from "@/hooks/useInfinityScroll";
-import Loading from "@/components/load-status/Loading";
-import ReachListEnd from "@/components/load-status/ReachListEnd";
-import EmptyContent from "@/components/load-status/EmptyContent";
-import {containerVariants, listItemVariants} from "@/components/variants";
+import {Loading,ReachListEnd, EmptyContent} from "@/components/shared/load-status";
+import {containerVariants, listItemVariants} from "@/components/shared/variants";
 import { motion } from "framer-motion";
-import MapFilter from "@/components/filter/map-filter";
 import PlaylistFilter from "@/components/filter/playlist-filter";
 export default function Home() {
     const { playlists,isLoadingMore,isEmpty,hasMore,loadMore,refresh,queryParam,updateQuery} = usePagingBSPlaylist();

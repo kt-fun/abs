@@ -1,16 +1,16 @@
 'use client'
 import { BSPlaylist as IBSPlaylist } from "@/interfaces/bs-playlist";
-import {DateLabel} from "@/components/labels/BSMapMetaLabels";
-import BSUserLabel from "@/components/labels/BSUserLabel";
+import {DateLabel} from "@/components/shared/labels/BSMapMetaLabels";
+import BSUserLabel from "@/components/shared/labels/BSUserLabel";
+import * as MapMetaLabel from "@/components/shared/labels/BSMapMetaLabels";
+import BSLabel, {BSMapCountLabel} from "@/components/shared/labels/BSLabel";
 import { Card } from "@/components/ui/card";
 import { Tooltip } from "@/components/ui/tooltip";
-import * as MapMetaLabel from "@/components/labels/BSMapMetaLabels";
 import * as Progress from "@radix-ui/react-progress";
 import Link from "@/components/ui/link";
 import { IoCloudDownloadOutline } from "react-icons/io5";
 import { IoSpeedometerOutline } from "react-icons/io5";
 import { HiCursorClick } from "react-icons/hi";
-import BSLabel, {BSMapCountLabel} from "./labels/BSLabel";
 import {escapeHtml} from "@/lib/ContentEscape";
 export default function BSPlaylistSideBar(
     {bsPlaylist}:{bsPlaylist:IBSPlaylist}

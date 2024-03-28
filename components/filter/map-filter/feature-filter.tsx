@@ -3,7 +3,7 @@ import React, {useCallback, useEffect, useRef, useState} from "react";
 import {useTranslation} from "@/hooks/useTranslation";
 import {ListFilter} from "lucide-react";
 import {BSGenreTags, BSStyleTags} from "@/interfaces/mapTags";
-import BSMapTag from "@/components/BSMapTag";
+import BSMapTag from "@/components/shared/BSMapTag";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {cn} from "@/lib/utils";
 import {BSMapQueryOptions, FeatureOption, MapQueryParam} from "@/interfaces/bsmap-query-param";

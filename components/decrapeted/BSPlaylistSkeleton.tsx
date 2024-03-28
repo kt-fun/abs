@@ -1,9 +1,9 @@
 import { Skeleton } from "@/components/ui/skeleton"
 import {Card} from "@/components/ui/card";
 
-import { DateLabel } from "@/components/labels/BSMapMetaLabels";
+import { DateLabel } from "@/components/shared/labels/BSMapMetaLabels";
 import { CiStar } from "react-icons/ci"
-import {BSMapCountLabel} from "@/components/labels/BSLabel";
+import {BSMapCountLabel} from "@/components/shared/labels/BSLabel";
 
 export default function BSPlaylistSkeleton() {
     return (

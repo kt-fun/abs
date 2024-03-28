@@ -2,7 +2,7 @@ import {BSMapDiff} from "@/interfaces/beatmap";
 import React, {useState} from "react";
 import {HoverCard as HoverCardRoot, HoverCardContent, HoverCardTrigger} from "@/components/ui/hover-card";
 import {CharacteristicIcon} from "@/components/icons/Characteristic";
-import * as MapDiffLabel from "@/components/labels/BSMapDiffLabels";
+import * as MapDiffLabel from "@/components/shared/labels/BSMapDiffLabels";
 import {cn} from "@/lib/utils";
 import {motion} from "framer-motion";
 

@@ -1,7 +1,7 @@
 import {BSBeatMap} from "@/interfaces/beatmap";
 import {useBSMapSongPreview} from "@/hooks/useSongPreview";
-import BSUserLabel from "@/components/labels/BSUserLabel";
-import * as MapMetaLabel from "@/components/labels/BSMapMetaLabels";
+import BSUserLabel from "@/components/shared/labels/BSUserLabel";
+import * as MapMetaLabel from "@/components/shared/labels/BSMapMetaLabels";
 import FeatureIcons, {checkIfHasFeature} from "@/components/icons/FeatureIcons";
 import {ScrollArea, ScrollBar} from "@/components/ui/scroll-area";
 import {DiffCard} from "@/components/bsmap/diffcard";

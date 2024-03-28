@@ -1,7 +1,7 @@
 'use client'
 import { BSPlaylist as IBSPlaylist } from "@/interfaces/bs-playlist";
-import BSUserLabel from "@/components/labels/BSUserLabel";
-import * as MapMetaLabel from "@/components/labels/BSMapMetaLabels";
+import BSUserLabel from "@/components/shared/labels/BSUserLabel";
+import * as MapMetaLabel from "@/components/shared/labels/BSMapMetaLabels";
 import { Tooltip } from "@/components/ui/tooltip";
 import  {Card} from "@/components/ui/card";
 import * as Progress from "@radix-ui/react-progress";
@@ -10,7 +10,7 @@ import Link from "@/components/ui/link";
 import { IoCloudDownloadOutline } from "react-icons/io5";
 import { IoSpeedometerOutline } from "react-icons/io5";
 import { HiCursorClick } from "react-icons/hi";
-import BSLabel, {BSMapCountLabel} from "@/components/labels/BSLabel";
+import BSLabel, {BSMapCountLabel} from "@/components/shared/labels/BSLabel";
 import {IconButton} from "@/components/ui/button";
 import React from "react";
 export default function BSPlaylistV1(

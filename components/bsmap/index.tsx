@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import {BSBeatMap} from "@/interfaces/beatmap";
-import {HTMLMotionProps, motion, useMotionValue, useScroll, useSpring} from "framer-motion";
+import {HTMLMotionProps, motion, useMotionValue, useSpring} from "framer-motion";
 import {useScrollConstraints} from "@/hooks/ui/useScrollConstraints";
 import {Overlay} from "@/components/bsmap/overlay";
 import BSMap from "./bsmap";

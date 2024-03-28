@@ -8,7 +8,6 @@ import {
 import Link from "@/components/ui/link";
 import * as React from "react";
 import {AnimatePresence, HTMLMotionProps, motion, Variants} from "framer-motion";
-import {containerVariants} from "@/components/variants";
 import {cn} from "@/lib/utils";
 import {NavItem} from "@/components/header/nav/navItems";
 

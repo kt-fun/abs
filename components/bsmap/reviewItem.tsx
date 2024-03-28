@@ -3,7 +3,6 @@ import {BSMapReview} from "@/interfaces/beatmap-review";
 import {Avatar} from "@/components/ui/avatar";
 import {cn} from "@/lib/utils";
 import {formatTime} from "@/lib/format";
-import {listItemVariants} from "@/components/variants";
 import React from "react";
 interface ReviewProps {
   review : BSMapReview

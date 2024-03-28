@@ -1,7 +1,7 @@
 'use client'
 import { BSUser } from "@/interfaces/beatsaver-user";
 import Link from "@/components/ui/link";
-import MapperAvatar from "@/components/MapperAvatar";
+import MapperAvatar from "@/components/shared/MapperAvatar";
 import BSUserDetailCard from "../BSUserDetialCard";
 import {
     HoverCard,

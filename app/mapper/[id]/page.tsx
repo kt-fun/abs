@@ -5,7 +5,7 @@ import {Download, DownloadCloud} from 'lucide-react'
 import * as Tabs from "@/components/ui/tabs";
 import { useRouter } from "next/navigation";
 import React, {useState} from "react";
-import Loading from "@/components/load-status/Loading";
+import {Loading} from "@/components/shared/load-status";
 import {escapeHtml} from "@/lib/ContentEscape";
 import ReviewList from "@/app/mapper/[id]/review-list";
 import {Avatar} from "@/components/ui/avatar";

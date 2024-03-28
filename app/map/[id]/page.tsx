@@ -1,8 +1,7 @@
 'use client';
 
-import * as MapMetaLabel from "@/components/labels/BSMapMetaLabels";
-import * as MapDiffLabel from "@/components/labels/BSMapDiffLabels";
-import { useBSMapDetail } from "@/hooks/api/useBSMapDetail";
+import {MapDiffLabel, MapMetaLabel}  from "@/components/shared/labels";
+import { useBSMapDetail } from "@/hooks/api";
 import { BSBeatMap, BSMapDiff, getBSMapCoverURL } from "@/interfaces/beatmap";
 import * as Tabs from "@radix-ui/react-tabs";
 import {IconButton,Button} from "@/components/ui/button";
@@ -11,7 +10,6 @@ import Link from "@/components/ui/link";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -42,14 +40,14 @@ import { AiOutlineLoading } from "react-icons/ai";
 import { PiHeartbeat } from "react-icons/pi";
 import { motion } from "framer-motion";
 import { useSongPreview } from "@/hooks/useSongPreview";
-import CopyIcon from "@/components/CopyIcon";
-import MapPreviewIFrame from "@/components/MapPreviewIFrame";
+import CopyIcon from "@/components/shared/CopyIcon";
+import MapPreviewIFrame from "@/components/shared/MapPreviewIFrame";
 import { BsHeartbreak } from "react-icons/bs";
 import { FcLike } from "react-icons/fc";
 import { TbMoodNeutral } from "react-icons/tb";
-import BSMapTag from "@/components/BSMapTag";
-import BSUserLabel from "@/components/labels/BSUserLabel";
-import Loading from "@/components/load-status/Loading";
+import BSMapTag from "@/components/shared/BSMapTag";
+import BSUserLabel from "@/components/shared/labels/BSUserLabel";
+import Loading from "@/components/shared/load-status/Loading";
 import {escapeHtml} from "@/lib/ContentEscape";
 import {ExternalLink} from "lucide-react";
 

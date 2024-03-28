@@ -1,15 +1,13 @@
 'use client'
-import { useNotifyStats, usePagingNotifications } from "@/hooks/api/useNotification";
+import { usePagingNotifications } from "@/hooks/api/useNotification";
 
 
-import {Dialog,DialogContent,DialogTrigger} from "@/components/ui/dialog";
+import {Dialog,DialogContent} from "@/components/ui/dialog";
 import React, { useState } from "react";
 import {IoCloseOutline, IoSettings} from "react-icons/io5";
 import {BSNotification} from "@/interfaces/bs-notification";
-import {Card, CardContent, CardHeader} from "@/components/ui/card";
-import dayjs from "dayjs";
 import {formatTime} from "@/lib/format";
-import Loading from "@/components/load-status/Loading";
+import {Loading} from "@/components/shared/load-status";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import {ScrollArea} from "@/components/ui/scroll-area";
 import {Scrollbar} from "@radix-ui/react-scroll-area";

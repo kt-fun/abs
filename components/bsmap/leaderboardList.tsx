@@ -1,13 +1,10 @@
-import {usePagingBSMapReview} from "@/hooks/api/usePagingBSMapReview";
 import {AnimatePresence, motion} from "framer-motion";
-import {containerVariants, listItemVariants} from "@/components/variants";
-import Loading from "@/components/load-status/Loading";
+import {containerVariants, listItemVariants} from "@/components/shared/variants";
+import {Loading,EmptyContent} from "@/components/shared/load-status";
 import React, {useEffect} from "react";
-import {usePagingBSMapScoreRank} from "@/hooks/api/usePagingMapScoreRank";
 import LeaderBoardItem from "@/components/bsmap/leaderboardItem";
 import {usePagingBLScores} from "@/hooks/api/usePagingBLScores";
 import {Table, TableBody, TableHead, TableHeader, TableRow} from "@/components/ui/table";
-import EmptyContent from "@/components/load-status/EmptyContent";
 
 const LeaderBoardList = (
 {

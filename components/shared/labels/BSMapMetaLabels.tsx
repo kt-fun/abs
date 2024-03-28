@@ -1,4 +1,4 @@
-import BSLabel, {LabelProps} from "@/components/labels/BSLabel";
+import BSLabel, {LabelProps} from "@/components/shared/labels/BSLabel";
 import {CiCalendarDate, CiStar, CiTimer} from "react-icons/ci";
 import {formatNumber, formatTime} from "@/lib/format";
 import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai";

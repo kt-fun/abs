@@ -1,9 +1,9 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {motion} from 'framer-motion';
 import ReviewItem from "@/components/bsmap/reviewItem";
 import {usePagingBSMapReview} from "@/hooks/api/usePagingBSMapReview";
-import Loading from "@/components/load-status/Loading";
-import {containerVariants, listItemVariants} from "@/components/variants";
+import {Loading} from "@/components/shared/load-status";
+import {containerVariants, listItemVariants} from "@/components/shared/variants";
 
 
 const ReviewList = (

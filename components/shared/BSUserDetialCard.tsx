@@ -2,7 +2,7 @@ import { BSUser } from "@/interfaces/beatsaver-user";
 import { useBSUser } from "@/hooks/api/useBSUser";
 import BSMapper from "@/components/bsmapper/BSMapper";
 import { MdOutlineErrorOutline } from "react-icons/md";
-import Loading from "@/components/load-status/Loading";
+import {Loading} from "@/components/shared/load-status";
 
 
 const Error = ({error}:{error:string})=> 

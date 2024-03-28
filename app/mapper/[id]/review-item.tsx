@@ -3,10 +3,8 @@ import {BSMapReview} from "@/interfaces/beatmap-review";
 import {Avatar} from "@/components/ui/avatar";
 import {cn} from "@/lib/utils";
 import {formatTime} from "@/lib/format";
-import {listItemVariants} from "@/components/variants";
 import React from "react";
-import {BSUser, BSUserWithStats} from "@/interfaces/beatsaver-user";
-import {Divide} from "lucide-react";
+import {BSUserWithStats} from "@/interfaces/beatsaver-user";
 interface ReviewProps {
   review : BSMapReview,
   user: BSUserWithStats,

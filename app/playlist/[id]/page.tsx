@@ -1,26 +1,22 @@
 'use client'
-import BSPlaylistSideBar from "@/components/BSPlaylistSideBar";
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
-import { FaArrowUp } from "react-icons/fa";
 import { usePagingBSPlaylistDetail } from "@/hooks/api/usePagingBSPlaylistDetail";
 import { BSBeatMap } from "@/interfaces/beatmap";
 import BSMap from "@/components/bsmap";
 import { useRouter } from "next/navigation";
-import Loading from "@/components/load-status/Loading";
-import ReachListEnd from "@/components/load-status/ReachListEnd";
-import BSLabel, {BSMapCountLabel} from "@/components/labels/BSLabel";
-import * as MapMetaLabel from "@/components/labels/BSMapMetaLabels";
-import BSUserLabel from "@/components/labels/BSUserLabel";
-import {DateLabel} from "@/components/labels/BSMapMetaLabels";
+import {Loading,ReachListEnd,EmptyContent} from "@/components/shared/load-status";
+import BSLabel, {BSMapCountLabel} from "@/components/shared/labels/BSLabel";
+import * as MapMetaLabel from "@/components/shared/labels/BSMapMetaLabels";
+import BSUserLabel from "@/components/shared/labels/BSUserLabel";
+import {DateLabel} from "@/components/shared/labels/BSMapMetaLabels";
 import {IoCloudDownloadOutline, IoSpeedometerOutline} from "react-icons/io5";
 import {Tooltip} from "@/components/ui/tooltip";
 import Link from "@/components/ui/link";
 import {HiCursorClick} from "react-icons/hi";
 import {escapeHtml} from "@/lib/ContentEscape";
-import {containerVariants, listItemVariants} from "@/components/variants";
-import EmptyContent from "@/components/load-status/EmptyContent";
-import {Progress} from "@/components/Progress";
+import {containerVariants, listItemVariants} from "@/components/shared/variants";
+import {Progress} from "@/components/shared/Progress";
 export default function Home({ params }: { params: { id: string } }) {
     const { playlist,maps,isLoadingMore,error,isEmpty,hasMore,loadMore} = usePagingBSPlaylistDetail(params.id);
     const router = useRouter()

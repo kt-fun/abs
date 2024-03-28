@@ -3,16 +3,15 @@ import { usePagingBSMap} from "@/hooks/api/usePagingBSMap";
 import { BSBeatMap } from "@/interfaces/beatmap";
 import {motion} from "framer-motion";
 import React, {useCallback} from "react";
-import Loading from "@/components/load-status/Loading";
-import ReachListEnd from "@/components/load-status/ReachListEnd";
-import {containerVariants, listItemVariants} from "@/components/variants";
+import Loading from "@/components/shared/load-status/Loading";
+import ReachListEnd from "@/components/shared/load-status/ReachListEnd";
+import {containerVariants, listItemVariants} from "@/components/shared/variants";
 import MapFilter from "@/components/filter/map-filter";
 import {useWindowScrollEndCallback} from "@/hooks/ui/useWindowScrollCallback";
-import EmptyContent from "@/components/load-status/EmptyContent";
+import {EmptyContent} from "@/components/shared/load-status";
 import BSMapQueryParam from "@/interfaces/bsmap-query-param";
 import {useBeatmaps} from "@/hooks/api/query/usePagingMap";
 import BSMap from "@/components/bsmap";
-import {Overlay} from "@/components/Overlay";
 
 type SearchParam = { [key: string]: string | string[] | undefined }
 

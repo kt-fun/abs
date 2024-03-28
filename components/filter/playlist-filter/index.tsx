@@ -1,6 +1,5 @@
 import {AnimatePresence, motion, useAnimationControls, Variants} from "framer-motion"
 import React, {useEffect, useMemo, useState} from 'react'
-import {MapQueryParam} from "@/hooks/api/usePagingBSMap";
 import {cn} from "@/lib/utils";
 import SearchBar from "@/components/filter/base/SearchBar";
 import {useTranslation} from "@/hooks/useTranslation";

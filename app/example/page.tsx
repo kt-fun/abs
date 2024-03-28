@@ -1,9 +1,5 @@
 
 'use client'
-import {motion} from "framer-motion";
-import ReachListEnd from "@/components/load-status/ReachListEnd";
-import Loading from "@/components/load-status/Loading";
-import {useEffect, useState} from "react";
 import {useWindowScroll} from "react-use";
 
 export default function Home() {

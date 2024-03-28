@@ -2,12 +2,10 @@ import {usePagingBSUserPlaylist} from "@/hooks/api/usePagingBSUserPlaylist";
 import {useInfinityScroll} from "@/hooks/useInfinityScroll";
 import React, {useEffect} from "react";
 import {motion} from "framer-motion";
-import {containerVariants, listItemVariants} from "@/components/variants";
+import {containerVariants, listItemVariants} from "@/components/shared/variants";
 import {BSPlaylist as IBSPlaylist} from "@/interfaces/bs-playlist";
 import BSPlaylist from "@/components/bsplaylist";
-import EmptyContent from "@/components/load-status/EmptyContent";
-import ReachListEnd from "@/components/load-status/ReachListEnd";
-import Loading from "@/components/load-status/Loading";
+import {EmptyContent,ReachListEnd,Loading} from "@/components/shared/load-status";
 
 const PlaylistsTab = (
   {

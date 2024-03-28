@@ -1,17 +1,11 @@
 'use client'
 import { BSPlaylist as IBSPlaylist } from "@/interfaces/bs-playlist";
-import BSUserLabel from "@/components/labels/BSUserLabel";
-import * as MapMetaLabel from "@/components/labels/BSMapMetaLabels";
-import { Tooltip } from "@/components/ui/tooltip";
+import BSUserLabel from "@/components/shared/labels/BSUserLabel";
+import * as MapMetaLabel from "@/components/shared/labels/BSMapMetaLabels";
 import  {Card} from "@/components/ui/card";
-import * as Progress from "@radix-ui/react-progress";
 import { CiStar } from "react-icons/ci";
 import Link from "@/components/ui/link";
-import { IoCloudDownloadOutline } from "react-icons/io5";
-import { IoSpeedometerOutline } from "react-icons/io5";
-import { HiCursorClick } from "react-icons/hi";
-import BSLabel, {BSMapCountLabel} from "@/components/labels/BSLabel";
-import {IconButton} from "@/components/ui/button";
+import BSLabel, {BSMapCountLabel} from "@/components/shared/labels/BSLabel";
 import React, {useState} from "react";
 import {cn} from "@/lib/utils";
 import {motion} from "framer-motion";

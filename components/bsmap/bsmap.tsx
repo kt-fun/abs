@@ -1,13 +1,13 @@
 import {BSBeatMap, getBSMapCoverURL, getMaxNPS} from "@/interfaces/beatmap";
 import React, {useMemo, useState} from "react";
 import {Card} from "@/components/ui/card";
-import BSUserLabel from "@/components/labels/BSUserLabel";
-import * as MapMetaLabel from "@/components/labels/BSMapMetaLabels";
+import BSUserLabel from "@/components/shared/labels/BSUserLabel";
+import * as MapMetaLabel from "@/components/shared/labels/BSMapMetaLabels";
 import {ScrollArea, ScrollBar} from "@/components/ui/scroll-area";
-import * as MapDiffLabel from "@/components/labels/BSMapDiffLabels";
+import * as MapDiffLabel from "@/components/shared/labels/BSMapDiffLabels";
 import {BSMapTagType, getMapTag} from "@/interfaces/mapTags";
-import BSMapTag from "@/components/BSMapTag";
-import {Progress} from "@/components/Progress";
+import BSMapTag from "@/components/shared/BSMapTag";
+import {Progress} from "@/components/shared/Progress";
 import DiffCard from "@/components/bsmap/diffcard";
 import {AnimatePresence, motion} from "framer-motion";
 import {cn} from "@/lib/utils";
@@ -15,7 +15,7 @@ import BSMapOverviewHiddenInfo from "@/components/bsmap/hoverInfo";
 import BSOpts from "@/components/bsmap/bsopts";
 import ReviewList from "@/components/bsmap/reviewList";
 import LeaderBoardList from "@/components/bsmap/leaderboardList";
-import LockBodyScroll from "@/components/LockBodyScroll";
+import LockBodyScroll from "@/components/shared/LockBodyScroll";
 
 
 

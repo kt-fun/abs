@@ -14,7 +14,7 @@ import {cn} from "@/lib/utils";
 import {escapeHtml} from "@/lib/ContentEscape";
 
 import {motion} from 'framer-motion'
-import {ThumbDownCountLabel, ThumbUpCountLabel} from "@/components/labels/BSMapMetaLabels";
+import {ThumbDownCountLabel, ThumbUpCountLabel} from "@/components/shared/labels/BSMapMetaLabels";
 import Link from "next/link";
 dayjs.extend(relativeTime);
 const LabelWithIcon = ({children, label,tooltip}:{children:React.ReactNode,label:string, tooltip?:string}) => {

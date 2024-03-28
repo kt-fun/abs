@@ -1,9 +1,8 @@
 import React from "react";
-import {BSBeatMap} from "@/interfaces/beatmap";
 import {HTMLMotionProps} from "framer-motion";
 import {BSPlaylist} from "@/interfaces/bs-playlist";
-import * as MapMetaLabel from "@/components/labels/BSMapMetaLabels";
-import BSLabel, {BSMapCountLabel} from "@/components/labels/BSLabel";
+import * as MapMetaLabel from "@/components/shared/labels/BSMapMetaLabels";
+import BSLabel, {BSMapCountLabel} from "@/components/shared/labels/BSLabel";
 import * as Progress from "@radix-ui/react-progress";
 import {IoCloudDownloadOutline, IoSpeedometerOutline} from "react-icons/io5";
 import {Tooltip} from "@/components/ui/tooltip";

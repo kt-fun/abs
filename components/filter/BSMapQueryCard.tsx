@@ -9,7 +9,7 @@ import SortMenu from "@/components/filter/base/SortMenu";
 import dayjs from "dayjs";
 import DateRangePicker from "@/components/filter/base/DateRangePicker";
 import {BSGenreTags, BSStyleTags} from "@/interfaces/mapTags";
-import BSMapTag from "@/components/BSMapTag";
+import BSMapTag from "@/components/shared/BSMapTag";
 import {cn} from "@/lib/utils";
 import {BSMapQueryOptions, FeatureOption, MapQueryParam} from "@/interfaces/bsmap-query-param";
 const mapSortOptions = [

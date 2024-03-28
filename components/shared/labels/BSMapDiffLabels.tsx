@@ -1,4 +1,4 @@
-import BSLabel, {LabelProps} from "@/components/labels/BSLabel";
+import BSLabel, {LabelProps} from "@/components/shared/labels/BSLabel";
 import {formatNumber} from "@/lib/format";
 import {GiBoltBomb} from "react-icons/gi";
 import {PiWall} from "react-icons/pi";
