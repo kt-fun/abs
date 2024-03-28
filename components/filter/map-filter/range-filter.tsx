@@ -51,7 +51,7 @@ const RangeFilter = React.forwardRef<HTMLDivElement, RangeFilterProps>((
   }:RangeFilterProps,
   ref,
 )=> {
-  const {t} = useTranslation()
+  const {t} = useTranslation('components.filter')
   const [isOpen,setIsOpen] = useState(false)
   let controls = useAnimationControls();
   useEffect(() => {
@@ -106,7 +106,7 @@ const RangeFilter = React.forwardRef<HTMLDivElement, RangeFilterProps>((
           <PopoverTrigger asChild>
             <motion.div layout className={"text-xs rounded-full p-1 px-2 bg-zinc-100 dark:bg-zinc-700/70 cursor-pointer flex items-center space-x-1"}>
               <ListFilter className={"h-4 w-4"}/>
-              <span>{t('range picker')}</span>
+              <span>{t('range.filter')}</span>
             </motion.div>
           </PopoverTrigger>
           <AnimatePresence>
@@ -118,7 +118,7 @@ const RangeFilter = React.forwardRef<HTMLDivElement, RangeFilterProps>((
                     asChild
                 >
                     <motion.div
-                        className={" p-4 m-2 rounded-lg mt-1 overflow-hidden text-left shadow backdrop-blur text-xs gap-1 space-y-1"}
+                        className={" p-4 m-2 rounded-lg mt-1 overflow-hidden text-left shadow backdrop-blur text-xs gap-2"}
                         initial="closed"
                         custom={height}
                         animate={controls}

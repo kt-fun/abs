@@ -12,6 +12,7 @@ import EmptyContent from "@/components/shared/load-status/EmptyContent";
 import BSMapQueryParam from "@/interfaces/bsmap-query-param";
 import {useBeatmaps} from "@/hooks/api/query/usePagingMap";
 import BSMap from "@/components/bsmap";
+import {useTranslation} from "@/hooks/useTranslation";
 
 type SearchParam = { [key: string]: string | string[] | undefined }
 
@@ -21,7 +22,7 @@ export default function Home({
                              }:{
   searchParams:SearchParam
 }) {
-
+  const {t} = useTranslation('main')
   // let param = BSMapQueryParam.buildSearchParamFromMapQueryParam(BSMapQueryParam.buildMapQueryParamFromSearchParam(searchParams))
   const {  } = useBeatmaps()
   const mapQueryParam = BSMapQueryParam.buildMapQueryParamFromSearchParam(searchParams)
@@ -38,8 +39,8 @@ export default function Home({
       <div className="flex max-w-[1024px] grow flex-col pb-2 px-2">
         <div className={"flex items-center bg-base-light dark:bg-base-dark"}>
           <div>
-            <h1 className={"text-3xl font-bold"}>BeatMaps</h1>
-            <span className={"text-zinc-400 dark:text-zinc-300 text-xs"}>search maps that you want</span>
+            <h1 className={"text-3xl font-bold"}>{t('title')}</h1>
+            <span className={"text-zinc-400 dark:text-zinc-300 text-xs"}>{t('sub-title')}</span>
           </div>
         </div>
         {

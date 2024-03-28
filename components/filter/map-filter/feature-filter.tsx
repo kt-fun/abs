@@ -13,34 +13,6 @@ type FeatureFilterProps = {
   onUpdateQueryParam:(queryParam:MapQueryParam) => void
 } & React.HTMLAttributes<HTMLDivElement>
 
-const itemVariants: Variants = {
-  open: {
-    opacity: 1,
-    y: 0,
-    transition: { type: "spring", stiffness: 300, damping: 24 }
-  },
-  closed: { opacity: 0, y: 20, transition: { duration: 0.2 } }
-};
-// const containerVariant = {
-//   open: (height = 1000) => ({
-//     clipPath: `circle(${height * 2 + 200}px at 40px 40px)`,
-//     // clipPath: "inset(0% 0% 0% 0% round 10px)",
-//     transition: {
-//       type: "spring",
-//       bounce: 0,
-//       duration: 0.7,
-//     }
-//   }),
-//   closed: {
-//     clipPath: "circle(30px at 10px 0px)",
-//     // clipPath: "inset(10% 50% 90% 50% round 10px)",
-//     transition: {
-//       type: "spring",
-//       bounce: 0,
-//       duration: 0.3
-//     }
-//   }
-// }
 const containerVariant = {
   open: {
     clipPath: "inset(0% 0% 0% 0% round 10px)",
@@ -69,20 +41,16 @@ const FeatureFilter = React.forwardRef<HTMLDivElement, FeatureFilterProps>((
   }:FeatureFilterProps,
   ref
 )=> {
-  const {t} = useTranslation()
+  const {t} = useTranslation('components.filter')
+  const {t :tagTrans} = useTranslation('tag')
   const [isOpen,setIsOpen] = useState(false)
   let controls = useAnimationControls();
   useEffect(() => {
     isOpen && controls.start("open")
   }, [controls, isOpen]);
   const containerRef = useRef(null)
-  // const {height} = useDimensions(containerRef)
   const checkIfOptionChecked = useCallback((option:FeatureOption)=>{
-
-    console.log("options",queryParam.options)
     if (!queryParam.options) return false
-
-
     return queryParam.options[option.label as keyof typeof queryParam.options] == true
   },[queryParam])
   const handleOptionChange = (option:FeatureOption)=>{
@@ -183,7 +151,7 @@ const FeatureFilter = React.forwardRef<HTMLDivElement, FeatureFilterProps>((
                         </div>
                         <div>
                             <div>
-                              {t('genre.selector')}
+                              {t('feature.selector')}
                             </div>
 
                             <div className={"flex flex-row flex-wrap gap-1"}>
@@ -196,7 +164,7 @@ const FeatureFilter = React.forwardRef<HTMLDivElement, FeatureFilterProps>((
                                         handleOptionChange(option)
                                       }}
                                       className={`${checkIfOptionChecked(option) ? '' : 'opacity-40'}  text-xs px-1 text-white rounded-md p-0.5 bg-green-600 inline-flex items-center justify-center space-x-1 cursor-pointer`}>
-                                      {option.label}
+                                      {tagTrans(option.id)}
                                     </motion.span>
                                   )
                                 })

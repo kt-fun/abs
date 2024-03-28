@@ -1,0 +1,8 @@
+{
+  "shared": {
+    "beatmap": "beatmap",
+    "playlist": "playlist"
+  },
+  "beatsaver": "BeatSaver",
+  "beatleader": "BeatLeader"
+}

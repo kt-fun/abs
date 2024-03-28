@@ -16,6 +16,7 @@ import BSOpts from "@/components/bsmap/bsopts";
 import ReviewList from "@/components/bsmap/reviewList";
 import LeaderBoardList from "@/components/bsmap/leaderboardList";
 import LockBodyScroll from "@/components/shared/LockBodyScroll";
+import {useTranslation} from "@/hooks/useTranslation";
 
 
 
@@ -50,7 +51,7 @@ const BSMap = (
   }
   const [imageLoading, setImageLoading] = useState(true);
   const [pulsing, setPulsing] = useState(true);
-
+  const {t} = useTranslation('components.bsmap')
   const imageLoaded = () => {
     setImageLoading(false);
     setTimeout(() => setPulsing(false), 600);
@@ -220,7 +221,7 @@ const BSMap = (
             {
               isDetailMode &&
                 <motion.div layout className={""}>
-                    <span className={"font-medium"}>Description</span>
+                    <span className={"font-medium"}>{t('description')}</span>
                     <div className={"text-xs p-2"}>
                         <p className={cn("text-ellipsis line-clamp-3 break-all")}>
                           {bsMap.description}
@@ -238,7 +239,7 @@ const BSMap = (
           >
               <motion.div>
                   <motion.div className={"flex space-x-2 items-center"}>
-                      <span className={"font-medium"}>Reviews</span>
+                      <span className={"font-medium"}>{t('reviews.label')}</span>
                       <span className={"opacity-30  text-xs"}>({bsMap.stats.reviews ?? 0})</span>
                   </motion.div>
                   <motion.div className={cn("text-xs")}>
@@ -246,14 +247,13 @@ const BSMap = (
                       bsMap.stats.reviews && <ReviewList mapId={bsMap.id} onContentUpdate={onContentUpdate}/>
                     }
                     {
-                      !bsMap.stats.reviews && <p>still no review now 😲</p>
+                      !bsMap.stats.reviews && <p>{t('reviews.empty')}</p>
                     }
                   </motion.div>
               </motion.div>
               <motion.div>
                   <motion.div className={"flex space-x-2 items-center"}>
-                      <span className={"font-medium"}>Leaderboard</span>
-                      <span className={"opacity-30  text-xs"}>({bsMap.stats.reviews ?? 0})</span>
+                      <span className={"font-medium"}>{t('leaderboard')}</span>
                   </motion.div>
                   <motion.div>
                     {

@@ -10,6 +10,7 @@ import * as React from "react";
 import {AnimatePresence, HTMLMotionProps, motion, Variants} from "framer-motion";
 import {cn} from "@/lib/utils";
 import {NavItem} from "@/components/header/nav/navItems";
+import {useTranslation} from "@/hooks/useTranslation";
 
 const variants:Variants = {
   open: {
@@ -60,12 +61,14 @@ const Item = React.forwardRef((
   } & HTMLMotionProps<'li'>,
   ref
 )=> {
+
+  const {t} = useTranslation('common')
   return (
     <NavigationMenuItem asChild className={'cursor-pointer'}>
       <motion.li {...rest}>
         <Link href={navItem.href!} legacyBehavior passHref>
           <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), 'cursor-pointer flex w-full text-center font-light font-sans')}>
-            <span className={'inline-block'}>{navItem.label}</span>
+            <span className={'inline-block'}>{t(navItem.id)}</span>
           </NavigationMenuLink>
         </Link>
       </motion.li>
@@ -81,6 +84,7 @@ navItem:NavItem
 }
 ) => {
 
+  const {t} = useTranslation('common')
   return (
     <>
       {navItem.href && <Item navItem={navItem} className={'hover:bg-zinc-200/60 hover:dark:bg-zinc-800/60 rounded-lg  text-lg'}/>}
@@ -88,14 +92,14 @@ navItem:NavItem
         !navItem.href && navItem.children &&
           <NavigationMenuItem className={'relative'} >
                   <NavigationMenuTrigger className={"text-lg  font-light"}>
-                    {navItem.label}
+                    {t(navItem.id)}
                   </NavigationMenuTrigger>
               <AnimatePresence>
                   <NavigationMenuContent asChild
                                          className={'border-none shadow-none rounded-lg left-auto top-full right-0 absolute'} >
 
                       <motion.ul
-                          className={"min-w-48 backdrop-blur bg-zinc-100/70 dark:bg-zinc-700/70 w-52"}
+                          className={"min-w-56 backdrop-blur bg-zinc-100/70 dark:bg-zinc-700/70 w-52"}
                           initial={'closed'}
                           animate={'open'}
                           exit={'closed'}

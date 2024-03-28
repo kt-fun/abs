@@ -210,6 +210,7 @@ const buildMapQueryParamFromSearchParam =  (searchParams:SearchParam) => {
   return param
 }
 export interface FeatureOption {
+  id:string,
   value:string,
   label:string,
   tooltip?:string,
@@ -217,46 +218,55 @@ export interface FeatureOption {
 
 export const BSMapQueryOptions:FeatureOption[] = [
   {
+    id:'feature.ai',
     value:"autoMapper",
     label:"AI",
     tooltip:"maybe mapped by AI",
   },
   {
+    id:'feature.curated',
     value:"curated",
     label:"Curated",
     tooltip:"Curated",
   },
   {
+    id:'feature.verified',
     value:"verified",
     label:"Verified",
     tooltip:"Verified",
   },
   {
+    id:'feature.chroma',
     value:"chroma",
     label:"Chroma",
     tooltip:"Chroma",
   },
   {
+    id:'feature.cinema',
     value:"cinema",
     label:"Cinema",
     tooltip:"Cinema",
   },
   {
+    id:'feature.noodle',
     value:"noodle",
     label:"Noodle Extension",
     tooltip:"Noodle Extension",
   },
   {
+    id:'feature.me',
     value:"me",
     label:"Mapping Extension",
     tooltip:"Mapping Extension",
   },
   {
+    id:'feature.ranked',
     value:"ranked",
     label:"Ranked",
     tooltip:"only ranked maps",
   },
   {
+    id:'feature.full-spread',
     value:"fullSpread",
     label:"Full Spread",
     tooltip:"Full Spread",

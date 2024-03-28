@@ -6,8 +6,10 @@ import React, { useCallback, useEffect } from "react";
 import {ReachListEnd, EmptyContent, Loading} from "@/components/shared/load-status";
 import {containerVariants, listItemVariants} from "@/components/shared/variants";
 import {useWindowScrollEndCallback} from "@/hooks/ui/useWindowScrollCallback";
+import {useTranslation} from "@/hooks/useTranslation";
 
 export default function MapperPage() {
+  const {t} = useTranslation('page.mapper')
   const { users,isLoadingMore,isEmpty,hasMore,loadMore} = usePagingBSUser();
   const reachEndCallback = useCallback(() => {
     !isLoadingMore && !isEmpty && hasMore && loadMore()
@@ -18,7 +20,7 @@ export default function MapperPage() {
         <div className="max-w-[1024px] w-full">
           <div className={"bg-base flex items-center mb-2"}>
             <div>
-              <h1 className={"text-3xl font-bold"}>Mappers</h1>
+              <h1 className={"text-3xl font-bold"}>{t('title')}</h1>
             </div>
             {/*<SearchBar queryKey={''} onQueryKeyChange={()=>{}} onQuery={()=>{}}/>*/}
           </div>

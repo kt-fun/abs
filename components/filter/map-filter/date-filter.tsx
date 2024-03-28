@@ -4,18 +4,14 @@ import {useTranslation} from "@/hooks/useTranslation";
 import {Calendar} from "@/components/ui/calendar";
 import { Calendar as CalendarIcon } from "lucide-react"
 import { DateRange } from "react-day-picker"
-import dayjs from "dayjs";
 import {cn} from "@/lib/utils";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {useDimensions} from "@/hooks/ui/useDimensions";
+import {useLocaleFormat} from "@/hooks/useFormat";
 type DateFilterProps = {
   value: DateRange,
   onUpdateValue:(value:DateRange|undefined) => void
 } & React.HTMLAttributes<HTMLDivElement>
-
-const formatDate = (date:Date) => {
-  return dayjs(date).format('YYYY-MM-DD')
-}
 
 const itemVariants: Variants = {
   open: {
@@ -53,7 +49,8 @@ const DateFilter = React.forwardRef<HTMLDivElement, DateFilterProps>((
   }:DateFilterProps,
   ref,
 )=> {
-  const {t} = useTranslation()
+  const {formatDate,FNSLocale} = useLocaleFormat()
+  const {t} = useTranslation('components.filter')
   const [isOpen,setIsOpen] = useState(false)
   let controls = useAnimationControls();
   useEffect(() => {
@@ -80,13 +77,13 @@ const DateFilter = React.forwardRef<HTMLDivElement, DateFilterProps>((
               <CalendarIcon className={"h-4 w-4"}/>
               <span className={"flex items-center justify-between w-full"}>
                 <span>
-                  {value.from? formatDate(value.from) :t('from') }
+                  {value.from? formatDate(value.from) :t('date.from') }
                 </span>
                 <span>
                   ~
                 </span>
                 <span>
-                  {value.to? formatDate(value.to) :t('to')}
+                  {value.to? formatDate(value.to) :t('date.to')}
                 </span>
               </span>
             </motion.div>
@@ -110,6 +107,7 @@ const DateFilter = React.forwardRef<HTMLDivElement, DateFilterProps>((
                             selected={value}
                             onSelect={(v)=>{onUpdateValue(v)}}
                             numberOfMonths={2}
+                            locale={FNSLocale}
                         />
                     </motion.div>
                 </PopoverContent>

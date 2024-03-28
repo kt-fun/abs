@@ -2,8 +2,8 @@ import {motion} from 'framer-motion'
 import {BSMapReview} from "@/interfaces/beatmap-review";
 import {Avatar} from "@/components/ui/avatar";
 import {cn} from "@/lib/utils";
-import {formatTime} from "@/lib/format";
 import React from "react";
+import {useLocaleFormat} from "@/hooks/useFormat";
 interface ReviewProps {
   review : BSMapReview
 }
@@ -13,6 +13,8 @@ export const ReviewItem = React.forwardRef<HTMLLIElement, ReviewProps>((
 }:ReviewProps,
 ref
 ) => {
+
+  const {formatTime} = useLocaleFormat()
   return (
     <motion.li
       ref={ref}

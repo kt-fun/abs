@@ -30,19 +30,19 @@ export default function NPSRangePicker(
         return `${min} - ${range[1]}`
     },[range])
     return (
-        <div className="relative">
-            <Slider
+      <div className="relative">
+          <div className="flex justify-between mb-1.5">
+              <span>NPS</span>
+              <span>{text}</span>
+          </div>
+          <Slider
             defaultValue={coveredRange}
             min={0}
             max={16}
             onValueChange={handle}
             onValueCommit={handle}
             step={0.1}
-            />
-            <div className="flex justify-between">
-                <span>NPS</span>
-                <span>{text}</span>
-            </div>
-        </div>
+          />
+      </div>
     )
 }

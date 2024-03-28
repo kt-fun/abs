@@ -1,7 +1,6 @@
 // 'use client'
 import RankedIcon from "@/components/icons/RankedIcon";
 import { BSUserWithStats } from "@/interfaces/beatsaver-user";
-import { formatNumber } from "@/lib/format";
 import { FaMapMarkedAlt } from "react-icons/fa";
 import * as Progress from '@radix-ui/react-progress';
 import  {Avatar} from "@/components/ui/avatar";
@@ -16,6 +15,7 @@ import {escapeHtml} from "@/lib/ContentEscape";
 import {motion} from 'framer-motion'
 import {ThumbDownCountLabel, ThumbUpCountLabel} from "@/components/shared/labels/BSMapMetaLabels";
 import Link from "next/link";
+import {useLocaleFormat} from "@/hooks/useFormat";
 dayjs.extend(relativeTime);
 const LabelWithIcon = ({children, label,tooltip}:{children:React.ReactNode,label:string, tooltip?:string}) => {
     return (
@@ -53,6 +53,7 @@ export default function BSMapper(
     bsUserWithStats.stats.totalUpvotes? bsUserWithStats.stats.totalUpvotes : 0,
     bsUserWithStats.stats.totalDownvotes? bsUserWithStats.stats.totalDownvotes : 0
   );
+  const {formatNumber} = useLocaleFormat()
     return (
         <>
         <Card.Card className={cn("min-w-64 max-w-[300px]",className)}>

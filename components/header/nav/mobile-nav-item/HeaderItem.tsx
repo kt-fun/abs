@@ -3,6 +3,7 @@ import {cn} from "@/lib/utils";
 import Link from "@/components/ui/link";
 import {NavItem} from "@/components/header/nav/navItems";
 import {CollapsibleItem} from "@/components/header/nav/mobile-nav-item/collapsible-item";
+import {useTranslation} from "@/hooks/useTranslation";
 
 const variants = {
   open: {
@@ -31,6 +32,7 @@ export const Item = ({
 } & HTMLMotionProps<'div'>
 
 ) => {
+  const {t} = useTranslation('common')
   return (
 <>
   {
@@ -38,7 +40,7 @@ export const Item = ({
           <motion.div
             {...rest}
             className={cn('text-lg font-medium leading-none', rest.className)}
-          >{item.label}</motion.div>
+          >{t(item.id)}</motion.div>
       </Link>
   }
   {
@@ -46,7 +48,7 @@ export const Item = ({
           <motion.div
             {...rest}
             className={cn('text-lg font-medium leading-none', rest.className)}
-          >{item.label}</motion.div>
+          >{t(item.id)}</motion.div>
   }
 </>
 )

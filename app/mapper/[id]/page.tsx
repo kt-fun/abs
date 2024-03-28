@@ -9,10 +9,10 @@ import {Loading} from "@/components/shared/load-status";
 import {escapeHtml} from "@/lib/ContentEscape";
 import ReviewList from "@/app/mapper/[id]/review-list";
 import {Avatar} from "@/components/ui/avatar";
-import {formatNumber} from "@/lib/format";
 import PlaylistsTab from "@/app/mapper/[id]/playlist-tab";
 import MapList from "@/app/mapper/[id]/map-list";
 import { motion } from "framer-motion";
+import {useLocaleFormat} from "@/hooks/useFormat";
 
 
 const getUserPlaylist = (uid: number, oneClick: boolean) => {
@@ -34,7 +34,7 @@ const Label = ({
 }
 
 export default function MapperDetailPage({params}: { params: { id: number } }) {
-
+  const {formatNumber} = useLocaleFormat()
   const {bsUserWithStats, isLoading, error} = useBSUser(params.id)
   const router = useRouter()
   if (error) {

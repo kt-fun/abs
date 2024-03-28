@@ -1,5 +1,6 @@
 import { Slider } from "@/components/ui/slider"
 import { useMemo } from "react";
+import {useTranslation} from "@/hooks/useTranslation";
 
 export default function RatingRangePicker(
     {
@@ -10,6 +11,7 @@ export default function RatingRangePicker(
         setRange:(range:[number|undefined, number|undefined])=>void   
     }
 ) {
+    const {t} = useTranslation('components.filter')
     const handle = (value: number[]) => {
         let [min, max]:[number|undefined, number|undefined] = value as [number, number];
         if (value[0] === 0) {
@@ -44,7 +46,7 @@ export default function RatingRangePicker(
             step={5}
             />
             <div className="flex justify-between">
-                <span>Rating</span>
+                <span>{t('range.rating')}</span>
                 <span>{text}</span>
             </div>
         </div>

@@ -2,13 +2,12 @@ import { motion} from "framer-motion"
 import React from 'react'
 import {cn} from "@/lib/utils";
 import SearchBar from "@/components/filter/base/SearchBar";
-import {useTranslation} from "@/hooks/useTranslation";
 import SortOrder from "@/components/filter/map-filter/order";
 import FeatureFilter from "@/components/filter/map-filter/feature-filter";
 import DateFilter from "@/components/filter/map-filter/date-filter";
 import RangeFilter from "@/components/filter/map-filter/range-filter";
-import {formatDate} from "@/lib/format";
 import {MapQueryParam} from "@/interfaces/bsmap-query-param";
+import {useLocaleFormat} from "@/hooks/useFormat";
 
 interface MapFilterProps extends React.HTMLAttributes<HTMLDivElement> {
   queryParam: MapQueryParam,
@@ -27,8 +26,7 @@ const MapFilter = React.forwardRef<HTMLDivElement, MapFilterProps>(
 } : MapFilterProps,
 ref,
 )=> {
-
-  const {t} = useTranslation()
+  const {formatDate} = useLocaleFormat()
   return (
     <div
       ref={ref}

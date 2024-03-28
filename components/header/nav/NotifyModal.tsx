@@ -6,7 +6,6 @@ import {Dialog,DialogContent} from "@/components/ui/dialog";
 import React, { useState } from "react";
 import {IoCloseOutline, IoSettings} from "react-icons/io5";
 import {BSNotification} from "@/interfaces/bs-notification";
-import {formatTime} from "@/lib/format";
 import {Loading} from "@/components/shared/load-status";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import {ScrollArea} from "@/components/ui/scroll-area";
@@ -14,7 +13,7 @@ import {Scrollbar} from "@radix-ui/react-scroll-area";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
-  DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
+  DropdownMenuContent,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import {Label} from "@/components/ui/label";
@@ -22,8 +21,7 @@ import {Button, IconButton} from "@/components/ui/button";
 import {DropdownMenuCheckboxItemProps} from "@radix-ui/react-dropdown-menu";
 import {Switch} from "@/components/ui/switch";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
-import {ToggleGroup, ToggleGroupItem} from "@/components/ui/toggle-group";
-
+import {useLocaleFormat} from "@/hooks/useFormat";
 
 
 
@@ -32,6 +30,7 @@ const BSNotificationCard = ({
 }:{
     notification:BSNotification
 }) => {
+  const {formatTime} = useLocaleFormat()
     return (
         <div className=" space-x-2 items-center border-0">
               <div className="flex space-x-2 text-sm">

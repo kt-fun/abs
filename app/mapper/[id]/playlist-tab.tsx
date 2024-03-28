@@ -42,19 +42,6 @@ const PlaylistsTab = (
       {!isEmpty && !hasMore && !isLoadingMore && <ReachListEnd/>}
       {isLoadingMore && <Loading/>}
     </motion.ul>
-    // <div className="grid gap-2 grid-cols-1 xl:grid-cols-3 md:grid-cols-2 justify-evenly">
-    //   {
-    //     playlists.map(
-    //       (playlist) => {
-    //         return (
-    //           <BSPlaylist key={playlist.playlistId} bsPlaylist={playlist}/>
-    //         );
-    //       })
-    //   }
-    //   {!isLoadingMore && isEmpty && <EmptyContent/>}
-    //   {!isEmpty && !hasMore && !isLoadingMore && <ReachListEnd/>}
-    //   {isLoadingMore && <Loading/>}
-    // </div>
   )
 }
 

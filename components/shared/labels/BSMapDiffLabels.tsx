@@ -1,15 +1,16 @@
 import BSLabel, {LabelProps} from "@/components/shared/labels/BSLabel";
-import {formatNumber} from "@/lib/format";
 import {GiBoltBomb} from "react-icons/gi";
 import {PiWall} from "react-icons/pi";
 import {IoSpeedometerOutline} from "react-icons/io5";
 import {FaHighlighter} from "react-icons/fa6";
 import {RxCross2} from "react-icons/rx";
 import {CiWarning} from "react-icons/ci";
+import {useLocaleFormat} from "@/hooks/useFormat";
 
 export const BSBombCountLabel = (
   {count,className, tooltip = "bomb count"}:{count:number} & LabelProps
 )=>{
+  const {formatNumber} = useLocaleFormat()
   return (
     <>
       <BSLabel label={formatNumber(count)} className={className} tooltip={tooltip}>
@@ -22,6 +23,7 @@ export const BSBombCountLabel = (
 export const BSNoteCountLabel = (
   {count,className, tooltip = "note count"}:{count:number} & LabelProps
 )=>{
+  const {formatNumber} = useLocaleFormat()
   return (
     <>
       <BSLabel label={formatNumber(count)} className={className} tooltip={tooltip}>
@@ -34,6 +36,7 @@ export const BSNoteCountLabel = (
 export const BSObstacleCountLabel = (
   {count,className, tooltip = "obstacle count"}:{count:number} & LabelProps
 )=>{
+  const {formatNumber} = useLocaleFormat()
   return (
     <>
       <BSLabel label={formatNumber(count)} className={className} tooltip={tooltip}>
@@ -46,6 +49,7 @@ export const BSObstacleCountLabel = (
 export const BSLightCountLabel = (
   {count,className, tooltip = "light event count"}:{count:number} & LabelProps
 )=>{
+  const {formatNumber} = useLocaleFormat()
   return (
     <>
       <BSLabel label={formatNumber(count)} className={className} tooltip={tooltip}>
@@ -82,6 +86,7 @@ export const BSNPSLabel = (
 export const BSMapParityErrorLabel = (
   {count,className, tooltip = "map parity error count"}:{count:number} & LabelProps
 )=>{
+  const {formatNumber} = useLocaleFormat()
     return (
       <>
         <BSLabel label={formatNumber(count)} className={className} tooltip={tooltip}>
@@ -95,6 +100,7 @@ export const BSMapParityErrorLabel = (
 export const BSMapParityWarningLabel = (
   {count,className, tooltip = "map parity warning count"}:{count:number} & LabelProps
 )=>{
+  const {formatNumber} = useLocaleFormat()
   return (
     <>
       <BSLabel label={formatNumber(count)} className={className} tooltip={tooltip}>

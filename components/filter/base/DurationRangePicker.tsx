@@ -2,6 +2,7 @@ import { formatDuration } from "@/lib/format";
 import { Slider } from "@/components/ui/slider"
 
 import { useMemo } from "react";
+import {useTranslation} from "@/hooks/useTranslation";
 
 export default function DurationRangePicker({
     range,
@@ -10,7 +11,7 @@ export default function DurationRangePicker({
     range:[number|undefined, number|undefined],
     setRange:(range:[number|undefined, number|undefined])=>void   
 }) {
-
+    const {t} = useTranslation('components.filter')
     const handle = (value: number[]) => {
         let [min, max]:[number|undefined, number|undefined] = value as [number, number];
         if (value[0] === 0) {
@@ -46,7 +47,7 @@ export default function DurationRangePicker({
                 step={30}
             />
             <div className="flex justify-between ">
-                <span>Duration</span>
+                <span>{t('range.duration')}</span>
                 <span>{text}</span>
             </div>
         </div>

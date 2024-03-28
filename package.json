@@ -43,6 +43,7 @@
     "framer-motion": "^11.0.22",
     "hono": "^4.0.9",
     "i18next": "^23.10.1",
+    "i18next-browser-languagedetector": "^7.2.0",
     "i18next-resources-to-backend": "^1.2.0",
     "lodash": "^4.17.21",
     "lucide-react": "^0.303.0",

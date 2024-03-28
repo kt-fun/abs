@@ -26,7 +26,7 @@ const PlaylistFilter = React.forwardRef<HTMLDivElement, PlaylistFilterProps>(
     ref,
   )=> {
 
-    const {t} = useTranslation()
+    const {t} = useTranslation('components.filter')
 
     const npsRange = useMemo(()=>{
       return [queryParam.minNps,queryParam.maxNps] as [number|undefined, number|undefined]
@@ -51,10 +51,10 @@ const PlaylistFilter = React.forwardRef<HTMLDivElement, PlaylistFilterProps>(
         <div>
 
           <ToggleGroup type="multiple">
-            <ToggleGroupItem value="verified" aria-label="Toggle Verified" size={'sm'}>
+            <ToggleGroupItem value="verified" aria-label={t('toggle.verified')} size={'sm'}>
               <BadgeCheck className="h-4 w-4"  />
             </ToggleGroupItem>
-            <ToggleGroupItem value="curated" aria-label="Toggle Curated" size={'sm'}>
+            <ToggleGroupItem value="curated" aria-label={t('toggle.curated')} size={'sm'}>
               <Award className="h-4 w-4" />
             </ToggleGroupItem>
           </ToggleGroup>

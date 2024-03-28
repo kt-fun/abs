@@ -3,11 +3,12 @@ import ThemeButton from './ThemeButton';
 import Link from "@/components/ui/link";
 import Nav from "@/components/header/nav/nav-item/Nav";
 import MobileNav from "@/components/header/nav/mobile-nav-item/mobileNav";
+import I18NButton from "@/components/header/i18nButton";
 
 export const Header = () => {
   return (
       <header
-        className='w-full md:px-4 h-full top-0 z-20 sticky bg-base-light dark:bg-base-dark'
+        className='w-full px-4 md:px-8 h-full top-0 z-20 sticky bg-base-light dark:bg-base-dark'
       >
         <div className='h-16 flex justify-between items-center max-w-[1200px] mx-auto'>
           <div className='flex items-center space-x-2'>
@@ -18,6 +19,7 @@ export const Header = () => {
           </div>
             <div className='hidden md:flex space-x-2 items-center'>
               {/*<UserNav/>*/}
+              <I18NButton/>
               <ThemeButton />
             </div>
           <div className='flex md:hidden space-x-2 items-center'>
@@ -25,6 +27,7 @@ export const Header = () => {
             {/*  <UserNav/>*/}
             {/*</div>*/}
             {/*<ThemeButton/>*/}
+            <I18NButton/>
             <MobileNav/>
           </div>
         </div>

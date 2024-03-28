@@ -1,15 +1,14 @@
 import BSLabel, {LabelProps} from "@/components/shared/labels/BSLabel";
 import {CiCalendarDate, CiStar, CiTimer} from "react-icons/ci";
-import {formatNumber, formatTime} from "@/lib/format";
 import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai";
-import dayjs from "dayjs";
 import {PiHeartbeat} from "react-icons/pi";
 import {IoKeyOutline} from "react-icons/io5";
-import duration from "dayjs/plugin/duration";
-dayjs.extend(duration)
+import {useLocaleFormat} from "@/hooks/useFormat";
+
 export const DateLabel = (
   {date,className,tooltip}:{date:string}& LabelProps
 )=> {
+  const {formatTime} = useLocaleFormat()
   return (
     <>
       <BSLabel label={formatTime(date)} className={className}  tooltip={tooltip}>
@@ -22,9 +21,10 @@ export const DateLabel = (
 export const DurationLabel = (
   {duration,className,tooltip}:{duration:number}& LabelProps
 )=> {
+  const {formatDuration} = useLocaleFormat()
   return (
     <>
-      <BSLabel label={dayjs.duration(duration,'seconds').format('mm[m]ss[s]')} className={className}  tooltip={tooltip}>
+      <BSLabel label={formatDuration(duration)} className={className}  tooltip={tooltip}>
         <CiTimer/>
       </BSLabel>
     </>
@@ -46,6 +46,7 @@ export const BSRatingLabel = (
 export const ThumbUpCountLabel = (
   {count,className,tooltip= "thumb up count"}:{count:number}& LabelProps
 ) => {
+  const {formatNumber} = useLocaleFormat()
   return (
     <>
       <BSLabel label={formatNumber(count)} className={className} tooltip={tooltip}>
@@ -58,6 +59,7 @@ export const ThumbUpCountLabel = (
 export const ThumbDownCountLabel = (
   {count,className,tooltip = "thumb up count"}:{count:number}& LabelProps
 ) => {
+  const {formatNumber} = useLocaleFormat()
   return (
     <>
       <BSLabel label={formatNumber(count)} className={className} tooltip={tooltip}>

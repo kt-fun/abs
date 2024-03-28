@@ -1,0 +1,22 @@
+{
+  "english": "English",
+  "chinese": "Chinese",
+  "header": {
+    "nav": {
+      "beatmap": "Beatmap",
+      "playlist": "Playlist",
+      "mapper": "Mapper",
+      "help": {
+        "self": "help",
+        "discord.bsmg": "BSMG",
+        "discord.beatsaver": "BeatSaver",
+        "bsmg.wiki": "BSMG Wiki",
+        "dmca": "DMCA Policy",
+        "pp": "Privacy Policy",
+        "tos": "Term of Service",
+        "github": "GitHub"
+      }
+    },
+    "toggle": "Toggle"
+  }
+}

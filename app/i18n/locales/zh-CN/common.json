@@ -1,0 +1,34 @@
+{
+  "english": "英语",
+  "chinese": "简体中文",
+  "header": {
+    "nav":{
+      "beatmap": "谱面",
+      "playlist": "歌单",
+      "mapper": "谱师",
+      "help": {
+        "self": "帮助",
+        "discord.bsmg": "BSMG",
+        "discord.beatsaver": "BeatSaver",
+        "bsmg.wiki": "BSMG Wiki",
+        "dmca": "《数字千年版权法》政策",
+        "pp": "隐私政策",
+        "tos": "服务术语",
+        "github": "GitHub"
+      }
+    },
+    "toggle": "Toggle"
+  },
+  "loading-state": {
+    "error": "error",
+    "loading": "loading",
+    "empty": "empty"
+  },
+  "diff": {
+    "easy": "简单",
+    "normal": "一般",
+    "hard": "困难",
+    "expert": "专家",
+    "expertplus": "专家+"
+  }
+}

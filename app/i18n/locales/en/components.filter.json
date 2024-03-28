@@ -1,0 +1,29 @@
+{
+  "filter": "filter",
+  "style.selector": "style selector",
+  "genre.selector": "genre selector",
+  "feature.selector": "common",
+
+  "date": {
+    "from": "from",
+    "to": "to"
+  },
+  "range": {
+    "filter": "range picker",
+    "duration": "Duration",
+    "rating": "Rating",
+    "nps": "NPS",
+    "bpm": "BPM"
+  },
+  "order": {
+    "relevance": "relevance",
+    "latest": "latest",
+    "rating": "rating",
+    "curated": "curated"
+  },
+  "search": {
+    "placeholder": "search"
+  },
+  "toggle.verified": "Toggle Verified",
+  "toggle.curated": "Toggle Curated"
+}

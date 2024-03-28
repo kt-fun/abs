@@ -1,5 +1,5 @@
 import {AnimatePresence, HTMLMotionProps, motion, useAnimationControls, Variants} from "framer-motion";
-import React, {useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useMemo, useState} from 'react'
 import {ArrowUpDown} from "lucide-react";
 import {useTranslation} from "@/hooks/useTranslation";
 import {cn} from "@/lib/utils";
@@ -48,7 +48,8 @@ const SortOrder = React.forwardRef<HTMLDivElement, SortOrderProps>((
 ref,
 )=> {
 
-  const {t} = useTranslation()
+  const {t:ft} = useTranslation('components.filter')
+  const t = useCallback((id:string)=>ft(`order.${id}`),[ft])
   const orders = ['Relevance', 'Rating', 'Latest', 'Curated']
   const [isOpen,setIsOpen] = useState(false)
   let controls = useAnimationControls();
@@ -71,7 +72,7 @@ ref,
             className={"flex items-center rounded-full p-1 px-2 bg-zinc-100 dark:bg-zinc-700/70 cursor-pointer space-x-1"}
           >
             <ArrowUpDown className={"h-4 w-4"}/>
-            <motion.span layout>{t(order)}</motion.span>
+            <motion.span layout>{t(order.toLowerCase())}</motion.span>
           </motion.button>
         </PopoverTrigger>
         <AnimatePresence>
@@ -102,7 +103,7 @@ ref,
                           setIsOpen(false)
                         }}
                       >
-                        {t(item)}
+                        {t(item.toLowerCase())}
                       </motion.li>
                     )
                   }

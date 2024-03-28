@@ -1,0 +1,28 @@
+{
+  "filter": "筛选器",
+  "style.selector": "谱面类型",
+  "genre.selector": "音乐风格",
+  "feature.selector": "通用",
+  "date": {
+    "from": "起始日期",
+    "to": "截止日期"
+  },
+  "range": {
+    "filter": "范围筛选器",
+    "duration": "时长",
+    "rating": "评分",
+    "nps": "NPS",
+    "bpm": "BPM"
+  },
+  "order": {
+    "relevance": "相关度",
+    "latest": "最新",
+    "rating": "评分",
+    "curated": "Curator 推荐"
+  },
+  "search": {
+    "placeholder": "搜索"
+  },
+  "toggle.verified": "已验证",
+  "toggle.curated": "Curator 推荐"
+}

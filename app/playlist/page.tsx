@@ -8,7 +8,11 @@ import {Loading,ReachListEnd, EmptyContent} from "@/components/shared/load-statu
 import {containerVariants, listItemVariants} from "@/components/shared/variants";
 import { motion } from "framer-motion";
 import PlaylistFilter from "@/components/filter/playlist-filter";
-export default function Home() {
+import {useTranslation} from "@/hooks/useTranslation";
+export default function Playlist() {
+
+    const {t} = useTranslation('page.playlist')
+
     const { playlists,isLoadingMore,isEmpty,hasMore,loadMore,refresh,queryParam,updateQuery} = usePagingBSPlaylist();
     const {reachedBottom,showScrollToTop, scrollToTop} = useInfinityScroll();
     useEffect(()=>{
@@ -22,8 +26,8 @@ export default function Home() {
           <div className="flex justify-center grow">
             <div className="flex-col flex max-w-[1024px]  space-x-4  w-full">
                 <div className={' bg-base-light dark:bg-base-dark'}>
-                  <h1 className={"text-3xl font-bold"}>Playlists</h1>
-                  <span className={"text-zinc-400 dark:text-zinc-300 text-xs"}>find playlist that you like</span>
+                  <h1 className={"text-3xl font-bold"}>{t('title')}</h1>
+                  <span className={"text-zinc-400 dark:text-zinc-300 text-xs"}>{t('sub-title')}</span>
                 </div>
               {
                 <PlaylistFilter
