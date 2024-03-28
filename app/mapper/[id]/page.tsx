@@ -1,265 +1,177 @@
 'use client'
-import BSPlaylist from "@/components/bsplaylist";
-import BSMap from "@/components/bsmap";
+
 import { useBSUser } from "@/hooks/api/useBSUser";
-import { useInfinityScroll } from "@/hooks/useInfinityScroll";
-import { FetchingType, usePagingBSUserMap } from "@/hooks/api/usePagingBSUserMap";
-import { usePagingBSUserPlaylist } from "@/hooks/api/usePagingBSUserPlaylist";
-import { usePagingBSUserReview } from "@/hooks/api/usePagingBSUserReview";
-import  {Card} from "@/components/ui/card";
-import Link from "@/components/ui/link";
-import * as Tabs from "@radix-ui/react-tabs";
+import {Download, DownloadCloud} from 'lucide-react'
+import * as Tabs from "@/components/ui/tabs";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import BSMapperSideBar from "@/components/BSMapperSideBar";
-import {DateLabel} from "@/components/labels/BSMapMetaLabels";
-import { FcLike } from "react-icons/fc";
-import { BsHeartbreak } from "react-icons/bs";
-import { TbMoodNeutral } from "react-icons/tb";
+import React, {useState} from "react";
 import Loading from "@/components/load-status/Loading";
-import ReachListEnd from "@/components/load-status/ReachListEnd";
-import EmptyContent from "@/components/load-status/EmptyContent";
-import {BSMapCountLabel} from "@/components/labels/BSLabel";
-import * as MapMetaLabel from "@/components/labels/BSMapMetaLabels";
 import {escapeHtml} from "@/lib/ContentEscape";
-const MapListTab = (
-  {
-    userId,
-    fetchingType
-  }: {
-    userId:string,
-    fetchingType:FetchingType
-  }
-) => {
-  const { maps,isLoadingMore,isEmpty,hasMore,loadMore} = usePagingBSUserMap(fetchingType as FetchingType,userId);
-  const {reachedBottom,showScrollToTop, scrollToTop} = useInfinityScroll();
-  useEffect(()=>{
-    if (reachedBottom && !isLoadingMore && !isEmpty && hasMore){
-      loadMore();
-    }
-  },[reachedBottom,isLoadingMore,isEmpty,hasMore,loadMore])
-  return (
-    <div className=" grid grid-cols-1 md:grid-cols-2 gap-2">
-      {
-        maps.map(
-        (map) => {
-          return (
-            <BSMap key={map.id} bsMap={map}/>
-          );
-        })
-      }
-      { !isLoadingMore && isEmpty && <EmptyContent/> }
-      { !isEmpty && !hasMore && !isLoadingMore && <ReachListEnd/> }
-      { isLoadingMore && <Loading/> }
-    </div>
+import ReviewList from "@/app/mapper/[id]/review-list";
+import {Avatar} from "@/components/ui/avatar";
+import {formatNumber} from "@/lib/format";
+import PlaylistsTab from "@/app/mapper/[id]/playlist-tab";
+import MapList from "@/app/mapper/[id]/map-list";
+import { motion } from "framer-motion";
 
-  )
+
+const getUserPlaylist = (uid: number, oneClick: boolean) => {
+  if (oneClick) {
+    return `bsplaylist://playlist/https://api.beatsaver.com/users/id/${uid}/playlist/beatsaver-user-${uid}.bplist`
+  }
+  return `https://api.beatsaver.com/users/id/${uid}/playlist`
+}
+const Label = ({
+                 label, content
+               }: {
+  label: string,
+  content: string
+}) => {
+  return (<div className="font-medium text-xs flex flex-col items-center cursor-default">
+    <span className={"text-xs opacity-50"}>{label}</span>
+    <span>{content}</span>
+  </div>)
 }
 
-const PlaylistsTab = (
-  {
-    userId
-  }: {
-    userId:string
+export default function MapperDetailPage({params}: { params: { id: number } }) {
+
+  const {bsUserWithStats, isLoading, error} = useBSUser(params.id)
+  const router = useRouter()
+  if (error) {
+    console.log(error)
+    router.push("/")
   }
-) => {
-  const { playlists,isLoadingMore,isEmpty,hasMore,loadMore} = usePagingBSUserPlaylist(userId);
-  const {reachedBottom,showScrollToTop, scrollToTop} = useInfinityScroll();
-  useEffect(()=>{
-    if (reachedBottom && !isLoadingMore && !isEmpty && hasMore){
-      loadMore();
-    }
-  },[reachedBottom,isLoadingMore,isEmpty,hasMore,loadMore])
-  return (
-    <div className="grid gap-2 grid-cols-1 xl:grid-cols-3 md:grid-cols-2 justify-evenly">
-      {
-        playlists.map(
-        (playlist) => {
-          return (
-            <BSPlaylist key={playlist.playlistId} bsPlaylist={playlist}/>
-          );
-        })
-      }
-      { !isLoadingMore && isEmpty && <EmptyContent/> }
-      { !isEmpty && !hasMore && !isLoadingMore && <ReachListEnd/> }
-      { isLoadingMore && <Loading/> }
-    </div>
-  )
-}
-const ReviewsTab = (
-  {
-    userId
-  }: {
-    userId:string
+  const [value,setValue] = useState("Published")
+  const TabValues = [{
+    value: 'Published',
+    label: 'Published',
+    content: <MapList userId={params.id.toString()} fetchingType="Curated"/>
+  },{
+    value: 'Playlist',
+    label: 'Playlist',
+    content: <PlaylistsTab userId={params.id.toString()}/>
+  // },{
+  //   value: 'WIP',
+  //   label: 'UnPublished',
+  //   content: <MapList userId={params.id.toString()} fetchingType="WIP"/>
+  },{
+    value: 'Curated',
+    label: 'Curated',
+    content: <MapList userId={params.id.toString()} fetchingType="Curated"/>
+  },{
+    value: 'Reviews',
+    label: 'Reviews',
+    content: <ReviewList user={bsUserWithStats}/>
+  }]
+  const handleFollow = ()=> {
+    //todo
   }
-) => {
-  const { reviews,isLoadingMore,isEmpty,hasMore,loadMore} = usePagingBSUserReview(userId);
-  const {reachedBottom,showScrollToTop, scrollToTop} = useInfinityScroll();
-  useEffect(()=>{
-    if (reachedBottom && !isLoadingMore && !isEmpty && hasMore){
-      loadMore();
-    }
-  },[reachedBottom,isLoadingMore,isEmpty,hasMore,loadMore])
-  return (
-    <div className="grid gap-2">
-    
-    {  reviews.map(
-      (review) => {
-        return (
-          <div key={review.id}>
-            <Card className="p-2">
-              <div className="flex space-x-2 items-center">
-                <div className="font-medium text-xs">
-                {
-                  review.sentiment == "POSITIVE" && <FcLike/>
-                }
-                {
-                  review.sentiment == "NEGATIVE" && <BsHeartbreak/>
-                }
-                {
-                  review.sentiment == "NEUTRAL" && <TbMoodNeutral/>
-                }
-                </div>
-                  <Link  href={`/map/${review.map?.id}`}>
-                  <div>{review.map?.name}</div>
-                  </Link>
-                <DateLabel date={review.createdAt}/>
-              </div>
-              <div>
-              {review.text}
-              </div>
-            </Card>
-          </div>
-        );
-      })
-    }
-      { !isLoadingMore && isEmpty && <EmptyContent/> }
-      { !isEmpty && !hasMore && !isLoadingMore && <ReachListEnd/> }
-      { isLoadingMore && <Loading/> }
-    </div>
-  )
-}
-
-export default function MapperDetailPage({ params }: { params: { id: number } }) {
-
-    const {bsUserWithStats, isLoading, error} = useBSUser(params.id)
-    const router = useRouter()
-    if(error) {
-      console.log(error)
-      router.push("/")
-    }
-    const handleTabChange = (value:string) => {
-    }
-
     return isLoading?(<Loading/>)
     : (
-        <div className=" max-w-[1200px] w-full">
+        <div className=" max-w-[1024px] w-full px-2">
 
-          <div className="block lg:hidden mb-2">
-            <div className="flex justify-start">
-              <img
-                className="h-[144px] w-[144px] sm:h-[256px] sm:w-[256px] aspect-square rounded-lg"
-                src={bsUserWithStats.avatar}
-              />
-              <div className="pl-2">
-                <div className="flex justify-between items-center">
+          <div className="block  mb-2">
+            <div className="flex flex-col">
+              <div className={'flex space-x-2 flex-col'}>
+                <div className={'flex space-x-2'}>
+                  <Avatar src={bsUserWithStats.avatar} className={'h-8 aspect-square rounded-lg'}/>
+                  <div className="flex justify-between items-center">
                     <span className="font-semibold text-lg line-clamp-3 text-ellipsis">
                         {bsUserWithStats.name}
                     </span>
-                </div>
-                <div className="">
-                  <div className="font-medium text-xs">
-                    followers: {bsUserWithStats.followData!.followers}
                   </div>
-                  {
-                    bsUserWithStats.followData!.follows &&
-                      <span className="font-medium text-xs">
-                        following: {bsUserWithStats.followData!.follows}
-                        </span>
-                  }
                 </div>
-                <div className="grid grid-cols-2 gap-1">
-                  <BSMapCountLabel count={bsUserWithStats.stats!.totalMaps} tooltip="total map count"/>
-                  <MapMetaLabel.BSRatingLabel rate={bsUserWithStats.stats!.avgScore / 100} tooltip={"avg rate of this mapper's map"}/>
-                  <MapMetaLabel.ThumbUpCountLabel count={bsUserWithStats.stats!.totalUpvotes} tooltip={"total up vote"}/>
-                  <MapMetaLabel.ThumbDownCountLabel count={bsUserWithStats.stats!.totalDownvotes} tooltip={"total down vote"}/>
-                </div>
-
-                <p
-                  className="text-ellipsis overflow-hidden text-xs hidden sm:block"
-                  dangerouslySetInnerHTML={{__html: bsUserWithStats.description == "" ? "No description" : escapeHtml(bsUserWithStats.description)}}
-                />
-                {/*<p className="text-ellipsis overflow-hidden text-xs hidden sm:block">*/}
-                {/*  {bsUserWithStats.description == "" ? "No description" : bsUserWithStats.description}*/}
-                {/*</p>*/}
               </div>
 
+              <div className="pl-2">
+                <p
+                  className="text-ellipsis overflow-hidden text-xs opacity-60 p-2"
+                  dangerouslySetInnerHTML={{__html: bsUserWithStats.description == "" ? "No description" : escapeHtml(bsUserWithStats.description)}}
+                />
+              </div>
+              <div className={'flex self-end space-x-2'}>
+
+                <div className={'border border-zinc-200 dark:border-zinc-800 rounded-lg items-center text-xs bg-zinc-100/30 backdrop-blur flex '}>
+                  <a  href={getUserPlaylist(bsUserWithStats.id, false)} className={'flex space-x-1 px-2 py-1'}>
+                  <Download className={'h-4 w-4'}/>
+                    <span>{"playlist"} </span>
+                  </a>
+                  <a href={getUserPlaylist(bsUserWithStats.id,true)} className={'bg-zinc-200/30 h-full py-1 rounded-r-lg items-center text-center align-middle inline-flex'}>
+                    <span className={'m-auto mx-1 self-center align-middle text-center'}><DownloadCloud className={'h-4 w-4 '}/></span>
+                  </a>
+                </div>
+                <button
+                  onClick={handleFollow}
+                  className={'border border-zinc-200 dark:border-zinc-800 rounded-lg items-center text-xs bg-zinc-100/30 backdrop-blur flex px-2 py-1'}>
+                  {bsUserWithStats.followData?.following ? "unfollow" : "follow"}
+                </button>
+              </div>
             </div>
-            <p
-              className="text-ellipsis overflow-hidden text-xs block sm:hidden"
-              dangerouslySetInnerHTML={{__html: bsUserWithStats.description == "" ? "No description" : escapeHtml(bsUserWithStats.description)}}
-            />
-            {/*<p className="text-ellipsis overflow-hidden text-xs block sm:hidden">*/}
-            {/*  {bsUserWithStats.description == "" ? "No description" : bsUserWithStats.description}*/}
-            {/*</p>*/}
           </div>
           <div className="flex grow space-x-2">
-
-            <Tabs.Root className="flex flex-col  mx-auto h-full w-full" defaultValue="Published"
-                       onValueChange={handleTabChange}>
-              <Tabs.List
-                className="px-1 py-0.5 bg-gray-100 dark:bg-[#232325] rounded-full flex w-fit mx-auto space-x-2 mb-2"
-                aria-label="">
-                <Tabs.Trigger
-                  className="rounded-full px-2 data-[state=active]:dark:bg-[#0d0d0e] data-[state=active]:bg-white"
-                  value="Published">
-                  <div>Published</div>
-                </Tabs.Trigger>
-                {
-                  false && <Tabs.Trigger
-                        className="rounded-full px-2 data-[state=active]:dark:bg-[#0d0d0e] data-[state=active]:bg-white"
-                        value="WIP">
-                        <div>UnPublished</div>
-                    </Tabs.Trigger>
-                }
-                <Tabs.Trigger
-                  className="rounded-full px-2 data-[state=active]:dark:bg-[#0d0d0e] data-[state=active]:bg-white"
-                  value="Curated">
-                  <div>Curated</div>
-                </Tabs.Trigger>
-                <Tabs.Trigger
-                  className="rounded-full px-2 data-[state=active]:dark:bg-[#0d0d0e] data-[state=active]:bg-white"
-                  value="Playlists">
-                  <div>Playlists</div>
-                </Tabs.Trigger>
-                <Tabs.Trigger
-                  className="rounded-full px-2 data-[state=active]:dark:bg-[#0d0d0e] data-[state=active]:bg-white"
-                  value="Reviews">
-                  <div>Reviews</div>
-                </Tabs.Trigger>
-              </Tabs.List>
-              <Tabs.Content className="" value="Published">
-                <MapListTab userId={params.id.toString()} fetchingType="Published"/>
-              </Tabs.Content>
+            <Tabs.Tabs
+              className="flex flex-col  mx-auto h-full w-full"
+              onValueChange={setValue}
+              value={value}
+            >
+              <div className={'flex justify-between items-center flex-col md:flex-row'}>
+                <div className={'flex order-0 md:order-1 w-full justify-between md:justify-end shrink items-center'}>
+                  <div className="grid xl:grid grid-rows-1 grid-cols-4 gap-1 ">
+                    <Label label={"total map"} content={formatNumber(bsUserWithStats.stats!.totalMaps)}/>
+                    <Label label={"like"} content={formatNumber(bsUserWithStats.stats!.totalUpvotes)}/>
+                    <Label label={"dislike"} content={formatNumber(bsUserWithStats.stats!.totalDownvotes)}/>
+                    <Label label={"avg rate"} content={`${formatNumber(bsUserWithStats.stats!.avgScore)}%`}/>
+                  </div>
+                  <div className="flex space-x-2 pl-2">
+                    <div className="font-medium text-xs flex flex-col items-center cursor-pointer">
+                      <span className={"text-xs opacity-50"}>followers</span>
+                      <span>{bsUserWithStats.followData!.followers}</span>
+                    </div>
+                    {
+                      bsUserWithStats.followData!.follows && <div className="font-medium text-xsflex flex-col">
+                            <span className={"text-xs opacity-50"}>following</span>
+                            <span>{bsUserWithStats.followData!.follows}</span>
+                        </div>
+                    }
+                  </div>
+                </div>
+                <Tabs.TabsList
+                  className="px-1 py-0.5 bg-gray-100 dark:bg-[#232325] rounded-full flex w-fit mr-auto ml-auto space-x-2 my-2 grow"
+                >
+                  {
+                    TabValues.map(item=> (
+                      <Tabs.TabsTrigger
+                        key={item.value}
+                        className="px-2 relative bg-transparent data-[state=active]:bg-transparent data-[state=active]:shadow-none"
+                        value={item.value}>
+                        {
+                          value == item.value && <motion.span
+                            layoutId={'active-tab'}
+                            transition={{
+                              duration: 0.5
+                            }}
+                            className={"absolute inset-0 bg-base-light dark:bg-base-dark shadow-md"}
+                            style={{ borderRadius: 9999 }}
+                          >
+                          </motion.span>
+                        }
+                        <div className={'z-10'}>{item.label}</div>
+                      </Tabs.TabsTrigger>
+                    ))
+                  }
+                </Tabs.TabsList>
+              </div>
               {
-                false &&
-                  <Tabs.Content className="" value="WIP">
-                      <MapListTab userId={params.id.toString()} fetchingType="WIP"/>
-                  </Tabs.Content>
+                TabValues.map(item=>
+                  <Tabs.TabsContent
+                    value={item.value}
+                    key={item.value}
+                  >
+                      {item.content}
+                  </Tabs.TabsContent>
+                )
               }
-              <Tabs.Content className="" value="Curated">
-                <MapListTab userId={params.id.toString()} fetchingType="Curated"/>
-              </Tabs.Content>
-              <Tabs.Content className="" value="Reviews">
-                <ReviewsTab userId={params.id.toString()}/>
-              </Tabs.Content>
-              <Tabs.Content className="" value="Playlists">
-                <PlaylistsTab userId={params.id.toString()}/>
-              </Tabs.Content>
-            </Tabs.Root>
-            <div className="hidden lg:block sticky top-28 justify-center w-[256px] grow-0 h-fit">
-              <BSMapperSideBar bsMapper={bsUserWithStats}/>
-            </div>
+            </Tabs.Tabs>
           </div>
 
         </div>

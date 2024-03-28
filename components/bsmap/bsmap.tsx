@@ -4,8 +4,6 @@ import {Card} from "@/components/ui/card";
 import BSUserLabel from "@/components/labels/BSUserLabel";
 import * as MapMetaLabel from "@/components/labels/BSMapMetaLabels";
 import {ScrollArea, ScrollBar} from "@/components/ui/scroll-area";
-
-import Link from "@/components/ui/link";
 import * as MapDiffLabel from "@/components/labels/BSMapDiffLabels";
 import {BSMapTagType, getMapTag} from "@/interfaces/mapTags";
 import BSMapTag from "@/components/BSMapTag";
@@ -17,6 +15,7 @@ import BSMapOverviewHiddenInfo from "@/components/bsmap/hoverInfo";
 import BSOpts from "@/components/bsmap/bsopts";
 import ReviewList from "@/components/bsmap/reviewList";
 import LeaderBoardList from "@/components/bsmap/leaderboardList";
+import LockBodyScroll from "@/components/LockBodyScroll";
 
 
 
@@ -61,7 +60,7 @@ const BSMap = (
       className={
         cn(
           ' min-w-[360px] max-w-[960px] relative mx-auto border-none shadow-none',
-          isDetailMode ? `h-auto sm:h-auto p-4` : `h-[160px] sm:h-[200px]`,
+          isDetailMode ? `h-auto sm:h-auto p-4 ` : `h-[160px] sm:h-[200px]`,
           // "bg-transparent backdrop-blur"
         )
       }
@@ -268,6 +267,9 @@ const BSMap = (
                   </motion.div>
               </motion.div>
           </motion.div>
+      }
+      {
+        isDetailMode && <LockBodyScroll/>
       }
     </Card>
   )

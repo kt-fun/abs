@@ -13,9 +13,7 @@ export function useScrollConstraints(ref: React.MutableRefObject<any>, measureCo
     top: 0,
     bottom: 0
   });
-  const [time,setTime] = useState(0)
   useEffect(() => {
-    console.log('measure')
     if (!measureConstraints) return;
 
     const element = ref.current;

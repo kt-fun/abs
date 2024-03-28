@@ -1,10 +1,9 @@
 'use client'
 import BSPlaylistSideBar from "@/components/BSPlaylistSideBar";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaArrowUp } from "react-icons/fa";
 import { usePagingBSPlaylistDetail } from "@/hooks/api/usePagingBSPlaylistDetail";
-import BSMapSkeleton from "@/components/BSMapSkeleton";
 import { BSBeatMap } from "@/interfaces/beatmap";
 import BSMap from "@/components/bsmap";
 import { useRouter } from "next/navigation";
@@ -18,46 +17,21 @@ import {IoCloudDownloadOutline, IoSpeedometerOutline} from "react-icons/io5";
 import {Tooltip} from "@/components/ui/tooltip";
 import Link from "@/components/ui/link";
 import {HiCursorClick} from "react-icons/hi";
-import * as Progress from "@radix-ui/react-progress";
 import {escapeHtml} from "@/lib/ContentEscape";
+import {containerVariants, listItemVariants} from "@/components/variants";
+import EmptyContent from "@/components/load-status/EmptyContent";
+import {Progress} from "@/components/Progress";
 export default function Home({ params }: { params: { id: string } }) {
     const { playlist,maps,isLoadingMore,error,isEmpty,hasMore,loadMore} = usePagingBSPlaylistDetail(params.id);
     const router = useRouter()
     if(error) {
+      console.log(error)
       router.push("/")
     }
-    const [top,setTop] = useState(0);
-    // handler inifinite scroll
-    const handleScroll = useCallback(() => {
-        setTop(document.documentElement.scrollTop);
-        if (
-          window.innerHeight + document.documentElement.scrollTop ===
-          document.documentElement.offsetHeight
-        ) {
-          if (isLoadingMore || isEmpty || !hasMore) return;
-          loadMore();
-        }
-      }, [isLoadingMore, isEmpty, hasMore,loadMore]);
-  
-      useEffect(() => {
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-      }, [handleScroll]);
 
-      const handleScrollToTop = useCallback(() => {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-      });
-      }, []);
-      const containerVariants = {
-        hidden: { opacity: 0, y: "100vw" },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-      };
-      const skeleton = [1,2,3,4,5,6,7,8,9,10,11,12]
       return (
-        <div className="max-w-[1200px]">
-          <div  className="block lg:hidden mb-2">
+        <div className="max-w-[1024px]">
+          <div  className="block mb-2">
             {
               !isLoadingMore && !isEmpty && playlist && (
                 <>
@@ -88,14 +62,7 @@ export default function Home({ params }: { params: { id: string } }) {
                         <MapMetaLabel.ThumbDownCountLabel count={playlist!.stats!.downVotes}/>
                       </div>
                       <div className="flex justify-between px-2 items-center">
-                        <Progress.Root
-                          className="relative overflow-hidden rounded-full w-full h-2 my-2 bg-gray-300"
-                          value={playlist!.stats.avgScore * 100}>
-                          <Progress.Indicator
-                            className=" h-2 rounded-full bg-gradient-to-r from-red-500 to-blue-500"
-                            style={{transform: `translateX(-${100 - playlist!.stats.avgScore * 100}%)`}}
-                          />
-                        </Progress.Root>
+                        <Progress score={playlist!.stats.avgScore * 100} />
                         <p className="pl-1 font-medium text-xs">{(playlist!.stats.avgScore * 100).toFixed(1)}%</p>
                       </div>
                       <div className="py-1 flex items-center space-x-1 justify-between">
@@ -123,74 +90,45 @@ export default function Home({ params }: { params: { id: string } }) {
                         </div>
 
                       </div>
-
                       <p
                         className="text-ellipsis overflow-hidden text-xs hidden sm:block"
                         dangerouslySetInnerHTML={{__html: playlist?.description == "" ? "No description" : escapeHtml(playlist?.description ?? "")}}
                       />
-                      {/*<p className="text-ellipsis overflow-hidden text-xs hidden sm:block">*/}
-                      {/*  {playlist?.description == "" ? "No description" : playlist?.description}*/}
-                      {/*</p>*/}
                     </div>
-
                   </div>
                   <p
                     className="text-ellipsis overflow-hidden text-xs block sm:hidden"
                     dangerouslySetInnerHTML={{__html: playlist?.description == "" ? "No description" : escapeHtml(playlist?.description ?? "")}}
                   />
-                  {/*<p className="text-ellipsis overflow-hidden text-xs block sm:hidden">*/}
-                  {/*  {playlist?.description == "" ? "No description" : playlist?.description }*/}
-                  {/*</p>*/}
                 </>
               )
             }
 
           </div>
           <div className="flex grow  space-x-2">
-            <div className="grid gap-2 grid-cols-1 xl:grid-cols-2 md:grid-cols-2 grow">
+            <motion.ul
+              variants={containerVariants}
+              initial={'hidden'}
+              animate={'show'}
+              className="grid gap-2 grid-cols-1 md:grid-cols-2 grow px-2 relative"
+            >
               {
-                maps.length == 0 && isLoadingMore && (
-                  skeleton.map((i: number) =>
-                    <BSMapSkeleton key={`${i}`}/>)
-                )
-
-              }
-              {
-                maps.map((map: BSBeatMap) => {
+                maps.map((map: BSBeatMap, i: number) => {
                   return (
-                    <BSMap key={map.id} bsMap={map}/>
+                    <BSMap
+                      // todo fix key issue, cause by data repeat
+                      key={map.id}
+                      variants={listItemVariants}
+                      custom={i}
+                      bsMap={map}
+                    />
                   );
                 })
               }
               {!isEmpty && !hasMore && !isLoadingMore && <ReachListEnd/>}
-              {isLoadingMore && <Loading/>}
-            </div>
-
-            <div className="hidden lg:flex sticky top-20 justify-center grow-0 h-fit">
-              {
-                playlist && (
-                  <BSPlaylistSideBar bsPlaylist={playlist}/>
-                )
-
-              }
-              {
-                !playlist && (<div>loading</div>)
-              }
-
-              {top > 100 && (<motion.div
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-                exit="hidden"
-                whileHover={{scale: 1.1}}
-                className={`fixed ml-auto bottom-2 rounded-full bg-gray-200 dark:bg-gray-700 p-2 cursor-pointer `}
-                onClick={handleScrollToTop}>
-                <div>
-                  <FaArrowUp/>
-                </div>
-              </motion.div>)
-              }</div>
-
+              {isEmpty && !hasMore && !isLoadingMore && <EmptyContent className={'col-span-2'}/>}
+              {isLoadingMore && <Loading className={'col-span-2'}/>}
+            </motion.ul>
           </div>
         </div>
       )
