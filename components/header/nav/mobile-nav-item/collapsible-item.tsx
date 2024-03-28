@@ -42,7 +42,7 @@ export const CollapsibleItem = (
                 initial={{height: 0, opacity: 0}}
                 animate={{height: 'auto', opacity: 1}}
                 exit={{height: 0, opacity: 0}}
-                className={"pl-4 space-y-2 pt-2 text-zinc-400"}
+                className={"pl-4 space-y-2 pt-2 text-current/70"}
             >
               {
                 navItem.children && navItem.children.map(it => {

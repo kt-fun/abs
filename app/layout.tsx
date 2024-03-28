@@ -7,7 +7,6 @@ import {ThemeProvider} from "@/components/providers/ThemeProvider";
 import {UserPreferenceProvider} from "@/components/providers/UserPreferenceProvider";
 import {getLocale} from "@/app/i18n/server";
 import LocaleProvider from '@/components/providers/i18nProvider';
-import ChangeLocale from "@/components/shared/ChangeLocale";
 const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({
@@ -28,7 +27,7 @@ export default function RootLayout({
         >
           <main className="flex min-h-screen flex-col bg-base-light dark:bg-base-dark">
             <Header/>
-            <section className='grow justify-center flex px-2'>
+            <section className='grow justify-center flex'>
               {children}
             </section>
           </main>

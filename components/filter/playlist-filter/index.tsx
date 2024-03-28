@@ -45,11 +45,10 @@ const PlaylistFilter = React.forwardRef<HTMLDivElement, PlaylistFilterProps>(
         {...rest}
         className={cn(
           rest.className,
-          "md:flex items-center justify-between flex-wrap gap-1 grid grid-rows-2 grid-cols-5 align-middle justify-items-center text-xs",
+          "md:flex items-center justify-between flex-wrap gap-1 grid grid-rows-2 grid-cols-12 align-middle justify-items-center text-xs",
         )}
       >
-        <div>
-
+        <div className={"col-span-3 col-start-10"}>
           <ToggleGroup type="multiple">
             <ToggleGroupItem value="verified" aria-label={t('toggle.verified')} size={'sm'}>
               <BadgeCheck className="h-4 w-4"  />
@@ -65,7 +64,7 @@ const PlaylistFilter = React.forwardRef<HTMLDivElement, PlaylistFilterProps>(
             from: queryParam.from? new Date(queryParam.from): undefined,
             to: queryParam.to? new Date(queryParam.to):undefined
           }}
-          className={"row-start-1 col-span-3 justify-self-end"}
+          className={"row-start-1 col-span-9 justify-self-start"}
           onUpdateValue={
             (v)=>{
               onUpdateQueryParam({
@@ -78,14 +77,17 @@ const PlaylistFilter = React.forwardRef<HTMLDivElement, PlaylistFilterProps>(
         />
         <SortOrder
           order={queryParam.sortKey}
-          className={"row-start-2 justify-self-start"}
+          className={"row-start-2 col-span-3 justify-self-start"}
           onUpdateOrder={(order)=>{
             onUpdateQueryParam({...queryParam,sortKey:order})
           }}
         />
-        <NPSRangePicker range={npsRange} setRange={setNpsRange}/>
+        <div className={"row-start-2 col-start-4 col-span-5 justify-self-center text-xs"}>
+          <NPSRangePicker range={npsRange} setRange={setNpsRange}/>
+        </div>
+
         <SearchBar
-          className={'h-6  row-start-2 col-start-4 col-span-2 justify-self-end'}
+          className={'h-6 row-start-2 col-start-9 col-span-4 justify-self-end'}
           queryKey={queryParam.queryKey}
           onQueryKeyChange={(k) => {
             onUpdateQueryParam({

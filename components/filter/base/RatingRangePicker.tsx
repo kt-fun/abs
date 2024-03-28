@@ -24,31 +24,32 @@ export default function RatingRangePicker(
     }
     const covertedRange = useMemo(()=>{
         return [
-            range[0] === undefined ? 0 : range[0],
-            range[1] === undefined ? 100 : range[1]
+            range[0] === undefined ? 0 : Math.floor(range[0]),
+            range[1] === undefined ? 100 : Math.floor(range[1])
         ]
     },[range])
     const text = useMemo(()=>{
-        let min = range[0]?range[0]:0;
+        let min = range[0]?range[0]?.toFixed(0):'0';
         if (range[1] === undefined) {
             return `${min} - 100 %`
         }
-        return `${min} - ${range[1]} %`
+        return `${min} - ${range[1]?.toFixed(0)??100} %`
     },[range])
     return (
-        <div className="relative">
-            <Slider
+      <div className="relative">
+
+          <div className="flex justify-between mb-1.5">
+              <span>{t('range.rating')}</span>
+              <span>{text}</span>
+          </div>
+          <Slider
             defaultValue={covertedRange}
             min={0}
             max={100}
             onValueChange={handle}
             onValueCommit={handle}
             step={5}
-            />
-            <div className="flex justify-between">
-                <span>{t('range.rating')}</span>
-                <span>{text}</span>
-            </div>
-        </div>
+          />
+      </div>
     )
 }

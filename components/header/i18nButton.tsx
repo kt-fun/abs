@@ -7,6 +7,7 @@ import {Languages} from "lucide-react";
 import {switchLocaleAction} from "@/lib/i18n/switch-locale";
 import {cn} from "@/lib/utils";
 import {HoverCard, HoverCardContent, HoverCardTrigger} from "@/components/ui/hover-card";
+import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
 
 const variants:Variants = {
   open: {
@@ -66,8 +67,8 @@ export default function I18NButton() {
   const [open,setOpen] = useState(false)
   return (
     <>
-      <HoverCard openDelay={300}>
-        <HoverCardTrigger>
+      <DropdownMenu open={open} onOpenChange={setOpen}>
+        <DropdownMenuTrigger asChild>
           <motion.span
             onClick={() => {
               setOpen(!open)
@@ -77,8 +78,8 @@ export default function I18NButton() {
             <span className="sr-only">Toggle language</span>
             <Languages className={'h-4 w-4'}/>
           </motion.span>
-        </HoverCardTrigger>
-        <HoverCardContent asChild>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent asChild>
           <motion.ul
             className={"absolute bg-zinc-100/70  dark:bg-zinc-700/70 backdrop-blur-2xl  w-52 p-2 cursor-pointer border-none shadow-none rounded-lg left-auto top-full right-0"}
             initial={'closed'}
@@ -96,7 +97,7 @@ export default function I18NButton() {
                     }}
                     className={cn(
                       "px-4 py-2 my-0.5 font-medium cursor-pointer hover:bg-zinc-300 rounded-lg transition-colors hover:text-slate-900 focus:text-slate-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 dark:hover:text-slate-50 dark:focus:text-slate-50",
-                      i18n.resolvedLanguage == lang.locale ?'bg-zinc-200/70 ':'')}
+                      i18n.resolvedLanguage == lang.locale ? 'bg-zinc-200/70 ' : '')}
                     variants={itemVariants}
                   >
                     {t(lang.id)}
@@ -105,17 +106,8 @@ export default function I18NButton() {
               })
             }
           </motion.ul>
-        </HoverCardContent>
-      </HoverCard>
-      {/*<motion.span*/}
-      {/*  onClick={() => {*/}
-      {/*    setOpen(!open)*/}
-      {/*  }}*/}
-      {/*  className={"relative h-6 w-6 items-center inline-flex justify-center"}*/}
-      {/*>*/}
-      {/*  <span className="sr-only">Toggle language</span>*/}
-      {/*  <Languages className={'h-4 w-4'}/>*/}
-      {/*</motion.span>*/}
+        </DropdownMenuContent>
+      </DropdownMenu>
     </>
   )
 }

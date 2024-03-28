@@ -22,7 +22,7 @@ export default function Home({
                              }:{
   searchParams:SearchParam
 }) {
-  const {t} = useTranslation('main')
+  const {t} = useTranslation('page.main')
   // let param = BSMapQueryParam.buildSearchParamFromMapQueryParam(BSMapQueryParam.buildMapQueryParamFromSearchParam(searchParams))
   const {  } = useBeatmaps()
   const mapQueryParam = BSMapQueryParam.buildMapQueryParamFromSearchParam(searchParams)
@@ -36,7 +36,7 @@ export default function Home({
   }
   return (
     <>
-      <div className="flex max-w-[1024px] grow flex-col pb-2 px-2">
+      <div className="flex max-w-[1024px] grow flex-col pb-2">
         <div className={"flex items-center bg-base-light dark:bg-base-dark"}>
           <div>
             <h1 className={"text-3xl font-bold"}>{t('title')}</h1>
@@ -45,7 +45,7 @@ export default function Home({
         </div>
         {
           <MapFilter
-            className={'sticky top-16 z-10 flex left-0 right-0 w-full bg-base-light dark:bg-base-dark py-2'}
+            className={'sticky top-16 z-10 flex left-0 right-0 w-full bg-base-light dark:bg-base-dark p-2'}
             queryParam={queryParam}
             onUpdateQueryParam={updateQuery}
             onQuery={()=>{
@@ -58,7 +58,7 @@ export default function Home({
           variants={containerVariants}
           initial={'hidden'}
           animate={'show'}
-          className="grid gap-2 grid-cols-1 md:grid-cols-2 grow px-2 relative"
+          className="grid gap-2 grid-cols-1 md:grid-cols-2 grow px-4 relative"
         >
           {
             maps.map((map:BSBeatMap, i:number) => {

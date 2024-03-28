@@ -49,7 +49,7 @@ const MobileNav = ()=> {
       ref={containerRef}
     >
       <motion.div variants={sidebar} layout
-                  className="w-full fixed left-0 right-0 top-16 h-auto bg-white dark:bg-zinc-700/70 px-4 py-2 rounded-b-lg z-30 ">
+                  className="w-full fixed left-0 right-0 top-16 h-auto bg-white dark:bg-slate-950 px-4 py-2 rounded-b-lg z-30 ">
         <motion.ul
           variants={variants}
           layout

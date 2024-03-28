@@ -18,9 +18,10 @@ export default function MapperPage() {
     return (
       <>
         <div className="max-w-[1024px] w-full">
-          <div className={"bg-base flex items-center mb-2"}>
+          <div className={"bg-base flex items-center mb-2 px-4"}>
             <div>
               <h1 className={"text-3xl font-bold"}>{t('title')}</h1>
+              <span className={"text-zinc-400 dark:text-zinc-300 text-xs"}>{t('sub-title')}</span>
             </div>
             {/*<SearchBar queryKey={''} onQueryKeyChange={()=>{}} onQuery={()=>{}}/>*/}
           </div>

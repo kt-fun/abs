@@ -33,25 +33,25 @@ ref,
       {...rest}
       className={cn(
         rest.className,
-        "md:flex items-center justify-between flex-wrap gap-1 grid grid-rows-2 grid-cols-5 align-middle justify-items-center",
+        "md:flex items-center justify-between flex-wrap gap-1 grid grid-rows-2 grid-cols-10 align-middle justify-items-center",
       )}
     >
         <FeatureFilter
-          className={"row-start-2 justify-self-start"}
+          className={"row-start-2 justify-self-start col-span-3"}
           queryParam={queryParam}
           onUpdateQueryParam={onUpdateQueryParam}
         />
         <RangeFilter
           queryParam={queryParam}
           updateQuery={onUpdateQueryParam}
-          className={"row-start-1 col-span-2 justify-self-start"}
+          className={"row-start-1 col-span-4 justify-self-start"}
         />
         <DateFilter
           value={{
             from: queryParam.from? new Date(queryParam.from): undefined,
             to: queryParam.to? new Date(queryParam.to):undefined
           }}
-          className={"row-start-1 col-span-3 justify-self-end"}
+          className={"row-start-1 col-span-6 justify-self-end"}
           onUpdateValue={
             (v)=>{
               onUpdateQueryParam({
@@ -64,13 +64,13 @@ ref,
         />
         <SortOrder
           order={queryParam.sortOrder}
-          className={"row-start-2 justify-self-start"}
+          className={"row-start-2 justify-self-start col-span-3 col-start-4"}
           onUpdateOrder={(order)=>{
             onUpdateQueryParam({...queryParam,sortOrder:order})
           }}
         />
         <SearchBar
-          className={'h-6  row-start-2 col-start-4 col-span-2 justify-self-end'}
+          className={'h-6  row-start-2 col-start-7 col-span-4 justify-self-end'}
           queryKey={queryParam.queryKey}
           onQueryKeyChange={(k) => {
             onUpdateQueryParam({

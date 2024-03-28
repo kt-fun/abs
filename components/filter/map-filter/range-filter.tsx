@@ -68,7 +68,7 @@ const RangeFilter = React.forwardRef<HTMLDivElement, RangeFilterProps>((
     return [queryParam.minDuration,queryParam.maxDuration] as [number|undefined, number|undefined]
   },[queryParam])
   const ratingRange = useMemo(()=>{
-    return [queryParam.minRating,queryParam.maxRating] as [number|undefined, number|undefined]
+    return [queryParam.minRating ? queryParam.minRating * 100 : undefined,queryParam.maxRating ? queryParam.maxRating * 100 : undefined] as [number|undefined, number|undefined]
   },[queryParam])
   const setNpsRange = (range:[number|undefined,number|undefined])=>{
     updateQuery({
@@ -87,8 +87,8 @@ const RangeFilter = React.forwardRef<HTMLDivElement, RangeFilterProps>((
   const setRatingRange = (range:[number|undefined,number|undefined])=>{
     updateQuery({
       ...queryParam,
-      minRating:range[0],
-      maxRating:range[1]
+      minRating:range[0]?range[0]/100:undefined,
+      maxRating:range[1]?range[1]/100:undefined
     })
   }
 
@@ -114,11 +114,11 @@ const RangeFilter = React.forwardRef<HTMLDivElement, RangeFilterProps>((
               isOpen &&
                 <PopoverContent
 
-                    className={"w-40 z-10 bg-zinc-100/70 dark:bg-zinc-700/70"}
+                    className={"w-full z-10 bg-zinc-100/70 dark:bg-zinc-700/70"}
                     asChild
                 >
                     <motion.div
-                        className={" p-4 m-2 rounded-lg mt-1 overflow-hidden text-left shadow backdrop-blur text-xs gap-2"}
+                        className={" p-4 m-2 rounded-lg mt-1 overflow-hidden text-left shadow backdrop-blur text-xs gap-2 flex flex-col"}
                         initial="closed"
                         custom={height}
                         animate={controls}

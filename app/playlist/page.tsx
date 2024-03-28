@@ -24,14 +24,14 @@ export default function Playlist() {
       return (
         <>
           <div className="flex justify-center grow">
-            <div className="flex-col flex max-w-[1024px]  space-x-4  w-full">
-                <div className={' bg-base-light dark:bg-base-dark'}>
+            <div className="flex-col flex max-w-[1024px]  w-full">
+                <div className={' bg-base-light dark:bg-base-dark p-2'}>
                   <h1 className={"text-3xl font-bold"}>{t('title')}</h1>
                   <span className={"text-zinc-400 dark:text-zinc-300 text-xs"}>{t('sub-title')}</span>
                 </div>
               {
                 <PlaylistFilter
-                  className={'sticky top-16 z-10 flex left-0 right-0 w-full bg-base-light dark:bg-base-dark py-2'}
+                  className={'sticky top-16 z-10 flex left-0 right-0 w-full bg-base-light dark:bg-base-dark p-2'}
                   layout
                   queryParam={queryParam}
                   onUpdateQueryParam={updateQuery}
