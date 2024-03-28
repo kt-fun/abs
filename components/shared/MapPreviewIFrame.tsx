@@ -2,19 +2,18 @@ import * as Dialog from "@/components/ui/dialog"
 import React, {useMemo} from "react"
 import { Tooltip } from "@/components/ui/tooltip"
 
- const MapPreviewIFrame = React.forwardRef(({
-    id,
+
+
+const PreviewIFrame = React.forwardRef(({
+    url,
   children
 }:{
-    id:string,
+    url:string,
     children:React.ReactNode
 },ref) => {
-    const url = useMemo(()=>{
-        return `https://allpoland.github.io/ArcViewer/?id=${id}`
-    },[id])
     return (
       <Dialog.Dialog>
-        <Tooltip content="play map preview" asChild>
+        <Tooltip content="play preview" asChild>
           <Dialog.DialogTrigger asChild ref={ref as any}>
             {children}
           </Dialog.DialogTrigger>
@@ -26,6 +25,37 @@ import { Tooltip } from "@/components/ui/tooltip"
     )
 })
 
-MapPreviewIFrame.displayName = "MapPreviewIFrame"
 
-export default MapPreviewIFrame
+export const BLReplayPreviewIFrame = React.forwardRef(({
+  id,
+  children
+}:{
+  id:string,
+  children:React.ReactNode
+},ref) => {
+  const url = useMemo(()=>{
+    return `https://replay.beatleader.xyz/?scoreId=${id}`
+  },[id])
+  return (
+    <PreviewIFrame url={url} ref={ref} children={children}/>
+  )
+})
+BLReplayPreviewIFrame.displayName = "BLReplayPreviewIFrame"
+
+
+export const MapPreviewIFrame = React.forwardRef(({
+  id,
+  children
+}:{
+  id:string,
+  children:React.ReactNode
+},ref) => {
+
+  const url = useMemo(()=>{
+    return `https://allpoland.github.io/ArcViewer/?id=${id}`
+  },[id])
+  return (
+    <PreviewIFrame url={url} ref={ref} children={children}/>
+  )
+})
+MapPreviewIFrame.displayName = "MapPreviewIFrame"

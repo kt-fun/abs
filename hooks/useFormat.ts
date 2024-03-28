@@ -31,13 +31,12 @@ export const formatDate = (locale:string) => (time: Date | undefined) => {
 export const formatDuration = ()=>(duration: number) => {
   const minutes = Math.floor(duration / 60)
   const seconds = duration % 60
-  return `${minutes}m${seconds < 10 ? '0' : ''}${seconds}`
+  return `${minutes}m${seconds < 10 ? '0' : ''}${seconds}s`
 }
 
 export const useLocaleFormat = (locale:string|undefined = undefined) => {
   const currentLocale = locale??useLocale()
   const FNSLocale = getFNSLocale(currentLocale)
-  //import { arSA } from 'date-fns/locale';
   return {
     formatTime: formatTime(currentLocale),
     formatDate: formatDate(currentLocale),

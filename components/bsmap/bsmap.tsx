@@ -38,17 +38,6 @@ const BSMap = (
   const isDetailMode = useMemo(() => {
     return mode == 'detail'
   }, [mode])
-  const imageVariant = {
-    init: {
-      opacity: 0,
-    },
-    loaded: {
-      opacity: 1,
-      transition: {
-        duration: 0.5
-      }
-    }
-  }
   const [imageLoading, setImageLoading] = useState(true);
   const [pulsing, setPulsing] = useState(true);
   const {t} = useTranslation('components.bsmap')
@@ -56,6 +45,9 @@ const BSMap = (
     setImageLoading(false);
     setTimeout(() => setPulsing(false), 600);
   };
+
+  const [currentDiff, setDiff]= useState(bsMap.versions[0].diffs[0])
+
   return (
     <Card
       className={
@@ -177,7 +169,7 @@ const BSMap = (
                           }
                         }}
                         key={diff.characteristic + diff.difficulty + bsMap.id}
-                        className={"text-zinc-200 shadow-md py-0.5 px-2"}
+                        className={"text-zinc-700/80 py-0.5 px-2"}
                       />
                   )
                 }
@@ -197,7 +189,7 @@ const BSMap = (
                       }
                     }}
                 >
-                    <BSOpts bsMap={bsMap} itemClassName={cn('text-black')} className={"justify-start mx-0 flex"}/>
+                    <BSOpts bsMap={bsMap} itemClassName={cn('')} className={"justify-start mx-0 flex"}/>
                 </motion.div>
             }
           </AnimatePresence>
@@ -252,16 +244,30 @@ const BSMap = (
                   </motion.div>
               </motion.div>
               <motion.div>
-                  <motion.div className={"flex space-x-2 items-center"}>
-                      <span className={"font-medium"}>{t('leaderboard')}</span>
-                  </motion.div>
+                  <div className={"flex items-center justify-between flex-col md:flex-row"}>
+                      <motion.div>
+                          <span className={"font-medium"}>{t('leaderboard')}</span>
+                      </motion.div>
+                      <motion.div className={'flex space-x-2 flex-wrap'}>
+                        {
+                          bsMap.versions[0].diffs.map(diff=>
+                            <div
+                              onClick={()=>{setDiff(diff)}}
+                              className={currentDiff == diff ? 'bg-zinc-200/70 rounded-full':''}
+                            >
+                              <DiffCard diff={diff}/>
+                            </div>
+                          )
+                        }
+                      </motion.div>
+                  </div>
                   <motion.div>
                     {
                       <LeaderBoardList
                         onContentUpdate={onContentUpdate}
                         hash={bsMap.versions[0].hash}
-                        mode={bsMap.versions[0].diffs[0].characteristic}
-                        difficulty={bsMap.versions[0].diffs[0].difficulty}
+                        mode={currentDiff.characteristic}
+                        difficulty={currentDiff.difficulty}
                       />
                     }
                   </motion.div>

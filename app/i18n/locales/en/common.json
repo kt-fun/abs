@@ -18,5 +18,23 @@
       }
     },
     "toggle": "Toggle"
+  },
+  "diff": {
+    "easy": "E",
+    "normal": "N",
+    "hard": "H",
+    "expert": "Ex",
+    "expertplus": "Ex+"
+  },
+  "characteristic": {
+    "standard": "Standard",
+    "noarrows": "NoArrows",
+    "onesaber": "OneSaber",
+    "90degree": "90Degree",
+    "360degree": "360Degree",
+    "lightshow": "Lightshow",
+    "lawless": "Lawless",
+    "legacy": "Legacy"
   }
+
 }

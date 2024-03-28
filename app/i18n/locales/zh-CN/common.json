@@ -30,5 +30,15 @@
     "hard": "困难",
     "expert": "专家",
     "expertplus": "专家+"
+  },
+  "characteristic": {
+    "standard": "标准",
+    "noarrows": "无向",
+    "onesaber": "单手",
+    "90degree": "90度",
+    "360degree": "360度",
+    "lightshow": "灯光展示",
+    "lawless": "无限制",
+    "legacy": "遗留"
   }
 }

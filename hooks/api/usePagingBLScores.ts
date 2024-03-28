@@ -27,6 +27,7 @@ export const usePagingBLScores = (
   const isEmpty = rankingItems.length === 0;
   const loadMore = () => setSize(size + 1);
   const hasMore = false;
+  const totalPage = 0;
   return {
     scores:rankingItems as BeatLeaderScore[],
     "isLoadingMore":!!isLoadingMore,
@@ -35,5 +36,8 @@ export const usePagingBLScores = (
     isRefreshing,
     size,
     hasMore,
+    totalPage,
+    // nextPage,
+    // prevPage,
   }
 }

@@ -4,5 +4,14 @@
     "empty": "这里还没评论哦 😯"
   },
   "description": "简介",
-  "leaderboard": "打分板"
+  "leaderboard": "打分板",
+  "table-column": {
+    "rank": "排名",
+    "player": "玩家",
+    "score": "得分",
+    "mod": "模组",
+    "accuracy": "准确度",
+    "pp": "PP",
+    "replay": "回放"
+  }
 }

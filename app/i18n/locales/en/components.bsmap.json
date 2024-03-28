@@ -4,5 +4,14 @@
     "empty": "still now review here 😯"
   },
   "description": "Description",
-  "leaderboard": "Leaderboard"
+  "leaderboard": "Leaderboard",
+  "table-column": {
+    "rank": "Rank",
+    "player": "Player",
+    "score": "Score",
+    "mod": "Mods",
+    "accuracy": "Accuracy",
+    "pp": "PP",
+    "replay": "回放"
+  }
 }

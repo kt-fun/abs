@@ -6,7 +6,7 @@ import {IconButton} from "@/components/ui/button";
 import {AiOutlineLoading} from "react-icons/ai";
 import {PiHeartbeat} from "react-icons/pi";
 import {CiMusicNote1, CiPlay1} from "react-icons/ci";
-import MapPreviewIFrame from "@/components/shared/MapPreviewIFrame";
+import {MapPreviewIFrame} from "@/components/shared/MapPreviewIFrame";
 import CopyIcon from "@/components/shared/CopyIcon";
 import {FaTwitch} from "react-icons/fa";
 import Link from "@/components/ui/link";
@@ -38,14 +38,14 @@ const BSOpts = (
     }>
       {/*<Tooltip content="add to playlist" asChild>*/}
       {/*  <IconButton onClick={handleAddToPlaylist}*/}
-      {/*              className="w-6 h-6 hover:bg-white text-white hover:text-red-400 rounded-full cursor-pointer"*/}
+      {/*              className="w-6 h-6 bg-transparent text-white hover:text-red-400 rounded-full cursor-pointer"*/}
       {/*              variant="ghost">*/}
       {/*    <IoAddOutline/>*/}
       {/*  </IconButton>*/}
       {/*</Tooltip>*/}
       {/*<Tooltip content="bookmark song" asChild>*/}
       {/*  <IconButton onClick={handleBookmark}*/}
-      {/*              className="w-6 h-6 hover:bg-white text-white hover:text-red-400 rounded-full cursor-pointer"*/}
+      {/*              className="w-6 h-6 bg-transparent text-white hover:text-red-400 rounded-full cursor-pointer"*/}
       {/*              variant="ghost">*/}
       {/*    <CiBookmark/>*/}
       {/*  </IconButton>*/}
@@ -54,10 +54,10 @@ const BSOpts = (
         <IconButton onClick={play}
             className={
             cn(
-            `w-6 h-6 hover:bg-white hover:text-red-400`,
+            `w-6 h-6 bg-transparent hover:text-red-400`,
             ` rounded-full cursor-pointer`,
             `${current && loading ? 'animate-spin' : ''}`,
-            ` ${current ? 'bg-white text-red-400' : ' text-white'}`,
+            ` ${current ? 'bg-white ' : ' '}`,
             itemClassName,
             )
           }
@@ -69,7 +69,7 @@ const BSOpts = (
         <IconButton
           className={
             cn(
-              "w-6 h-6 hover:bg-white text-white hover:text-red-400 rounded-full cursor-pointer",
+              "w-6 h-6 bg-transparent hover:text-red-400 rounded-full cursor-pointer",
               itemClassName
             )
           }
@@ -82,7 +82,7 @@ const BSOpts = (
         <div>
           <CopyIcon
             className={
-              cn("w-6 h-6 hover:bg-white text-white hover:text-red-400 rounded-full cursor-pointer", itemClassName)
+              cn("w-6 h-6 bg-transparent hover:text-red-400 rounded-full cursor-pointer", itemClassName)
             }
             content={`!bsr ${bsMap.id}`}>
             <FaTwitch/>
@@ -93,7 +93,7 @@ const BSOpts = (
         <div>
           <IconButton
             className={
-              cn("w-6 h-6 hover:bg-white text-white hover:text-red-400 rounded-full", itemClassName)
+              cn("w-6 h-6 bg-transparent  hover:text-red-400 rounded-full", itemClassName)
             }
             variant="ghost">
             <Link href={bsMap.versions[0].downloadURL} className="text-inherit">
@@ -106,7 +106,7 @@ const BSOpts = (
         <div>
           <IconButton
             className={
-              cn("w-6 h-6 hover:bg-white text-white hover:text-red-400 rounded-full cursor-pointer", itemClassName)
+              cn("w-6 h-6 bg-transparent hover:text-red-400 rounded-full cursor-pointer", itemClassName)
             }
             variant="ghost">
             <Link href={`beatsaver://${bsMap.id}`} className="text-inherit">
