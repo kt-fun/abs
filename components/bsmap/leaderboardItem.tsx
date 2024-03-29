@@ -15,15 +15,16 @@ const MotionTableRow= motion(TableRow)
 interface LeaderBoardItemProps {
   score : BeatLeaderScore
 }
+const getPlayerURL = (id:string)=>{
+  return `https://beatleader.xyz/u/${id}`
+}
 const LeaderBoardItem = React.forwardRef<HTMLLIElement, LeaderBoardItemProps>((
 {
   score
 }:LeaderBoardItemProps,
 ref
 ) => {
-  const getPlayerURL = useCallback((id:string)=>{
-    return `https://beatleader.xyz/u/${id}`
-  },[])
+
   return (
       <MotionTableRow
         ref={ref} key={score.id}>

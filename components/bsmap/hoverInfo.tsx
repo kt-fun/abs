@@ -8,6 +8,8 @@ import {DiffCard} from "@/components/bsmap/diffcard";
 import React from "react";
 import {HTMLMotionProps, motion} from "framer-motion";
 import {cn} from "@/lib/utils";
+import {useTranslation} from "@/hooks/useTranslation";
+import BSOpts from "@/components/bsmap/bsopts";
 
 const BSMapOverviewHiddenInfo = React.forwardRef((
 {
@@ -21,6 +23,7 @@ const BSMapOverviewHiddenInfo = React.forwardRef((
 ref
 ) => {
   const {current} = useBSMapSongPreview(bsMap)
+  const {t} = useTranslation('components.bsmap')
   const handleCopyMapId = () => {
     navigator.clipboard.writeText(bsMap.id);
   }
@@ -56,16 +59,17 @@ ref
         <p
           className="text-ellipsis overflow-hidden  line-clamp-1 sm:line-clamp-4 text-xs dark text-gray-200 mx-1"
         >
-          {bsMap.description == "" ? "No description" : bsMap.description}
+          {bsMap.description == "" ? t("description.empty") : bsMap.description}
         </p>
         <ScrollArea>
-          <div className='grid  grid-rows-1 sm:grid-rows-2 grid-flow-col'>
+          <div className='grid  grid-rows-1 sm:grid-rows-2 grid-flow-col dark'>
             {
               bsMap.versions[0]
                 .diffs
                 .map((diff) =>
                   <DiffCard
                     diff={diff}
+                    className={'dark:text-zinc-50'}
                     key={diff.characteristic + diff.difficulty + bsMap.id}
                   />
                 )
@@ -73,6 +77,9 @@ ref
           </div>
           <ScrollBar orientation="horizontal"/>
         </ScrollArea>
+        <div>
+          <BSOpts bsMap={bsMap} itemClassName={'dark'}/>
+        </div>
       </div>
     </div>
   )

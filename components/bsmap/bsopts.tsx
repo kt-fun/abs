@@ -55,9 +55,9 @@ const BSOpts = (
             className={
             cn(
             `w-6 h-6 bg-transparent hover:text-red-400`,
-            ` rounded-full cursor-pointer`,
+            ` rounded-full cursor-pointer hover:dark:bg-zinc-300/70 dark:text-zinc-50`,
             `${current && loading ? 'animate-spin' : ''}`,
-            ` ${current ? 'bg-white ' : ' '}`,
+            ` ${current && !loading ? '' : ' '}`,
             itemClassName,
             )
           }
@@ -69,7 +69,7 @@ const BSOpts = (
         <IconButton
           className={
             cn(
-              "w-6 h-6 bg-transparent hover:text-red-400 rounded-full cursor-pointer",
+              "w-6 h-6 bg-transparent hover:text-red-400 rounded-full cursor-pointer hover:dark:bg-zinc-300/70 dark:text-zinc-50",
               itemClassName
             )
           }
@@ -82,7 +82,7 @@ const BSOpts = (
         <div>
           <CopyIcon
             className={
-              cn("w-6 h-6 bg-transparent hover:text-red-400 rounded-full cursor-pointer", itemClassName)
+              cn("w-6 h-6 bg-transparent hover:text-red-400 rounded-full cursor-pointer hover:dark:bg-zinc-300/70 dark:text-zinc-50", itemClassName)
             }
             content={`!bsr ${bsMap.id}`}>
             <FaTwitch/>
@@ -93,7 +93,7 @@ const BSOpts = (
         <div>
           <IconButton
             className={
-              cn("w-6 h-6 bg-transparent  hover:text-red-400 rounded-full", itemClassName)
+              cn("w-6 h-6 bg-transparent  hover:text-red-400 rounded-full hover:dark:bg-zinc-300/70 dark:text-zinc-50", itemClassName)
             }
             variant="ghost">
             <Link href={bsMap.versions[0].downloadURL} className="text-inherit">
@@ -106,7 +106,7 @@ const BSOpts = (
         <div>
           <IconButton
             className={
-              cn("w-6 h-6 bg-transparent hover:text-red-400 rounded-full cursor-pointer", itemClassName)
+              cn("w-6 h-6 bg-transparent hover:text-red-400 rounded-full cursor-pointer hover:dark:bg-zinc-300/70 dark:text-zinc-50", itemClassName)
             }
             variant="ghost">
             <Link href={`beatsaver://${bsMap.id}`} className="text-inherit">

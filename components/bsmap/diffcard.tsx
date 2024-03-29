@@ -64,7 +64,7 @@ ref,
     //     </PopoverContent>
     //   </Popover>
     <HoverCardRoot open={diffHoverCardOpen} onOpenChange={setDiffHoverCardOpen}>
-      <HoverCardTrigger className="w-fit" onClick={handleDiffHoverCardClick}>
+      <HoverCardTrigger className={cn("w-fit")} onClick={handleDiffHoverCardClick}>
           <span ref={ref} className={
             cn(
               'relative w-fit hover:text-red-500 font-semibold m-0.5 px-1 rounded-full cursor-pointer  hover:border-red-500 border-solid border flex items-center',

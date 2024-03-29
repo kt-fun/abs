@@ -53,7 +53,7 @@ const BSMap = (
       className={
         cn(
           ' min-w-[360px] max-w-[960px] relative mx-auto border-none shadow-none',
-          isDetailMode ? `h-auto sm:h-auto p-4 ` : `h-[160px] sm:h-[200px]`,
+          isDetailMode ? `h-auto sm:h-auto` : `h-[160px] sm:h-[200px]`,
           // "bg-transparent backdrop-blur"
         )
       }
@@ -73,7 +73,7 @@ const BSMap = (
           cn(
             'aspect-square relative',
             'w-[160px] sm:w-[200px] group rounded-lg',
-            isDetailMode && 'w-full aspect-square sm:w-[300px] rounded-lg basis-full max-w-[300px]'
+            isDetailMode && 'w-full inset-0 p-0 sm:p-4 aspect-square sm:w-[300px] rounded-lg basis-full sm:max-w-[300px]'
           )
         }
       >
@@ -90,7 +90,7 @@ const BSMap = (
           loading="lazy" src={bg} className={cn(
           'object-cover',
                 'w-[160px] sm:w-[200px] group rounded-lg absolute shadow-none border-none bg-transparent',
-              isDetailMode && 'w-full aspect-square sm:w-[300px] rounded-lg basis-full max-w-[300px] relative'
+              isDetailMode && 'w-full inset-0 aspect-square sm:w-[300px] rounded-lg basis-full sm:max-w-[300px] relative'
         )}/>
         <BSMapOverviewHiddenInfo
           layout
@@ -103,7 +103,7 @@ const BSMap = (
         <motion.div
           layout
           className={
-            cn('h-full ml-2 flex flex-col', isDetailMode && 'ml-0 sm:ml-2')
+            cn('h-full ml-2 flex flex-col', isDetailMode && 'ml-0 sm:ml-2 p-4')
           }>
           <div className="overflow-ellipsis line-clamp-1 text-xl font-medium pr-2">
             <motion.div layout className="overflow-ellipsis break-all line-clamp-1 text-xl font-medium pr-2 cursor-pointer" onClick={onSelect}>
@@ -168,8 +168,11 @@ const BSMap = (
                             duration: 1
                           }
                         }}
+                        exit={{
+                          opacity: 0.5,
+                        }}
                         key={diff.characteristic + diff.difficulty + bsMap.id}
-                        className={"text-zinc-700/80 py-0.5 px-2"}
+                        className={"text-zinc-700/80 dark:text-zinc-50 py-0.5 px-2"}
                       />
                   )
                 }
@@ -228,6 +231,7 @@ const BSMap = (
         isDetailMode &&
           <motion.div
               layout
+              className={cn(isDetailMode && ' p-4')}
           >
               <motion.div>
                   <motion.div className={"flex space-x-2 items-center"}>
@@ -254,9 +258,11 @@ const BSMap = (
                             <div
                               key={diff.difficulty+diff.characteristic}
                               onClick={()=>{setDiff(diff)}}
-                              className={currentDiff == diff ? 'bg-zinc-200/70 rounded-full':''}
                             >
-                              <DiffCard diff={diff}/>
+                              <DiffCard
+                                diff={diff}
+                                className={currentDiff == diff ? ' rounded-full':' opacity-30'}
+                              />
                             </div>
                           )
                         }

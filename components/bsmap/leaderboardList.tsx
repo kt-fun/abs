@@ -14,6 +14,7 @@ import {
   PaginationLink, PaginationNext,
   PaginationPrevious
 } from "@/components/ui/pagination";
+import {cn} from "@/lib/utils";
 
 const LeaderBoardList = (
 {
@@ -29,7 +30,13 @@ const LeaderBoardList = (
   mode: string,
   onContentUpdate?: ()=>void,
 }) => {
-  const { scores,isLoadingMore,isEmpty } = usePagingBLScores(hash,mode,difficulty)
+  const { scores,isLoadingMore,isEmpty,loadMore,
+    totalPage,
+    currentPage,
+    hasPreviousPage,
+    previousPage,
+    nextPage,
+    hasNextPage } = usePagingBLScores(hash,mode,difficulty)
   const {t} = useTranslation('components.bsmap')
   useEffect(()=>{
     onContentUpdate?.()
@@ -37,7 +44,6 @@ const LeaderBoardList = (
   return (
     <motion.ul
       variants={containerVariants}
-      layout
       initial={'hidden'}
       animate={'show'}
       exit={'hidden'}
@@ -67,7 +73,6 @@ const LeaderBoardList = (
                 presenceAffectsLayout
                 key={item.id}>
                 <LeaderBoardItem
-                  layout
                   score={item}
                   custom={i}
                   variants={listItemVariants}
@@ -77,22 +82,35 @@ const LeaderBoardList = (
           }
         </TableBody>
       </Table>
-      {/*<Pagination>*/}
-      {/*  <PaginationContent>*/}
-      {/*    <PaginationItem>*/}
-      {/*      <PaginationPrevious href="#"  text={"Previous"}/>*/}
-      {/*    </PaginationItem>*/}
-      {/*    <PaginationItem>*/}
-      {/*      <PaginationLink href="#">1</PaginationLink>*/}
-      {/*    </PaginationItem>*/}
-      {/*    <PaginationItem>*/}
-      {/*      <PaginationEllipsis />*/}
-      {/*    </PaginationItem>*/}
-      {/*    <PaginationItem>*/}
-      {/*      <PaginationNext href="#" text={"Next"}/>*/}
-      {/*    </PaginationItem>*/}
-      {/*  </PaginationContent>*/}
-      {/*</Pagination>*/}
+      {
+        totalPage !=undefined && totalPage > 1 && <Pagination>
+          <PaginationContent>
+            {
+              <PaginationItem className={cn(!hasPreviousPage && 'opacity-50')}>
+                    <PaginationPrevious href="#"  text={"Previous"} onClick={()=>{hasPreviousPage && previousPage()}}/>
+              </PaginationItem>
+            }
+            <PaginationItem>
+              <PaginationLink href="#">{currentPage}</PaginationLink>
+            </PaginationItem>
+            {/*{*/}
+            {/*   totalPage - currentPage > 2 && <PaginationItem>*/}
+            {/*    <PaginationEllipsis />*/}
+            {/*  </PaginationItem>*/}
+            {/*}*/}
+            {/*{*/}
+            {/*  totalPage - currentPage > 3 && <PaginationItem>*/}
+            {/*        <PaginationLink href="#" onClick={()=>{}} className={"opacity-70"}>{totalPage}</PaginationLink>*/}
+            {/*    </PaginationItem>*/}
+            {/*}*/}
+            {
+              <PaginationItem className={cn(!hasNextPage && 'opacity-50')}>
+                  <PaginationNext href="#" text={"Next"} onClick={()=>{hasNextPage && nextPage()}}/>
+              </PaginationItem>
+            }
+          </PaginationContent>
+        </Pagination>
+      }
     </motion.ul>
   )
 }
