@@ -52,7 +52,7 @@ const BSOpts = (
       {/*    <CiBookmark/>*/}
       {/*  </IconButton>*/}
       {/*</Tooltip>*/}
-      <Tooltip content={t("tooltip-preview")} asChild>
+      <Tooltip content={t("tooltip.play-preview")} asChild>
         <IconButton onClick={play}
             className={
             cn(
