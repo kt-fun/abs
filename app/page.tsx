@@ -37,7 +37,7 @@ export default function Home({
   return (
     <>
       <div className="flex max-w-[1024px] grow flex-col pb-2">
-        <div className={"flex items-center bg-base-light dark:bg-base-dark"}>
+        <div className={"flex items-center bg-base-light dark:bg-base-dark px-4"}>
           <div>
             <h1 className={"text-3xl font-bold"}>{t('title')}</h1>
             <span className={"text-zinc-400 dark:text-zinc-300 text-xs"}>{t('sub-title')}</span>
