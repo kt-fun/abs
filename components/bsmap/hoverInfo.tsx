@@ -78,7 +78,7 @@ ref
           <ScrollBar orientation="horizontal"/>
         </ScrollArea>
         <div>
-          <BSOpts bsMap={bsMap} itemClassName={'dark'}/>
+          <BSOpts bsMap={bsMap} className={'dark'} itemClassName={'dark'}/>
         </div>
       </div>
     </div>
