@@ -12,6 +12,18 @@
     "mod": "Mods",
     "accuracy": "Accuracy",
     "pp": "PP",
-    "replay": "回放"
+    "replay": "Replay"
+  },
+  "label.tooltip": {
+    "copy-id": "click to copy map id",
+    "duration": "duration of this map",
+    "max-nps": "max nps of this map",
+    "created-at": "create time of this map"
+  },
+  "tooltip": {
+    "play-preview": "play song preview",
+    "copy-bsr": "copy twitch request",
+    "download": "download as .zip",
+    "one-click": "one click download"
   }
 }

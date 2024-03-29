@@ -13,6 +13,7 @@ import Link from "@/components/ui/link";
 import {IoCloudDownloadOutline} from "react-icons/io5";
 import {HiCursorClick} from "react-icons/hi";
 import React from "react";
+import {useTranslation} from "@/hooks/useTranslation";
 
 const BSOpts = (
   {
@@ -32,6 +33,7 @@ const BSOpts = (
   const handleAddToPlaylist = () => {
 
   }
+  const {t} = useTranslation('components.bsmap')
   return (
     <div className={
       cn("grid grid-cols-4 gap-1 sm:flex items-center mx-auto justify-center pb-0.5", className)
@@ -50,7 +52,7 @@ const BSOpts = (
       {/*    <CiBookmark/>*/}
       {/*  </IconButton>*/}
       {/*</Tooltip>*/}
-      <Tooltip content="play song preview" asChild>
+      <Tooltip content={t("tooltip-preview")} asChild>
         <IconButton onClick={play}
             className={
             cn(
@@ -78,7 +80,7 @@ const BSOpts = (
         </IconButton>
       </MapPreviewIFrame>
 
-      <Tooltip content="copy twitch request" asChild>
+      <Tooltip content={t('tooltip.copy-bsr')} asChild>
         <div>
           <CopyIcon
             className={
@@ -89,7 +91,7 @@ const BSOpts = (
           </CopyIcon>
         </div>
       </Tooltip>
-      <Tooltip content="download zip" asChild>
+      <Tooltip content={t('tooltip.download')} asChild>
         <div>
           <IconButton
             className={
@@ -102,7 +104,7 @@ const BSOpts = (
           </IconButton>
         </div>
       </Tooltip>
-      <Tooltip content="one click download" asChild>
+      <Tooltip content={t('tooltip.one-click')} asChild>
         <div>
           <IconButton
             className={

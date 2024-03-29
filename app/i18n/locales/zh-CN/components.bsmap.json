@@ -19,5 +19,17 @@
     "duration": "时长",
     "bpm": "bpm",
     "id": "id"
+  },
+  "label.tooltip": {
+    "copy-id": "点击复制谱面 id",
+    "duration": "谱面时长",
+    "max-nps": "谱面最大 NPS",
+    "created-at": "创建时间"
+  },
+  "tooltip": {
+    "play-preview": "预览谱面",
+    "copy-bsr": "复制 twitch 请求",
+    "download": "下载为 .zip",
+    "one-click": "一键下载（需本机mod）"
   }
 }

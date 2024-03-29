@@ -1,8 +1,7 @@
 import {motion} from 'framer-motion'
-import {BSMapReview} from "@/interfaces/beatmap-review";
 import {Avatar} from "@/components/ui/avatar";
 import {cn} from "@/lib/utils";
-import React, {useCallback} from "react";
+import React from "react";
 import {BeatLeaderScore} from "@/interfaces/beatmap-rank";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {BLReplayPreviewIFrame} from "@/components/shared/MapPreviewIFrame";

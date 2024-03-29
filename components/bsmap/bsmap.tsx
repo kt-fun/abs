@@ -47,7 +47,6 @@ const BSMap = (
   };
 
   const [currentDiff, setDiff]= useState(bsMap.versions[0].diffs[0])
-
   return (
     <Card
       className={
@@ -115,7 +114,7 @@ const BSMap = (
           </motion.div>
           <motion.div layout className='flex space-x-2'>
 
-            <MapMetaLabel.BSIDLabel id={bsMap.id} className="cursor-pointer" tooltip="copy map id"/>
+            <MapMetaLabel.BSIDLabel id={bsMap.id} className="cursor-pointer" tooltip={t("label.tooltip.copy-id")}/>
 
             {
               isDetailMode &&
@@ -123,15 +122,15 @@ const BSMap = (
                     bpm={bsMap.metadata.bpm}
                 />
             }
-            <MapMetaLabel.DurationLabel duration={bsMap.metadata.duration} tooltip={"duration of this map"}/>
+            <MapMetaLabel.DurationLabel duration={bsMap.metadata.duration} tooltip={t("label.tooltip.duration")}/>
             {
-              !isDetailMode && <MapDiffLabel.BSNPSLabel nps={getMaxNPS(bsMap)} tooltip='max nps of this map'/>
+              !isDetailMode && <MapDiffLabel.BSNPSLabel nps={getMaxNPS(bsMap)} tooltip={t("label.tooltip.max-nps")}/>
             }
             {
               isDetailMode &&
                 <MapMetaLabel.DateLabel
                     date={bsMap.createdAt}
-                    tooltip={"create time of this map"}
+                    tooltip={t('label.tooltip.created-at')}
                 />
             }
           </motion.div>
@@ -203,7 +202,7 @@ const BSMap = (
             </motion.div>
             <motion.div layout className='flex items-center space-x-2'>
               <div className='flex items-center space-x-2'>
-                <MapMetaLabel.ThumbUpCountLabel count={bsMap.stats.upvotes} tooltip="up vote count"/>
+                <MapMetaLabel.ThumbUpCountLabel count={bsMap.stats.upvotes}/>
                 <MapMetaLabel.ThumbDownCountLabel count={bsMap.stats.downvotes}/>
               </div>
               {

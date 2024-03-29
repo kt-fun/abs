@@ -1,3 +1,13 @@
 {
-
+  "label.tooltip": {
+  "copy-id": "click to copy map id",
+  "duration": "duration of this map",
+  "max-nps": "max nps of this map",
+  "created-at": "create time of this map"
+  },
+  "tooltip": {
+    "nps-range": "min nps to max nps",
+    "download": "download as .zip",
+    "one-click": "one click download"
+  }
 }

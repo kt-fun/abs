@@ -1,3 +1,12 @@
 {
-
+  "label.tooltip": {
+    "copy-id": "点击复制谱面 id",
+    "duration": "时长",
+    "created-at": "创建时间"
+  },
+  "tooltip": {
+    "nps-range": "NPS 范围",
+    "download": "下载为 .zip",
+    "one-click": "一键下载（需本机mod）"
+  }
 }

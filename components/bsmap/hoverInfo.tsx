@@ -48,7 +48,7 @@ ref
             </div>
         }
         <div onClick={handleCopyMapId} className='text-white flex'>
-          <MapMetaLabel.BSIDLabel id={bsMap.id} className="cursor-pointer" tooltip="copy map id"/>
+          <MapMetaLabel.BSIDLabel id={bsMap.id} className="cursor-pointer" tooltip={t('label.tooltip.copy-id')}/>
           {
             checkIfHasFeature(bsMap) &&
               <div className="flex space-x-1 items-center mx-1 text-white">

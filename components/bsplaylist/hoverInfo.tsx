@@ -10,6 +10,7 @@ import {IconButton} from "@/components/ui/button";
 import Link from "@/components/ui/link";
 import {HiCursorClick} from "react-icons/hi";
 import {cn} from "@/lib/utils";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const BSPlaylistOverviewHiddenInfo = React.forwardRef((
   {
@@ -20,6 +21,7 @@ const BSPlaylistOverviewHiddenInfo = React.forwardRef((
   } &HTMLMotionProps<'div'>,
   ref
 ) => {
+  const {t}=useTranslation("components.bsplaylist")
   const npsRange = `${bsPlaylist.stats?.minNps?.toFixed(1)} - ${bsPlaylist.stats?.maxNps?.toFixed(1)}`
   return (
     <div
@@ -40,12 +42,12 @@ const BSPlaylistOverviewHiddenInfo = React.forwardRef((
         <div>
           <div>
             <div className="flex justify-between px-2 text-white">
-              <MapMetaLabel.DurationLabel duration={bsPlaylist.stats?.totalDuration??0} tooltip="total duration"/>
-              <BSMapCountLabel count={bsPlaylist.stats?.totalMaps??0} tooltip="total map amount"/>
+              <MapMetaLabel.DurationLabel duration={bsPlaylist.stats?.totalDuration??0}/>
+              <BSMapCountLabel count={bsPlaylist.stats?.totalMaps??0}/>
             </div>
             <div className="flex justify-between px-2">
-              <MapMetaLabel.ThumbUpCountLabel count={bsPlaylist.stats?.upVotes??0} tooltip="total upvote"/>
-              <MapMetaLabel.ThumbDownCountLabel count={bsPlaylist.stats?.downVotes??0} tooltip="total down vote"/>
+              <MapMetaLabel.ThumbUpCountLabel count={bsPlaylist.stats?.upVotes??0}/>
+              <MapMetaLabel.ThumbDownCountLabel count={bsPlaylist.stats?.downVotes??0}/>
             </div>
           </div>
           <div className="flex justify-between px-2 items-center">
@@ -60,12 +62,12 @@ const BSPlaylistOverviewHiddenInfo = React.forwardRef((
           </div>
           <div className=" px-3 flex items-center space-x-1 justify-between pb-1">
             <div>
-              <BSLabel label={npsRange} tooltip="min nps to max nps">
+              <BSLabel label={npsRange} tooltip={t("label.tooltip.nps-range")}>
                 <IoSpeedometerOutline/>
               </BSLabel>
             </div>
             <div className="flex items-center space-x-1">
-              <Tooltip content="download zip" asChild>
+              <Tooltip content={t("tooltip.download")} asChild>
                 <IconButton
                   className="w-4 h-4  sm:w-6 sm:h-6 text-white hover:bg-white hover:text-red-400  p-1 rounded-full"
                   variant="ghost">
@@ -75,7 +77,7 @@ const BSPlaylistOverviewHiddenInfo = React.forwardRef((
                 </IconButton>
 
               </Tooltip>
-              <Tooltip content="one click download" asChild>
+              <Tooltip content={t("tooltip.one-click")} asChild>
                 <IconButton
                   className="w-4 h-4  sm:w-6 sm:h-6  p-1 rounded-full  text-white hover:bg-white hover:text-red-400"
                   variant="ghost">
