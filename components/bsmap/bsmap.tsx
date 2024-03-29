@@ -45,7 +45,9 @@ const BSMap = (
     setImageLoading(false);
     setTimeout(() => setPulsing(false), 600);
   };
-
+  const handleCopyMapId = () => {
+    navigator.clipboard.writeText(bsMap.id);
+  }
   const [currentDiff, setDiff]= useState(bsMap.versions[0].diffs[0])
   return (
     <Card
@@ -113,9 +115,9 @@ const BSMap = (
             <BSUserLabel user={bsMap.uploader}/>
           </motion.div>
           <motion.div layout className='flex space-x-2'>
-
-            <MapMetaLabel.BSIDLabel id={bsMap.id} className="cursor-pointer" tooltip={t("label.tooltip.copy-id")}/>
-
+            <div onClick={handleCopyMapId}>
+              <MapMetaLabel.BSIDLabel id={bsMap.id} className="cursor-pointer" tooltip={t('label.tooltip.copy-id')}/>
+            </div>
             {
               isDetailMode &&
                 <MapMetaLabel.BSBPMLabel

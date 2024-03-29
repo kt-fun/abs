@@ -24,9 +24,6 @@ ref
 ) => {
   const {current} = useBSMapSongPreview(bsMap)
   const {t} = useTranslation('components.bsmap')
-  const handleCopyMapId = () => {
-    navigator.clipboard.writeText(bsMap.id);
-  }
   return (
     <div
       ref={ref as any}
@@ -47,8 +44,7 @@ ref
                 <BSUserLabel user={bsMap.curator} className="font-light text-white" linkClassName="text-white"/>
             </div>
         }
-        <div onClick={handleCopyMapId} className='text-white flex'>
-          <MapMetaLabel.BSIDLabel id={bsMap.id} className="cursor-pointer" tooltip={t('label.tooltip.copy-id')}/>
+        <div className='text-white flex'>
           {
             checkIfHasFeature(bsMap) &&
               <div className="flex space-x-1 items-center mx-1 text-white">
