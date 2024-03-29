@@ -9,11 +9,21 @@ import {containerVariants, listItemVariants} from "@/components/shared/variants"
 import { motion } from "framer-motion";
 import PlaylistFilter from "@/components/filter/playlist-filter";
 import {useTranslation} from "@/hooks/useTranslation";
-export default function Playlist() {
+import BSPlaylistQueryParam from "@/interfaces/bsplaylist-query-param";
+
+
+type SearchParam = { [key: string]: string | string[] | undefined }
+
+
+export default function Playlist({
+ searchParams,
+}:{
+  searchParams:SearchParam
+}) {
 
     const {t} = useTranslation('page.playlist')
-
-    const { playlists,isLoadingMore,isEmpty,hasMore,loadMore,refresh,queryParam,updateQuery} = usePagingBSPlaylist();
+  const playlistQueryParam = BSPlaylistQueryParam.buildPlaylistQueryParamFromSearchParam(searchParams)
+    const { playlists,isLoadingMore,isEmpty,hasMore,loadMore,refresh,queryParam,updateQuery} = usePagingBSPlaylist(playlistQueryParam);
     const {reachedBottom,showScrollToTop, scrollToTop} = useInfinityScroll();
     useEffect(()=>{
       if (reachedBottom && !isLoadingMore && !isEmpty && hasMore){
@@ -32,9 +42,11 @@ export default function Playlist() {
               {
                 <PlaylistFilter
                   className={'sticky top-16 z-10 flex left-0 right-0 w-full bg-base-light dark:bg-base-dark p-2'}
-                  layout
                   queryParam={queryParam}
                   onUpdateQueryParam={updateQuery}
+                  onQuery={()=>{
+                    scrollToTop()
+                    refresh()}}
                   isQuerying={isLoadingMore ?? false}
                 />
               }

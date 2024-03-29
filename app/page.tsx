@@ -18,8 +18,8 @@ type SearchParam = { [key: string]: string | string[] | undefined }
 
 
 export default function Home({
-                               searchParams,
-                             }:{
+  searchParams,
+}:{
   searchParams:SearchParam
 }) {
   const {t} = useTranslation('page.main')

@@ -52,19 +52,19 @@ export default function Home({ params }: { params: { id: string } }) {
                         </div>
                       </div>
                       <div className="grid grid-cols-2 gap-1">
-                        <BSMapCountLabel count={playlist!.stats!.totalMaps}/>
-                        <MapMetaLabel.BSRatingLabel rate={playlist!.stats!.avgScore}/>
-                        <MapMetaLabel.ThumbUpCountLabel count={playlist!.stats!.upVotes}/>
-                        <MapMetaLabel.ThumbDownCountLabel count={playlist!.stats!.downVotes}/>
+                        <BSMapCountLabel count={playlist!.stats?.totalMaps}/>
+                        <MapMetaLabel.BSRatingLabel rate={playlist!.stats?.avgScore}/>
+                        <MapMetaLabel.ThumbUpCountLabel count={playlist!.stats?.upVotes}/>
+                        <MapMetaLabel.ThumbDownCountLabel count={playlist!.stats?.downVotes}/>
                       </div>
                       <div className="flex justify-between px-2 items-center">
-                        <Progress score={playlist!.stats.avgScore * 100} />
+                        <Progress score={playlist?.stats?.avgScore * 100} />
                         <p className="pl-1 font-medium text-xs">{(playlist!.stats.avgScore * 100).toFixed(1)}%</p>
                       </div>
                       <div className="py-1 flex items-center space-x-1 justify-between">
                         <div>
                           <BSLabel
-                            label={`${playlist?.stats!.minNps.toFixed(1)} - ${playlist!.stats.maxNps.toFixed(1)}`}
+                            label={`${playlist?.stats?.minNps?.toFixed(1)} - ${playlist?.stats?.maxNps.toFixed(1)}`}
                             tooltip="min nps to max nps">
                             <IoSpeedometerOutline/>
                           </BSLabel>

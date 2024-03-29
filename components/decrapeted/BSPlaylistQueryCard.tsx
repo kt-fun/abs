@@ -1,6 +1,5 @@
 import { Card } from "@/components/ui/card";
 import {Switch } from "@/components/ui/switch";
-import { PlaylistQueryParam } from "@/hooks/api/usePagingBSPlaylist";
 import SearchBar from "@/components/filter/base/SearchBar";
 import NPSRangePicker from "@/components/filter/base/NPSRangePicker";
 import DateRangePicker from "@/components/decrapeted/DateRangePicker";
@@ -8,6 +7,7 @@ import { useMemo, useState } from "react";
 import SortMenu from "@/components/decrapeted/SortMenu";
 import dayjs from "dayjs";
 import {cn} from "@/lib/utils";
+import {PlaylistQueryParam} from "@/interfaces/bsplaylist-query-param";
 const playlistSortOptions = [
     "Relevance",
     "Latest",
@@ -39,7 +39,7 @@ export default function BSPlaylistQueryCard(
         setSortMenuCurrent(current);
         updateQuery({
             ...queryParam,
-            sortKey:current
+            sortOrder:current
         })
     }
     const npsRange = useMemo(()=>{

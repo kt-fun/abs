@@ -17,7 +17,6 @@ export default function BSPlaylist(
 
   const [imageLoading, setImageLoading] = useState(true);
   const [pulsing, setPulsing] = useState(true);
-
   const imageLoaded = () => {
     setImageLoading(false);
     setTimeout(() => setPulsing(false), 600);
@@ -67,10 +66,10 @@ export default function BSPlaylist(
         <div className="flex items-center justify-between pb-2 px-2">
           <MapMetaLabel.DateLabel date={bsPlaylist.updatedAt}/>
           <div className="flex items-center space-x-1 text-center">
-            <BSMapCountLabel count={bsPlaylist.stats.totalMaps}/>
+            <BSMapCountLabel count={bsPlaylist.stats?.totalMaps}/>
             <div className="flex items-center">
               <CiStar/>
-              <div className="pl-1 font-medium text-xs">{(bsPlaylist.stats.avgScore * 100).toFixed(1)}%</div>
+              <div className="pl-1 font-medium text-xs">{(bsPlaylist.stats?.avgScore * 100).toFixed(1)}%</div>
             </div>
           </div>
         </div>

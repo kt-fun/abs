@@ -2,9 +2,9 @@ import { motion} from "framer-motion"
 import React from 'react'
 import {cn} from "@/lib/utils";
 import SearchBar from "@/components/filter/base/SearchBar";
-import SortOrder from "@/components/filter/map-filter/order";
+import SortOrder from "@/components/filter/base/order";
 import FeatureFilter from "@/components/filter/map-filter/feature-filter";
-import DateFilter from "@/components/filter/map-filter/date-filter";
+import DateFilter from "@/components/filter/base/date-filter";
 import RangeFilter from "@/components/filter/map-filter/range-filter";
 import {MapQueryParam} from "@/interfaces/bsmap-query-param";
 import {useLocaleFormat} from "@/hooks/useFormat";

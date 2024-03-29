@@ -20,7 +20,7 @@ const BSPlaylistOverviewHiddenInfo = React.forwardRef((
   } &HTMLMotionProps<'div'>,
   ref
 ) => {
-  const npsRange = `${bsPlaylist.stats.minNps.toFixed(1)} - ${bsPlaylist.stats.maxNps.toFixed(1)}`
+  const npsRange = `${bsPlaylist.stats?.minNps?.toFixed(1)} - ${bsPlaylist.stats?.maxNps?.toFixed(1)}`
   return (
     <div
       ref={ref as any}
@@ -40,23 +40,23 @@ const BSPlaylistOverviewHiddenInfo = React.forwardRef((
         <div>
           <div>
             <div className="flex justify-between px-2 text-white">
-              <MapMetaLabel.DurationLabel duration={bsPlaylist.stats.totalDuration} tooltip="total duration"/>
-              <BSMapCountLabel count={bsPlaylist.stats.totalMaps} tooltip="total map amount"/>
+              <MapMetaLabel.DurationLabel duration={bsPlaylist.stats?.totalDuration??0} tooltip="total duration"/>
+              <BSMapCountLabel count={bsPlaylist.stats?.totalMaps??0} tooltip="total map amount"/>
             </div>
             <div className="flex justify-between px-2">
-              <MapMetaLabel.ThumbUpCountLabel count={bsPlaylist.stats.upVotes} tooltip="total upvote"/>
-              <MapMetaLabel.ThumbDownCountLabel count={bsPlaylist.stats.downVotes} tooltip="total down vote"/>
+              <MapMetaLabel.ThumbUpCountLabel count={bsPlaylist.stats?.upVotes??0} tooltip="total upvote"/>
+              <MapMetaLabel.ThumbDownCountLabel count={bsPlaylist.stats?.downVotes??0} tooltip="total down vote"/>
             </div>
           </div>
           <div className="flex justify-between px-2 items-center">
             <Progress.Root className="relative overflow-hidden rounded-full w-full h-2 mx-2 my-2 bg-gray-100"
-                           value={bsPlaylist.stats.avgScore * 100}>
+                           value={bsPlaylist.stats?.avgScore * 100??0}>
               <Progress.Indicator
                 className=" h-2 rounded-full bg-gradient-to-r from-red-500 to-blue-500"
-                style={{transform: `translateX(-${100 - bsPlaylist.stats.avgScore * 100}%)`}}
+                style={{transform: `translateX(-${100 - bsPlaylist.stats?.avgScore * 100??0}%)`}}
               />
             </Progress.Root>
-            <p className="pl-1 font-semibold text-xs">{(bsPlaylist.stats.avgScore * 100).toFixed(1)}%</p>
+            <p className="pl-1 font-semibold text-xs">{(bsPlaylist.stats?.avgScore * 100??0).toFixed(1)}%</p>
           </div>
           <div className=" px-3 flex items-center space-x-1 justify-between pb-1">
             <div>

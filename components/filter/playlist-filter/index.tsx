@@ -1,19 +1,20 @@
-import {AnimatePresence, motion, useAnimationControls, Variants} from "framer-motion"
+import {AnimatePresence, motion} from "framer-motion"
 import React, {useEffect, useMemo, useState} from 'react'
 import {cn} from "@/lib/utils";
 import SearchBar from "@/components/filter/base/SearchBar";
 import {useTranslation} from "@/hooks/useTranslation";
-import SortOrder from "@/components/filter/map-filter/order";
-import DateFilter from "@/components/filter/map-filter/date-filter";
-import {PlaylistQueryParam} from "@/hooks/api/usePagingBSPlaylist";
+import SortOrder from "@/components/filter/base/order";
+import DateFilter from "@/components/filter/base/date-filter";
 import {ToggleGroup, ToggleGroupItem} from "@/components/ui/toggle-group";
 import {Award, BadgeCheck} from "lucide-react";
 import NPSRangePicker from "@/components/filter/base/NPSRangePicker";
+import {PlaylistQueryParam} from "@/interfaces/bsplaylist-query-param";
 
 interface PlaylistFilterProps extends React.HTMLAttributes<HTMLDivElement> {
   queryParam: PlaylistQueryParam,
   onUpdateQueryParam: (searchParam:PlaylistQueryParam) => void,
-  isQuerying: boolean
+  isQuerying: boolean,
+  onQuery: ()=>void
 }
 const PlaylistFilter = React.forwardRef<HTMLDivElement, PlaylistFilterProps>(
   (
@@ -21,6 +22,7 @@ const PlaylistFilter = React.forwardRef<HTMLDivElement, PlaylistFilterProps>(
       queryParam,
       onUpdateQueryParam,
       isQuerying,
+      onQuery,
       ...rest
     } : PlaylistFilterProps,
     ref,
@@ -76,10 +78,10 @@ const PlaylistFilter = React.forwardRef<HTMLDivElement, PlaylistFilterProps>(
           }
         />
         <SortOrder
-          order={queryParam.sortKey}
+          order={queryParam.sortOrder}
           className={"row-start-2 col-span-3 justify-self-start"}
           onUpdateOrder={(order)=>{
-            onUpdateQueryParam({...queryParam,sortKey:order})
+            onUpdateQueryParam({...queryParam,sortOrder:order})
           }}
         />
         <div className={"row-start-2 col-start-4 col-span-5 justify-self-center text-xs"}>
@@ -95,9 +97,7 @@ const PlaylistFilter = React.forwardRef<HTMLDivElement, PlaylistFilterProps>(
               queryKey: k
             })
           }}
-          onQuery={() => {
-
-          }}
+          onQuery={onQuery}
         />
       </div>
     )

@@ -28,14 +28,20 @@ export default function SearchBar(
         <>
           <div className={cn("flex",className)}>
             <div className="relative w-full flex items-center space-x-1 justify-between rounded-lg">
-              <input
-                type="search"
-                id="search"
-                value={queryKey}
-                onChange={handleQueryKeyChange}
-                className=" w-full block  px-1 text-gray-900 h-6 border border-gray-300 text-xs focus:outline-none dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500 rounded-full"
-                placeholder={t('search.placeholder')}
-                required/>
+              <form
+                onSubmit={handleQuery}
+              >
+                <input
+                  type="search"
+                  id="search"
+                  value={queryKey}
+                  onChange={handleQueryKeyChange}
+                  className=" w-full block  px-1 text-gray-900 h-6 border border-gray-300 text-xs focus:outline-none dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500 rounded-full"
+                  placeholder={t('search.placeholder')}
+                />
+                <input type="submit" hidden/>
+              </form>
+
               <IconButton onClick={handleQuery} variant={"ghost"}>
                 <Search className={'h-4 w-4'}/>
               </IconButton>
