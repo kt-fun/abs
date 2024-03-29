@@ -17,6 +17,18 @@ import {HiCursorClick} from "react-icons/hi";
 import {escapeHtml} from "@/lib/ContentEscape";
 import {containerVariants, listItemVariants} from "@/components/shared/variants";
 import {Progress} from "@/components/shared/Progress";
+
+const Label = ({
+ label, content
+}: {
+  label: string,
+  content: string
+}) => {
+  return (<div className="font-medium text-xs flex flex-col items-center cursor-default">
+    <span className={"text-xs opacity-50"}>{label}</span>
+    <span>{content}</span>
+  </div>)
+}
 export default function Home({ params }: { params: { id: string } }) {
     const { playlist,maps,isLoadingMore,error,isEmpty,hasMore,loadMore} = usePagingBSPlaylistDetail(params.id);
     const router = useRouter()
@@ -27,79 +39,73 @@ export default function Home({ params }: { params: { id: string } }) {
 
       return (
         <div className="max-w-[1024px]">
-          <div  className="block mb-2">
+          <div  className="flex flex-col mb-2">
             {
               !isLoadingMore && !isEmpty && playlist && (
                 <>
-                  <div className="flex justify-start">
-                    <div
-                      className="h-[164px] w-[164px] sm:h-[200px] sm:w-[200px] aspect-square rounded-lg"
-                      style={{
-                        backgroundImage: `url('${playlist?.playlistImage512}')`,
-                        backgroundSize: 'cover',
-                      }}
+                  <div className={"flex relative sm:flex-row flex-col"}>
+                    <img
+                      className="w-full inset-0 sm:h-[200px] sm:w-[200px] aspect-square rounded-lg"
+                      src={playlist?.playlistImage512}
+                      loading={"lazy"}
                     />
-                    <div className="pl-2 w-full max-w-64">
-                      <div className="flex justify-between items-center">
-                  <span className="font-semibold text-lg line-clamp-3 text-ellipsis">
-                      {playlist?.name}
-                  </span>
-                      </div>
-                      <div className="">
-                        <div className="font-medium text-xs">
-                          <BSUserLabel user={playlist!.owner}/>
-                          <DateLabel date={playlist!.updatedAt}/>
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-2 gap-1">
-                        <BSMapCountLabel count={playlist!.stats?.totalMaps}/>
-                        <MapMetaLabel.BSRatingLabel rate={playlist!.stats?.avgScore}/>
-                        <MapMetaLabel.ThumbUpCountLabel count={playlist!.stats?.upVotes}/>
-                        <MapMetaLabel.ThumbDownCountLabel count={playlist!.stats?.downVotes}/>
-                      </div>
-                      <div className="flex justify-between px-2 items-center">
-                        <Progress score={playlist?.stats?.avgScore * 100} />
-                        <p className="pl-1 font-medium text-xs">{(playlist!.stats.avgScore * 100).toFixed(1)}%</p>
-                      </div>
-                      <div className="py-1 flex items-center space-x-1 justify-between">
-                        <div>
-                          <BSLabel
-                            label={`${playlist?.stats?.minNps?.toFixed(1)} - ${playlist?.stats?.maxNps.toFixed(1)}`}
-                            tooltip="min nps to max nps">
-                            <IoSpeedometerOutline/>
-                          </BSLabel>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                          <Tooltip content="download as .bplist" asChild>
-                            <Link href={playlist!.downloadURL}
-                                  className="hover:bg-white hover:text-red-400 p-1 rounded-full w-6 h-6 text-inherit">
-                              <IoCloudDownloadOutline/>
-                            </Link>
-                          </Tooltip>
-                          <Tooltip content="one click download" asChild>
-                            <Link
-                              href={`bsplaylist://playlist/${playlist!.downloadURL}/beatsaver-${playlist!.playlistId}.bplist`}
-                              className="hover:bg-white hover:text-red-400 p-1 rounded-full w-6 h-6 text-inherit">
-                              <HiCursorClick/>
-                            </Link>
-                          </Tooltip>
-                        </div>
-
+                    <div>
+                      <div
+                        className={"px-2 grid w-full sm:w-auto grid-cols-2 grid-rows-2 sm:grid-cols-2 sm:grid-rows-3 items-center justify-center content-center"}>
+                        <span className="font-semibold text-lg order-1 line-clamp-2 text-ellipsis sm:col-span-2">
+                            {playlist?.name}
+                        </span>
+                        <BSUserLabel user={playlist!.owner}
+                                     className={"justify-self-end sm:justify-self-start sm:col-span-1 order-2"}/>
+                        <BSLabel
+                          className={"justify-self-start flex sm:col-span-1 sm:order-4 order-3 px-2"}
+                          label={`${playlist?.stats?.minNps?.toFixed(1)} - ${playlist?.stats?.maxNps.toFixed(1)}`}
+                          tooltip="min nps to max nps">
+                          <IoSpeedometerOutline/>
+                        </BSLabel>
+                        <DateLabel date={playlist!.updatedAt} className={"justify-self-end sm:justify-self-start order-4 sm:order-3"}/>
                       </div>
                       <p
-                        className="text-ellipsis overflow-hidden text-xs hidden sm:block"
+                        className="text-ellipsis overflow-hidden text-xs p-2 hidden sm:block sm:col-span-2"
                         dangerouslySetInnerHTML={{__html: playlist?.description == "" ? "No description" : escapeHtml(playlist?.description ?? "")}}
                       />
                     </div>
+
                   </div>
                   <p
-                    className="text-ellipsis overflow-hidden text-xs block sm:hidden"
+                    className="text-ellipsis overflow-hidden text-xs p-2 block sm:hidden"
                     dangerouslySetInnerHTML={{__html: playlist?.description == "" ? "No description" : escapeHtml(playlist?.description ?? "")}}
                   />
+
+                  <div className="py-1 px-2 flex items-center w-full justify-between flex-col sm:flex-row">
+
+                      <div className="grid grid-cols-4 gap-1 order-2 sm:order-1">
+                        <Label label={"total count"} content={playlist!.stats?.totalMaps?.toString()}/>
+                        <Label label={"avg score"} content={(playlist!.stats?.avgScore * 100).toFixed(1) + "%"}/>
+                        <Label label={"total like"} content={playlist!.stats?.upVotes?.toString()}/>
+                        <Label label={"total dislike"} content={playlist!.stats?.downVotes?.toString()}/>
+                      </div>
+                      <div className="flex items-center space-x-1 order-1 sm:order-2 self-end sm:self-auto">
+                        <Tooltip content="download as .bplist" asChild>
+                          <Link href={playlist!.downloadURL}
+                                className="hover:bg-white hover:text-red-400 p-1 rounded-full w-6 h-6 text-inherit">
+                            <IoCloudDownloadOutline/>
+                          </Link>
+                        </Tooltip>
+                        <Tooltip content="one click download" asChild>
+                          <Link
+                            href={`bsplaylist://playlist/${playlist!.downloadURL}/beatsaver-${playlist!.playlistId}.bplist`}
+                            className="hover:bg-white hover:text-red-400 p-1 rounded-full w-6 h-6 text-inherit">
+                            <HiCursorClick/>
+                          </Link>
+                        </Tooltip>
+                      </div>
+
+                  </div>
+
                 </>
               )
             }
-
           </div>
           <div className="flex grow  space-x-2">
             <motion.ul
