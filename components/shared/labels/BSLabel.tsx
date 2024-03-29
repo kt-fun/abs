@@ -31,7 +31,6 @@ const Label = React.forwardRef<HTMLSpanElement, BaseProps>(({
     <motion.span
       {...rest}
       ref={forwardedRef}
-      layout
       initial={{
         opacity: 0,
       }}
