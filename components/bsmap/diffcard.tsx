@@ -75,7 +75,7 @@ ref,
             <span className='ml-[2px] text-xs'>{diffTrans(diff.difficulty.toLowerCase())}</span>
           </span>
       </HoverCardTrigger>
-      <HoverCardContent align="center" className="shadow-md p-2 border bg-zinc-100/70 backdrop-blur dark:bg-zinc-700/70">
+      <HoverCardContent align="center" className="shadow-md p-2 border-none bg-zinc-100/70 backdrop-blur dark:bg-zinc-700/70">
         <div className='cursor-default'>{characterTrans(diff.characteristic.toLowerCase())}</div>
         <div className='grid grid-cols-3 gap-1'>
           <MapDiffLabel.BSNPSLabel nps={diff.nps}/>
