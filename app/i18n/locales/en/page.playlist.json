@@ -1,4 +1,18 @@
 {
   "title": "Playlists",
-  "sub-title": "find playlists that you like"
+  "sub-title": "find playlists that you like",
+  "detail": {
+    "label": {
+      "like": "like",
+      "dislike": "dislike",
+      "total-map": "total map",
+      "avg-score": "avg score"
+    },
+    "tooltip": {
+      "nps-range": "min nps to max nps",
+      "one-click": "one click download with mods",
+      "download": "download as .bplist"
+    },
+    "empty-description": "No description"
+  }
 }

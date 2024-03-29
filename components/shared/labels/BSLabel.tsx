@@ -5,6 +5,7 @@ import {CiMap} from "react-icons/ci";
 import {GiRank3} from "react-icons/gi";
 import {HTMLMotionProps, motion} from 'framer-motion'
 import {useLocaleFormat} from "@/hooks/useFormat";
+import {useTranslation} from "@/hooks/useTranslation";
 interface BSLabelProps {
     label:string,
   className?:string
@@ -80,22 +81,26 @@ export default function BSLabel(
 
 
 export const BSMapCountLabel =  (
-  {count,className, tooltip = "map count"}:{count:number} & LabelProps
+  {count,className, tooltip}:{count:number} & LabelProps
 )=> {
+  const {t} = useTranslation('components.label')
+  const tt = tooltip ?? t('map-amount')
   const {formatNumber} = useLocaleFormat()
   return (
-    <BSLabel label={formatNumber(count)} className={className} tooltip={tooltip}>
+    <BSLabel label={formatNumber(count)} className={className} tooltip={tt}>
       <CiMap/>
     </BSLabel>
   )
 }
 
 export const BSRankMapCountLabel =  (
-  {count,className, tooltip = "rank map count"}:{count:number} & LabelProps
+  {count,className, tooltip}:{count:number} & LabelProps
 )=> {
+  const {t} = useTranslation('components.label')
+  const tt = tooltip ?? t('rank-map-amount')
   const {formatNumber} = useLocaleFormat()
   return (
-    <BSLabel label={formatNumber(count)} className={className} tooltip={tooltip}>
+    <BSLabel label={formatNumber(count)} className={className} tooltip={tt}>
       <GiRank3/>
     </BSLabel>
   )

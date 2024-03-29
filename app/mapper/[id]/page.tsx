@@ -13,6 +13,7 @@ import PlaylistsTab from "@/app/mapper/[id]/playlist-tab";
 import MapList from "@/app/mapper/[id]/map-list";
 import { motion } from "framer-motion";
 import {useLocaleFormat} from "@/hooks/useFormat";
+import {useTranslation} from "@/hooks/useTranslation";
 
 
 const getUserPlaylist = (uid: number, oneClick: boolean) => {
@@ -35,6 +36,7 @@ const Label = ({
 
 export default function MapperDetailPage({params}: { params: { id: number } }) {
   const {formatNumber} = useLocaleFormat()
+  const {t} = useTranslation('page.mapper')
   const {bsUserWithStats, isLoading, error} = useBSUser(params.id)
   const router = useRouter()
   if (error) {
@@ -44,11 +46,11 @@ export default function MapperDetailPage({params}: { params: { id: number } }) {
   const [value,setValue] = useState("Published")
   const TabValues = [{
     value: 'Published',
-    label: 'Published',
+    label: t('detail.tab.published'),
     content: <MapList userId={params.id.toString()} fetchingType="Curated"/>
   },{
     value: 'Playlist',
-    label: 'Playlist',
+    label: t('detail.tab.playlist'),
     content: <PlaylistsTab userId={params.id.toString()}/>
   // },{
   //   value: 'WIP',
@@ -56,11 +58,11 @@ export default function MapperDetailPage({params}: { params: { id: number } }) {
   //   content: <MapList userId={params.id.toString()} fetchingType="WIP"/>
   },{
     value: 'Curated',
-    label: 'Curated',
+    label: t('detail.tab.curated'),
     content: <MapList userId={params.id.toString()} fetchingType="Curated"/>
   },{
     value: 'Reviews',
-    label: 'Reviews',
+    label: t('detail.tab.reviews'),
     content: <ReviewList user={bsUserWithStats}/>
   }]
   const handleFollow = ()=> {
@@ -94,7 +96,7 @@ export default function MapperDetailPage({params}: { params: { id: number } }) {
                 <div className={'border border-zinc-200 dark:border-zinc-800 rounded-lg items-center text-xs bg-zinc-100/30 backdrop-blur flex '}>
                   <a  href={getUserPlaylist(bsUserWithStats.id, false)} className={'flex space-x-1 px-2 py-1'}>
                   <Download className={'h-4 w-4'}/>
-                    <span>{"playlist"} </span>
+                    <span>{t("detail.playlist")} </span>
                   </a>
                   <a href={getUserPlaylist(bsUserWithStats.id,true)} className={'bg-zinc-200/30 h-full py-1 rounded-r-lg items-center text-center align-middle inline-flex'}>
                     <span className={'m-auto mx-1 self-center align-middle text-center'}><DownloadCloud className={'h-4 w-4 '}/></span>
@@ -103,7 +105,7 @@ export default function MapperDetailPage({params}: { params: { id: number } }) {
                 <button
                   onClick={handleFollow}
                   className={'border border-zinc-200 dark:border-zinc-800 rounded-lg items-center text-xs bg-zinc-100/30 backdrop-blur flex px-2 py-1'}>
-                  {bsUserWithStats.followData?.following ? "unfollow" : "follow"}
+                  {bsUserWithStats.followData?.following ? t("detail.unfollow") : t("detail.follow")}
                 </button>
               </div>
             </div>
@@ -117,19 +119,19 @@ export default function MapperDetailPage({params}: { params: { id: number } }) {
               <div className={'flex justify-between items-center flex-col md:flex-row'}>
                 <div className={'flex order-0 md:order-1 w-full justify-between md:justify-end shrink items-center'}>
                   <div className="grid xl:grid grid-rows-1 grid-cols-4 gap-1 ">
-                    <Label label={"total map"} content={formatNumber(bsUserWithStats.stats!.totalMaps)}/>
-                    <Label label={"like"} content={formatNumber(bsUserWithStats.stats!.totalUpvotes)}/>
-                    <Label label={"dislike"} content={formatNumber(bsUserWithStats.stats!.totalDownvotes)}/>
-                    <Label label={"avg rate"} content={`${formatNumber(bsUserWithStats.stats!.avgScore)}%`}/>
+                    <Label label={t("detail.total-map")} content={formatNumber(bsUserWithStats.stats!.totalMaps)}/>
+                    <Label label={t("detail.like")} content={formatNumber(bsUserWithStats.stats!.totalUpvotes)}/>
+                    <Label label={t("detail.dislike")} content={formatNumber(bsUserWithStats.stats!.totalDownvotes)}/>
+                    <Label label={t("detail.avg-score")} content={`${formatNumber(bsUserWithStats.stats!.avgScore)}%`}/>
                   </div>
                   <div className="flex space-x-2 pl-2">
                     <div className="font-medium text-xs flex flex-col items-center cursor-pointer">
-                      <span className={"text-xs opacity-50"}>followers</span>
+                      <span className={"text-xs opacity-50"}>{t("detail.follower")}</span>
                       <span>{bsUserWithStats.followData!.followers}</span>
                     </div>
                     {
                       bsUserWithStats.followData!.follows && <div className="font-medium text-xsflex flex-col">
-                            <span className={"text-xs opacity-50"}>following</span>
+                            <span className={"text-xs opacity-50"}>{t("detail.following")}</span>
                             <span>{bsUserWithStats.followData!.follows}</span>
                         </div>
                     }

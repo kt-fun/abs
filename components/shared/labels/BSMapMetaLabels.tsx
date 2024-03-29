@@ -4,6 +4,7 @@ import {AiOutlineDislike, AiOutlineLike} from "react-icons/ai";
 import {PiHeartbeat} from "react-icons/pi";
 import {IoKeyOutline} from "react-icons/io5";
 import {useLocaleFormat} from "@/hooks/useFormat";
+import {useTranslation} from "@/hooks/useTranslation";
 
 export const DateLabel = (
   {date,className,tooltip}:{date:string}& LabelProps
@@ -32,11 +33,13 @@ export const DurationLabel = (
 }
 
 export const BSRatingLabel = (
-  {rate,className,tooltip="rate"}:{rate:number}& LabelProps
+  {rate,className,tooltip}:{rate:number}& LabelProps
 ) => {
+  const {t} = useTranslation('components.label')
+  const tt =tooltip?? t('tooltip.score')
   return (
     <>
-      <BSLabel label={`${(100*rate).toFixed(1)} %`} className={className} tooltip={tooltip}>
+      <BSLabel label={`${(100*rate).toFixed(1)} %`} className={className} tooltip={tt}>
         <CiStar/>
       </BSLabel>
     </>
@@ -44,12 +47,14 @@ export const BSRatingLabel = (
 }
 
 export const ThumbUpCountLabel = (
-  {count,className,tooltip= "thumb up count"}:{count:number}& LabelProps
+  {count,className,tooltip}:{count:number}& LabelProps
 ) => {
+  const {t} = useTranslation('components.label')
+  const tt =tooltip?? t('tooltip.like')
   const {formatNumber} = useLocaleFormat()
   return (
     <>
-      <BSLabel label={formatNumber(count)} className={className} tooltip={tooltip}>
+      <BSLabel label={formatNumber(count)} className={className} tooltip={tt}>
         <AiOutlineLike/>
       </BSLabel>
     </>
@@ -57,12 +62,14 @@ export const ThumbUpCountLabel = (
 }
 
 export const ThumbDownCountLabel = (
-  {count,className,tooltip = "thumb up count"}:{count:number}& LabelProps
+  {count,className,tooltip}:{count:number}& LabelProps
 ) => {
+  const {t} = useTranslation('components.label')
+  const tt =tooltip?? t('tooltip.dislike')
   const {formatNumber} = useLocaleFormat()
   return (
     <>
-      <BSLabel label={formatNumber(count)} className={className} tooltip={tooltip}>
+      <BSLabel label={formatNumber(count)} className={className} tooltip={tt}>
         <AiOutlineDislike/>
       </BSLabel>
     </>
@@ -71,11 +78,13 @@ export const ThumbDownCountLabel = (
 
 
 export const BSBPMLabel =(
-  {bpm,className, tooltip = "beats per minute"}:{bpm:number} & LabelProps
+  {bpm,className, tooltip}:{bpm:number} & LabelProps
 )=>{
+  const {t} = useTranslation('components.label')
+  const tt =tooltip?? t('tooltip.bpm')
   return (
     <>
-      <BSLabel label={bpm.toFixed(0)}  className={className} tooltip={tooltip}>
+      <BSLabel label={bpm.toFixed(0)}  className={className} tooltip={tt}>
         <PiHeartbeat/>
       </BSLabel>
     </>
@@ -85,13 +94,15 @@ export const BSBPMLabel =(
 export const BSIDLabel = ({
   id,
   className,
-  tooltip = "beatmap id"
+  tooltip
 }:{
   id:string
 } & LabelProps) => {
+  const {t} = useTranslation('components.label')
+  const tt =tooltip?? t('tooltip.id')
   return (
     <>
-      <BSLabel label={id}  className={className} tooltip={tooltip}>
+      <BSLabel label={id}  className={className} tooltip={tt}>
         <IoKeyOutline/>
       </BSLabel>
     </>

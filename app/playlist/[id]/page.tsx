@@ -17,6 +17,7 @@ import {HiCursorClick} from "react-icons/hi";
 import {escapeHtml} from "@/lib/ContentEscape";
 import {containerVariants, listItemVariants} from "@/components/shared/variants";
 import {Progress} from "@/components/shared/Progress";
+import {useTranslation} from "@/hooks/useTranslation";
 
 const Label = ({
  label, content
@@ -36,6 +37,7 @@ export default function Home({ params }: { params: { id: string } }) {
       console.log(error)
       router.push("/")
     }
+    const {t} = useTranslation('page.playlist')
 
       return (
         <div className="max-w-[1024px]">
@@ -55,44 +57,45 @@ export default function Home({ params }: { params: { id: string } }) {
                         <span className="font-semibold text-lg order-1 line-clamp-2 text-ellipsis sm:col-span-2">
                             {playlist?.name}
                         </span>
-                        <BSUserLabel user={playlist!.owner}
-                                     className={"justify-self-end sm:justify-self-start sm:col-span-1 order-2"}/>
+                        <BSUserLabel
+                          user={playlist!.owner}
+                          className={"justify-self-end sm:justify-self-start sm:col-span-1 order-2"}/>
                         <BSLabel
                           className={"justify-self-start flex sm:col-span-1 sm:order-4 order-3 px-2"}
                           label={`${playlist?.stats?.minNps?.toFixed(1)} - ${playlist?.stats?.maxNps.toFixed(1)}`}
-                          tooltip="min nps to max nps">
+                          tooltip={t("detail.tooltip.nps-range")}>
                           <IoSpeedometerOutline/>
                         </BSLabel>
-                        <DateLabel date={playlist!.updatedAt} className={"justify-self-end sm:justify-self-start order-4 sm:order-3"}/>
+                        <DateLabel date={playlist!.updatedAt} className={"justify-self-end px-2 sm:justify-self-start order-4 sm:order-3"}/>
                       </div>
                       <p
                         className="text-ellipsis overflow-hidden text-xs p-2 hidden sm:block sm:col-span-2"
-                        dangerouslySetInnerHTML={{__html: playlist?.description == "" ? "No description" : escapeHtml(playlist?.description ?? "")}}
+                        dangerouslySetInnerHTML={{__html: playlist?.description == "" ? t("detail.empty-description") : escapeHtml(playlist?.description ?? "")}}
                       />
                     </div>
 
                   </div>
                   <p
                     className="text-ellipsis overflow-hidden text-xs p-2 block sm:hidden"
-                    dangerouslySetInnerHTML={{__html: playlist?.description == "" ? "No description" : escapeHtml(playlist?.description ?? "")}}
+                    dangerouslySetInnerHTML={{__html: playlist?.description == "" ? t("detail.empty-description") : escapeHtml(playlist?.description ?? "")}}
                   />
 
                   <div className="py-1 px-2 flex items-center w-full justify-between flex-col sm:flex-row">
 
                       <div className="grid grid-cols-4 gap-1 order-2 sm:order-1">
-                        <Label label={"total count"} content={playlist!.stats?.totalMaps?.toString()}/>
-                        <Label label={"avg score"} content={(playlist!.stats?.avgScore * 100).toFixed(1) + "%"}/>
-                        <Label label={"total like"} content={playlist!.stats?.upVotes?.toString()}/>
-                        <Label label={"total dislike"} content={playlist!.stats?.downVotes?.toString()}/>
+                        <Label label={t("detail.label.total-map")} content={playlist!.stats?.totalMaps?.toString()}/>
+                        <Label label={t("detail.label.avg-score")} content={(playlist!.stats?.avgScore * 100).toFixed(1) + "%"}/>
+                        <Label label={t("detail.label.like")} content={playlist!.stats?.upVotes?.toString()}/>
+                        <Label label={t("detail.label.dislike")} content={playlist!.stats?.downVotes?.toString()}/>
                       </div>
                       <div className="flex items-center space-x-1 order-1 sm:order-2 self-end sm:self-auto">
-                        <Tooltip content="download as .bplist" asChild>
+                        <Tooltip content={t('detail.tooltip.download')} asChild>
                           <Link href={playlist!.downloadURL}
                                 className="hover:bg-white hover:text-red-400 p-1 rounded-full w-6 h-6 text-inherit">
                             <IoCloudDownloadOutline/>
                           </Link>
                         </Tooltip>
-                        <Tooltip content="one click download" asChild>
+                        <Tooltip content={t('detail.tooltip.one-click')} asChild>
                           <Link
                             href={`bsplaylist://playlist/${playlist!.downloadURL}/beatsaver-${playlist!.playlistId}.bplist`}
                             className="hover:bg-white hover:text-red-400 p-1 rounded-full w-6 h-6 text-inherit">

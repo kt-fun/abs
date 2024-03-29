@@ -1,0 +1,19 @@
+{
+  "tooltip": {
+    "parity-error": "map parity error amount",
+    "parity-warning": "map parity warning amount",
+    "map-amount": "map amount",
+    "rank-map-amount": "rank map amount",
+    "bomb-amount": "bomb amount",
+    "note-amount": "note amount",
+    "obstacle-amount": "obstacle amount",
+    "light-event-amount": "light event amount",
+    "njs": "note jump speed",
+    "nps": "note per seconds",
+    "score": "score",
+    "like": "like amount",
+    "dislike": "dislike amount",
+    "bpm": "beats per minute",
+    "id": "id"
+  }
+}

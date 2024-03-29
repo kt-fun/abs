@@ -1,0 +1,19 @@
+{
+  "tooltip": {
+    "parity-error": "谱面奇偶校验错误数",
+    "parity-warning": "谱面奇偶校验警告数",
+    "map-amount": "谱面数",
+    "rank-map-amount": "ranked 谱面数",
+    "bomb-amount": "炸弹数",
+    "note-amount": "方块数",
+    "obstacle-amount": "墙数",
+    "light-event-amount": "灯光/特效数",
+    "njs": "方块跳跃速度",
+    "nps": "每秒方块数",
+    "score": "评分",
+    "like": "点赞数",
+    "dislike": "点踩数",
+    "bpm": "每分钟节拍数",
+    "id": "id"
+  }
+}

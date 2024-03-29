@@ -20,7 +20,7 @@ export default function BSUserDetailCard(
     return (
             <>
             {
-                isLoading ? <Loading /> :
+                isLoading ? <Loading className="shadow-none bg-zinc-100/70 dark:bg-zinc-700/70 backdrop-blur"/> :
                 bsUserWithStats ? <BSMapper bsUserWithStats={bsUserWithStats} className="shadow-none bg-zinc-100/70 dark:bg-zinc-700/70 backdrop-blur"/> :
                 <Error error={error.toString()}/>
             }

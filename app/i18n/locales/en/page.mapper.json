@@ -1,4 +1,23 @@
 {
   "title": "Mappers",
-  "sub-title": "look these awesome mappers"
+  "sub-title": "look these awesome mappers",
+  "detail": {
+    "like": "like",
+    "dislike": "dislike",
+    "total-map": "total map",
+    "avg-score": "avg score",
+    "follower": "followers",
+    "following": "following",
+    "follow": "follow",
+    "unfollow": "unfollow",
+    "followed": "followed",
+    "playlist": "playlist",
+    "tab": {
+      "published": "Published",
+      "playlist": "Playlist",
+      "wip": "UnPublished",
+      "curated": "Curated",
+      "reviews": "Reviews"
+    }
+  }
 }

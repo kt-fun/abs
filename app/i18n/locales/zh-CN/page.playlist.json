@@ -1,4 +1,18 @@
 {
   "title": "歌单",
-  "sub-title": "即刻查看你所喜爱的歌单"
+  "sub-title": "即刻查看你所喜爱的歌单",
+  "detail": {
+    "label": {
+      "like": "点赞数",
+      "dislike": "点踩数",
+      "total-map": "谱面数",
+      "avg-score": "平均评分"
+    },
+    "tooltip": {
+      "nps-range": "NPS 范围",
+      "one-click": "一键下载（需要本机mod支持）",
+      "download": "下载为 .bplist"
+    },
+    "empty-description": "这里什么都没有"
+  }
 }

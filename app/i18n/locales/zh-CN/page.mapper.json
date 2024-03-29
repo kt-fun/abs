@@ -1,4 +1,23 @@
 {
   "title": "谱师",
-  "sub-title": "看，这些超酷的谱师"
+  "sub-title": "看，这些超酷的谱师",
+  "detail": {
+    "like": "点赞数",
+    "dislike": "点踩数",
+    "total-map": "谱面数",
+    "avg-score": "平均评分",
+    "follower": "关注者",
+    "following": "已关注",
+    "follow": "关注",
+    "unfollow": "取消关注",
+    "followed": "已关注",
+    "playlist": "歌单",
+    "tab": {
+      "published": "已发布",
+      "playlist": "歌单",
+      "wip": "未发布",
+      "curated": "Curated",
+      "reviews": "评论"
+    }
+  }
 }
