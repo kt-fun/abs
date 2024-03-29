@@ -3,7 +3,7 @@ import * as React from 'react'
 import {cn} from "@/lib/utils";
 import {CiMap} from "react-icons/ci";
 import {GiRank3} from "react-icons/gi";
-import  {motion} from 'framer-motion'
+import {HTMLMotionProps, motion} from 'framer-motion'
 import {useLocaleFormat} from "@/hooks/useFormat";
 interface BSLabelProps {
     label:string,
@@ -14,38 +14,43 @@ export interface LabelProps {
   tooltip?:string
 }
 
-const Label = React.forwardRef(({
+interface BaseProps {
+  children:React.ReactNode,
+  label:string,
+  className?:string,
+}
+
+const Label = React.forwardRef<HTMLSpanElement, BaseProps>(({
     children,
     label,
-    className
-}:{
-    children:React.ReactNode,
-    label:string,
-    className?:string,
-}, forwardedRef) => {
+    className,
+  ...rest
+}:BaseProps & HTMLMotionProps<'span'>, forwardedRef) => {
   return (
-  <motion.span
-    layout
-    initial={{
-      opacity: 0,
-    }}
-    animate={{
-      opacity: 1,
-      transition:{
-        duration: 1
-      }
-    }}
-    exit={{
-      opacity: 0,
-      transition:{
-        duration: 1
-      }
-    }}
-    className={cn("font-medium inline-flex items-center space-x-1  text-xs cursor-default",className)} ref={forwardedRef as any}
-  >
+    <motion.span
+      {...rest}
+      ref={forwardedRef}
+      layout
+      initial={{
+        opacity: 0,
+      }}
+      animate={{
+        opacity: 1,
+        transition: {
+          duration: 1
+        }
+      }}
+      exit={{
+        opacity: 0,
+        transition: {
+          duration: 1
+        }
+      }}
+      className={cn("font-medium inline-flex items-center space-x-1  text-xs cursor-default", className)}
+    >
       <span>{children}</span>
       <span>{label}</span>
-  </motion.span>
+    </motion.span>
   )
   }
 )
@@ -53,18 +58,18 @@ const Label = React.forwardRef(({
 Label.displayName = "Label";
 
 export default function BSLabel(
-{children, label,className, tooltip}:BSLabelProps & {children:React.ReactNode,tooltip?:string}
+  {children, label, className, tooltip}: BSLabelProps & { children: React.ReactNode, tooltip?: string }
 ) {
-    return (
-        <>
-        {
-            tooltip ?
-              (
-                <Tooltip content={tooltip} >
-                    <Label label={label} className={className}>{children}</Label>
-                </Tooltip>
-              ) : (
-                <Label label={label} className={className}>{children}</Label>
+  return (
+    <>
+      {
+        tooltip ?
+          (
+            <Tooltip content={tooltip} asChild>
+              <Label label={label} className={className}>{children}</Label>
+            </Tooltip>
+          ) : (
+            <Label label={label} className={className}>{children}</Label>
               )
         }
 
