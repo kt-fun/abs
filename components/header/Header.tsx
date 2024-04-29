@@ -13,7 +13,9 @@ export const Header = () => {
         <div className='h-16 flex justify-between items-center max-w-[1200px] mx-auto'>
           <div className='flex items-center space-x-2'>
             <Link href="/" className="hover:no-underline">
-                <div className="font-semibold text-2xl cursor-pointer bg-gradient-to-r bg-clip-text text-transparent from-red-500 to-blue-500">Another BeatSaver</div>
+                <div className="font-semibold text-2xl cursor-pointer bg-gradient-to-r bg-clip-text text-transparent from-red-500 to-blue-500">
+                  AIOSaber
+                </div>
             </Link>
             <Nav className='hidden md:flex items-center space-x-2'/>
           </div>
