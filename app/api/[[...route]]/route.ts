@@ -1,5 +1,6 @@
 import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
+import {getOauthKV} from "@/lib/kv";
 
 export const runtime = 'edge';
 
@@ -101,6 +102,31 @@ app.get('/render/beatleader/:uid/pinnedScores', async (c)=> {
   const {uid} = c.req.param()
   const res = await fetch(`https://api.beatleader.xyz/player/${uid}/pinnedScores`)
   return res
+})
+app.get('/oauth/beatsaver/token/:code', async (c)=> {
+  const {code} = c.req.param()
+  const res = await getOauthKV(code)
+  return c.json(res)
+})
+
+app.get('/oauth/beatsaver/:code', async (c)=> {
+  const {code} = c.req.param()
+  var myHeaders = new Headers();
+  myHeaders.append("User-Agent", "AioSaber/0.0.2 (https://aiobs.ktlab.io)");
+  const form = new FormData()
+  form.append('client_id',process.env.BEATSAVER_CLIENT_ID as string)
+  form.append('client_secret',process.env.BEATSAVER_CLIENT_SECRET as string)
+  form.append('redirect_uri',process.env.BEATSAVER_REDIRECT_URL as string)
+  form.append('code',code)
+  form.append('grant_type','authorization_code')
+  const res = await fetch('https://beatsaver.com/api/oauth2/token', {
+    method: 'POST',
+    headers: myHeaders,
+    body: form,
+    redirect: 'follow'
+  })
+  const json = await res.json()
+  return c.json(json)
 })
 
 app.get('/*', async (c) => {
