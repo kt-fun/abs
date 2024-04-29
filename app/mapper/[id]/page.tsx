@@ -47,7 +47,7 @@ export default function MapperDetailPage({params}: { params: { id: number } }) {
   const TabValues = [{
     value: 'Published',
     label: t('detail.tab.published'),
-    content: <MapList userId={params.id.toString()} fetchingType="Curated"/>
+    content: <MapList userId={params.id.toString()} fetchingType="Published"/>
   },{
     value: 'Playlist',
     label: t('detail.tab.playlist'),
