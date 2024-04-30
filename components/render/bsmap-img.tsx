@@ -111,11 +111,11 @@ export default function BSMapShare(
                   </div>
                   <div className="flex items-center space-x-2">
                     <div className={'flex flex-col items-center'}>
-                      <QRCode url={`https://beatsaver.com/maps/${bsMap.id}`} className={'w-10'}/>
+                      <QRCode url={`https://beatsaver.com/maps/${bsMap.id}`} className={'w-20'}/>
                       <div className={"text-[8px] font-light"}>beatsaver</div>
                     </div>
                     <div className={'flex flex-col items-center'}>
-                      <QRCode url={`https://allpoland.github.io/ArcViewer/?id=${bsMap.id}`} className={'w-10'}/>
+                      <QRCode url={`https://allpoland.github.io/ArcViewer/?id=${bsMap.id}`} className={'w-20'}/>
                       <div className={"text-[8px] font-light"}>preview</div>
                     </div>
                   </div>
