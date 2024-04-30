@@ -18,10 +18,10 @@ export default function BSMapShare(
   return(
     <>
       <div
-        className={"w-[400px] rounded-none flex flex-col relative h-auto"}
+        className={"w-[400px] rounded-none flex flex-col relative h-auto  my-auto"}
         id="render-result"
       >
-        <div className={"relative z-10 my-auto"}>
+        <div className={"relative z-10"}>
           <div className={"bg-blend-darken bg-black/[.8] text-white  rounded-none"}>
             <img src={bsMap.versions[0].coverURL} className="w-[400px]"/>
             <div className="flex w-full h-auto flex-col">
