@@ -2,12 +2,13 @@ import { Avatar } from "@/components/ui/avatar";
 import config from "@/lib/config";
 import { Datum } from "@/interfaces/render/beatleaderreq";
 import { BarChart, Check, Key, Star, Clock, ThumbsUp, ThumbsDown, Calendar } from "lucide-react";
-import ReplayQRCode from "@/components/render/qrcode";
+import QRCode from "@/components/render/qrcode";
 import { diffConv } from "@/lib/utils";
 import ScoreGraph from "@/components/render/scoregraph";
 import { BSMap } from "@/interfaces/render/beatsaver";
 import { formatDuration, formatTime } from "@/lib/render/format";
 import Progress from "@/components/render/progress";
+import {ClientOnly} from "@/components/shared/ClientOnly";
 
 const BASE_URL = config.constants.BASE_URL
 
@@ -36,36 +37,33 @@ export default async function BSPlayerRankPage({params,searchParams}: { params: 
 
     const beatmap = await getBeatMapInfo(score.song.hash)
 
-    console.log("fetch scoreInfo", score)
+    // console.log("fetch scoreInfo", score)
 
     const bg = "https://www.loliapi.com/acg/pc/"
 
     return (
         <>
-    <div className={"flex flex-col bg-slate-100 justify-center items-center min-h-screen"}>
+
         <div
-            className={"h-[720px] w-[400px] rounded-none bg-gradient-to-br from-red-300 to-blue-300"}
-            id="render-result"
-            style={{
-                backgroundImage: `url('${bg}')`,
-                backgroundSize: 'cover',
-            }}
+          className={"flex flex-col justify-center items-center relative h-[720px] w-[400px] my-auto rounded-none"}
+          id="render-result"
         >
-            <div className={"bg-blend-darken bg-black/[.6] p-4 text-white h-full rounded-none flex flex-col"}>
+            <div
+              className={"bg-blend-darken h-full left-auto absolute right-auto bg-black/[.6] p-4 text-white flex flex-col justify-between z-10"}
+            >
                 <div className="flex space-x-4 items-center justify-between text-xl font-bold">
                     <div className="flex space-x-4 items-center justify-between text-2xl font-bold">
-                        <Avatar className={"h-16 w-16 rounded-full"} src={score.player.avatar} fallback={score.player.name.slice(0,1)} />
+                        <Avatar className={"h-16 w-16 rounded-full"} src={score.player.avatar}
+                                fallback={score.player.name.slice(0, 1)}/>
                         <div>{score.player.name}</div>
                     </div>
-                    <div>
-                        <ReplayQRCode url={`https://replay.beatleader.xyz/?scoreId=${score.id}`}/>
-                    </div>
+                    <QRCode url={`https://replay.beatleader.xyz/?scoreId=${score.id}`} withImg/>
                 </div>
                 <div className="flex space-x-4 h-40">
                     <Avatar
                       className={"h-40 w-40 rounded-md"}
                       src={score.song.cover}
-                      fallback={score.song.name.slice(0,1)}
+                      fallback={score.song.name.slice(0, 1)}
                     />
                     <div className="text-xs font-bold flex flex-col justify-between">
                         <div className="text-xl text-ellipsis line-clamp-2">{score.song.name}</div>
@@ -73,7 +71,7 @@ export default async function BSPlayerRankPage({params,searchParams}: { params: 
                             <Avatar
                               className={"h-4 w-4 rounded-full"}
                               src={beatmap.uploader.avatar}
-                              fallback={score.song.mapper.slice(0,1)}
+                              fallback={score.song.mapper.slice(0, 1)}
                             />
                             <div className="flex items-center justify-between">
                                 <div className="text-ellipsis line-clamp-1">
@@ -83,8 +81,8 @@ export default async function BSPlayerRankPage({params,searchParams}: { params: 
                         </div>
                         <div className="text-xs grid grid-cols-3 gap-1 *:space-x-1 *:flex *:items-center font-normal">
                             <div className="flex items-center text-ellipsis col-span-3 line-clamp-1">
-                                    <Calendar className="h-3 w-3"/>
-                                    <span>{formatTime(beatmap.lastPublishedAt)}</span>
+                                <Calendar className="h-3 w-3"/>
+                                <span>{formatTime(beatmap.lastPublishedAt)}</span>
                             </div>
                             <div>
                                 <span><BarChart className={"w-3 h-3"}/></span>
@@ -92,13 +90,13 @@ export default async function BSPlayerRankPage({params,searchParams}: { params: 
                             </div>
                             <div>
                                 <span><Star className={"w-3 h-3"}/></span>
-                                <span>{score.difficulty.stars?.toFixed(2)??"none"} </span>
+                                <span>{score.difficulty.stars?.toFixed(2) ?? "none"} </span>
                             </div>
                             <div>
                                 <span><Key className={"w-3 h-3"}/></span>
-                                <span>{score.song.id.toLowerCase().replaceAll('x','')}</span>
+                                <span>{score.song.id.toLowerCase().replaceAll('x', '')}</span>
                             </div>
-                            
+
                             <div className="flex items-center">
                                 <ThumbsUp className="h-3 w-3"/>
                                 <span>{beatmap.stats.upvotes}</span>
@@ -113,7 +111,7 @@ export default async function BSPlayerRankPage({params,searchParams}: { params: 
                             </div>
                         </div>
                         <div className="flex items-center space-x-2 text-xs font-normal">
-                            <Progress value={beatmap.stats.score * 100} className="h-1.5"  containerClassName="h-1.5"/>
+                            <Progress value={beatmap.stats.score * 100} className="h-1.5" containerClassName="h-1.5"/>
                             <span>{(beatmap.stats.score * 100).toFixed(2)} %</span>
                         </div>
                     </div>
@@ -131,36 +129,36 @@ export default async function BSPlayerRankPage({params,searchParams}: { params: 
                         </div>
                     }
                     {
-                        score.fullCombo &&
-                         <div className="flex items-center justify-between">
-                            <span>Full Combo</span>
-                            <Check/>
-                         </div>
+                      score.fullCombo &&
+                      <div className="flex items-center justify-between">
+                          <span>Full Combo</span>
+                          <Check/>
+                      </div>
                     }
                     {
-                        score.maxCombo &&
-                         <div className="flex items-center justify-between">
-                            <span>Max Combo</span>
-                            <span>{score.maxCombo}</span>
-                         </div>
+                      score.maxCombo &&
+                      <div className="flex items-center justify-between">
+                          <span>Max Combo</span>
+                          <span>{score.maxCombo}</span>
+                      </div>
                     }
                     {
-                         <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between">
                             <span>Missed Notes</span>
                             <span>{score.missedNotes}</span>
-                         </div>
+                        </div>
                     }
                     {
-                         <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between">
                             <span>Total Mistakes</span>
                             <span>{score.missedNotes}</span>
-                         </div>
+                        </div>
                     }
                     {
-                         score.modifiers && <div className="flex items-center justify-between">
-                            <span>Modifiers</span>
-                            <span>{score.modifiers}</span>
-                         </div>
+                      score.modifiers && <div className="flex items-center justify-between">
+                          <span>Modifiers</span>
+                          <span>{score.modifiers}</span>
+                      </div>
                     }
                 </div>
                 <div className="align-end mt-auto mb-2">
@@ -171,9 +169,10 @@ export default async function BSPlayerRankPage({params,searchParams}: { params: 
                 </div>
 
             </div>
+
+            <img src={bg} className={'inset-0 rounded-lg absolute h-full object-cover'} loading={'eager'}/>
         </div>
-    </div>
-    </>
+        </>
     )
 
 

@@ -1,72 +1,96 @@
 'use client'
 
-import React, { useEffect, useRef, useState, ChangeEvent } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import QRCodeStyling, {
-    DrawType,
-    TypeNumber,
-    Mode,
-    ErrorCorrectionLevel,
-    DotType,
-    CornerSquareType,
-    CornerDotType,
-    Options
-  } from "qr-code-styling";
-export default function ReplayQRCode(
-{
-    url
-}:{
-    url:string
+  CornerDotType,
+  CornerSquareType,
+  DotType,
+  DrawType,
+  ErrorCorrectionLevel,
+  Mode,
+  Options,
+  TypeNumber
+} from "qr-code-styling";
+function blobToBase64(blob:Blob) {
+  return new Promise((resolve, _) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result);
+    reader.readAsDataURL(blob);
+  });
 }
+export default function QRCode(
+  {
+    url,
+    withImg,
+    width,
+    height,
+    className
+  }:{
+
+    url:string,
+    width?:number,
+    height?:number,
+    withImg?:boolean,
+    className?: string,
+  }
 ){
-    
-    const [options] = useState<Options>({
-        width: 100,
-        height: 100,
-        type: 'svg' as DrawType,
-        data: url,
-        image: '/beatleader.svg',
-        margin: 10,
-        qrOptions: {
-          typeNumber: 0 as TypeNumber,
-          mode: 'Byte' as Mode,
-          errorCorrectionLevel: 'Q' as ErrorCorrectionLevel
-        },
-        imageOptions: {
-          hideBackgroundDots: true,
-          imageSize: 0.2,
-          margin: 0,
-          crossOrigin: 'anonymous',
-        },
-        dotsOptions: {
-          color: '#ffffff',
-          type: 'rounded' as DotType
-        },
-        backgroundOptions: {
-            color: 'rgb(0,0,0,0)',
-        },
-        cornersSquareOptions: {
-          color: '#ffffff',
-          type: 'extra-rounded' as CornerSquareType,
-        },
-        cornersDotOptions: {
-          color: '#ffffff',
-          type: 'dot' as CornerDotType,
-        }
-      });
-      const [qrCode] = useState<QRCodeStyling>(new QRCodeStyling(options));
-      const ref = useRef<HTMLDivElement>(null);
-    
-      useEffect(() => {
-        if (ref.current) {
-          qrCode.append(ref.current);
-        }
-      }, [qrCode, ref]);
-    
-      useEffect(() => {
-        if (!qrCode) return;
-        qrCode.update(options);
-      }, [qrCode, options]);
-      return (
-          <div ref={ref} />
-      );
+  const [options] = useState<Options>({
+    width: width ?? 300,
+    height: height ?? 300,
+    type: 'canvas' as DrawType,
+    data: url,
+    image: withImg ? '/beatleader.svg':undefined,
+    margin: 0,
+    qrOptions: {
+      typeNumber: 0 as TypeNumber,
+      mode: 'Byte' as Mode,
+      errorCorrectionLevel: 'Q' as ErrorCorrectionLevel
+    },
+    imageOptions: {
+      hideBackgroundDots: true,
+      imageSize: 0.2,
+      margin: 10,
+      crossOrigin: 'anonymous',
+    },
+    dotsOptions: {
+      color: '#ffffff',
+      type: 'rounded' as DotType
+    },
+    backgroundOptions: {
+      color: 'rgb(0,0,0,0)',
+    },
+    cornersSquareOptions: {
+      color: '#ffffff',
+      type: 'extra-rounded' as CornerSquareType,
+    },
+    cornersDotOptions: {
+      color: '#ffffff',
+      type: 'dot' as CornerDotType,
+    }
+  });
+  const it = new QRCodeStyling(options)
+  const [qrCode] = useState<QRCodeStyling>(it);
+
+  const [imgUrl,setImgUrl] = useState('')
+  const setImage = async ()=> {
+    const  data = await qrCode.getRawData('png')
+    const res = await blobToBase64(data!)
+    setImgUrl(res as any)
+  }
+
+  useEffect(() => {
+      setImage()
+  },
+  []
+  );
+
+  useEffect(() => {
+    if (!qrCode) return;
+    qrCode.update(options);
+  }, [qrCode, options]);
+  return (
+
+    <img src={imgUrl} width={width ?? 100} height={height ?? 100} className={className}/>
+)
+  ;
 }

@@ -59,14 +59,13 @@ export default async function BSPlayerRankPage({params,searchParams}: { params: 
   topLeaderItems.filter(item=> pinnedItems.some(pinned=>pinned.id === item.id))
   const leaderItems = pinnedItems.concat(topLeaderItems).slice(0,24)
   const part = getPart(user)
-  // const bg = user.profileSettings.profileCover ?? user.avatar
   const bg = "https://www.loliapi.com/acg/pc/"
-    // console.log(user)
   return(
   <>
     <div
       id={"render-result"}
-      className={"flex flex-col justify-center items-center relative h-[720px] w-[1024px]"}>
+      className={"flex flex-col justify-center items-center relative h-[720px] w-[1024px] my-auto"}
+    >
 
       <div
         className={"bg-blend-darken h-full left-auto absolute right-auto bg-black/[.6] p-4 text-white rounded-lg flex flex-col justify-between z-10"}

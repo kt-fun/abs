@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
 import {getOauthKV} from "@/lib/kv";
+import {BSMap} from "@/interfaces/render/beatsaver";
 
 export const runtime = 'edge';
 
@@ -12,6 +13,10 @@ app.get('/hello', (c) => {
   })
 })
 
+interface QueryMapByHashResponse {
+  [hash: string]: BSMap
+}
+
 app.get('/beatleader/*', async (c)=> {
   //   /v3/scores/{hash}/{diff}/{mode}/{context}/{scope}/{method}
   const req = c.req.raw.clone()
@@ -22,7 +27,7 @@ app.get('/beatleader/*', async (c)=> {
   const res = await fetch(afterUrl, {
     ...req,
     headers: {
-      "User-Agent": "ABS/0.0.3 (https://abs.ktlab.io)"
+      "User-Agent": "ABS/0.0.3 (https://aiobs.ktlab.io)"
     }
   })
   return res
@@ -36,11 +41,18 @@ app.get('/render/player/:uid', async (c)=> {
     fetch(`https://scoresaber.com/api/player/${uid}/scores?page=1&sort=top`).then(res=>res.json()),
     fetch(`https://scoresaber.com/api/player/${uid}/scores?page=2&sort=top`).then(res=>res.json()),
     fetch(`https://scoresaber.com/api/player/${uid}/scores?page=3&sort=top`).then(res=>res.json()),
-    fetch(`https://scoresaber.com/api/player/${uid}/scores?page=4&sort=top`).then(res=>res.json()),
   ]
 
-  const res = (await Promise.all(items)).map(item=>item["playerScores"])
-  return c.json(res)
+  const res = (await Promise.all(items)).map(item=>item["playerScores"]).flatMap(item=>item)
+  const scoreHashes = res.map(item=>item.leaderboard.songHash)
+  const maps = (await fetch(`https://api.beatsaver.com/maps/hash/${scoreHashes.join(",")}`).then(res=>res.json())) as QueryMapByHashResponse
+  console.log("maps")
+  const result = res.map(item=> ({
+    score: item.score,
+    leaderboard: item.leaderboard,
+    mapId: maps[item.leaderboard.songHash.toLowerCase()]?.id,
+  }))
+  return c.json(result)
 })
 
 app.get('/render/player/:uid/full', async (c)=> {

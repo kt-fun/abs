@@ -47,7 +47,8 @@ export interface ScoreSaberUserResponse {
 
 export interface ScoreSaberItem{
   score: BeatScore,
-  leaderboard: LeaderBoard
+  leaderboard: LeaderBoard,
+  mapId?: string
 }
 
 interface BeatScore {
