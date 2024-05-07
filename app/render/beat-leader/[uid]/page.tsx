@@ -139,7 +139,7 @@ export default async function BSPlayerRankPage({params,searchParams}: { params: 
         </div>
 
       </div>
-      <img src={bg} className={'inset-0 rounded-lg absolute h-full'} loading={'eager'}/>
+      <img src={bg} className={'inset-0 rounded-lg absolute h-full object-cover'} loading={'eager'}/>
     </div>
   </>
   )
