@@ -99,8 +99,8 @@ export default function Score({
       {
         label: label,
         data: scoreData.map(it=>it.score),
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        borderColor: type =='score' ? 'rgb(53, 162, 235)':'rgb(196, 71, 95)',
+        backgroundColor: type =='score' ? 'rgba(53, 162, 235, 0.5)':'rgb(196, 71, 95, 0.5)',
         borderRadius: 5,
         borderWidth: 2,
         borderSkipped: false,
