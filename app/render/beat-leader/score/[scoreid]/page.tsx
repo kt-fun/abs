@@ -49,7 +49,7 @@ export default async function BSPlayerRankPage({params,searchParams}: { params: 
           id="render-result"
         >
             <div
-              className={"bg-blend-darken h-full left-auto absolute right-auto bg-black/[.6] p-4 text-white flex flex-col justify-between z-10"}
+              className={"bg-blend-darken h-full w-full left-auto absolute right-auto bg-black/[.6] p-4 text-white flex flex-col justify-between z-10"}
             >
                 <div className="flex space-x-4 items-center justify-between text-xl font-bold">
                     <div className="flex space-x-4 items-center justify-between text-2xl font-bold">
