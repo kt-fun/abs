@@ -19,6 +19,7 @@ interface ScoreProps {
   type: 'hit'|'score'
 }
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import ChartAnnotation from 'chartjs-plugin-annotation';
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -26,7 +27,8 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  ChartDataLabels
+  ChartDataLabels,
+  ChartAnnotation
 );
 import { Bar } from "react-chartjs-2";
 import Chart from "chart.js/auto";
@@ -47,6 +49,7 @@ export default function Score({
     },
     responsive: true,
     plugins: {
+
       legend: {
         position: 'top' as const,
         labels: {
@@ -58,10 +61,13 @@ export default function Score({
       title: {
         display: true,
         text: title,
+        font: {
+          size: 40
+        },
       },
       subtitle: {
         display: true,
-        textStyle: dayjs().format('YYYY-MM-DD HH:mm'),
+        text: dayjs().format('YYYY-MM-DD HH:mm'),
       },
       datalabels: {
         color: 'white',
@@ -91,10 +97,49 @@ export default function Score({
           },
         }
       },
+      annotation: {
+        common: {
+          drawTime: 'beforeDraw' as const
+        },
+        annotations: {
+          annotation1: {
+            type: 'line' as const,
+            borderColor: type == 'score' ? 'rgb(196, 71, 95)' : 'rgb(53, 162, 235)',
+            label: {
+              backgroundColor: type == 'score' ? 'rgb(196, 71, 95,0.5)' : 'rgb(53, 162, 235,0.5)',
+              content: 'Top 10',
+              display: true
+            },
+            borderWidth: 1,
+            scaleID: 'y',
+            value: 10.5,
+            borderDash: [6, 6],
+          }
+        },
+        annotation3: {
+          type: 'line'  as const,
+          borderColor: type == 'score' ? 'rgb(196, 71, 95)' : 'rgb(53, 162, 235)',
+          label: {
+            backgroundColor: type == 'score' ? 'rgb(196, 71, 95,0.5)' : 'rgb(53, 162, 235,0.5)',
+            content: 'Top 50',
+            display: true
+          },
+          borderWidth: 1,
+          scaleID: 'x',
+          value: 50.5,
+          borderDash: [6, 6],
+        }
+      }
     },
   };
   const data = {
-    labels:scoreData.map(it=>it.name),
+    labels:scoreData.map(it=> {
+      let name = it.name
+      if(it.name.length > 10) {
+        name = it.name.slice(0,10) + "...";
+      }
+      return name
+    }),
     datasets: [
       {
         label: label,
@@ -111,8 +156,8 @@ export default function Score({
   return (
     <div>
       <div className={"relative z-10 overflow-hidden rounded-lg"} id={'render-result'} ref={ref}>
-        <div className={"bg-blend-darken bg-black/[.6] z-10 rounded-lg"}>
-          <Bar options={options} data={data} width={1400} height={2048}
+        <div className={"bg-blend-darken bg-black/[.6] z-10 rounded-lg w-[1400px] h-[2048px] flex justify-center mx-auto"}>
+          <Bar options={options} data={data} width={1380} height={2048}
           />
         </div>
         <img src={"https://loliapi.com/acg/pe"} className={'inset-0 w-[1400px] h-[2048px] absolute -z-10 object-cover'}
