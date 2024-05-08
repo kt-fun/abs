@@ -34,6 +34,8 @@ import { Bar } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 import html2canvas from "html2canvas";
 import dayjs from "dayjs";
+import duration from "dayjs/plugin/duration";
+dayjs.extend(duration);
 Chart.defaults.backgroundColor = 'rgb(0,0,0,0)';
 Chart.defaults.borderColor = 'rgb(0,0,0,0.1)';
 Chart.defaults.color = '#ffffff';
@@ -112,23 +114,10 @@ export default function Score({
             },
             borderWidth: 1,
             scaleID: 'y',
-            value: 10.5,
+            value: 9.5,
             borderDash: [6, 6],
           }
         },
-        annotation3: {
-          type: 'line'  as const,
-          borderColor: type == 'score' ? 'rgb(196, 71, 95)' : 'rgb(53, 162, 235)',
-          label: {
-            backgroundColor: type == 'score' ? 'rgb(196, 71, 95,0.5)' : 'rgb(53, 162, 235,0.5)',
-            content: 'Top 50',
-            display: true
-          },
-          borderWidth: 1,
-          scaleID: 'x',
-          value: 50.5,
-          borderDash: [6, 6],
-        }
       }
     },
   };
