@@ -2,10 +2,12 @@ export const dynamic = 'force-dynamic'
 import Score from "@/app/tmp/lb/score";
 async function getScoreInfo() {
   const url = `http://gateway.lightband.cn:3005/activity/api/activity/playInfo?code=summer2024`
-  const res =  await fetch(url)
+  const res =  await fetch(url, { cache: 'no-store' })
+  console.log('load score')
   if (!res.ok) {
     throw new Error('Failed to fetch scoreInfo:')
   }
+  console.log('load score success')
   const data = await res.json()
   const scoreList = data.data.scoreRankList.map((it:any) => ({
     name: it.player.nickname,
