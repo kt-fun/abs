@@ -67,7 +67,7 @@ export default function Score({
       },
       subtitle: {
         display: true,
-        text: dayjs().format('YYYY-MM-DD HH:mm'),
+        text: dayjs().add(dayjs.duration({hours:8})).format('YYYY-MM-DD HH:mm'),
       },
       datalabels: {
         color: 'white',
