@@ -101,7 +101,7 @@ export default function Score({
       },
       annotation: {
         common: {
-          drawTime: 'beforeDraw' as const
+          drawTime: 'afterDatasetsDraw' as const
         },
         annotations: {
           annotation1: {
