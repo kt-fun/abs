@@ -1,4 +1,4 @@
-
+export const dynamic = 'force-dynamic'
 import Score from "@/app/tmp/lb/score";
 async function getScoreInfo() {
   const url = `http://gateway.lightband.cn:3005/activity/api/activity/playInfo?code=summer2024`
