@@ -14,7 +14,8 @@ const timeout = ()=> {
 
 const constants = {
   BASE_URL : process.env.BASE_URL,
-  CACHE_TIMEOUT : timeout()
+  CACHE_TIMEOUT : timeout(),
+  FEEDBACK_URL: process.env.FEEDBACK_URL
 }
 
 export default {

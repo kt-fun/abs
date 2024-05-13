@@ -18,6 +18,10 @@ interface QueryMapByHashResponse {
   [hash: string]: BSMap
 }
 
+app.get('/feedback', async (c)=> {
+  return c.redirect(config.constants.FEEDBACK_URL as string)
+})
+
 app.get('/beatleader/*', async (c)=> {
   const req = c.req.raw.clone()
   const url = new URL(c.req.url.replace('/api/beatleader',''))
