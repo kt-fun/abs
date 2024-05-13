@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
 import {getOauthKV} from "@/lib/kv";
 import {BSMap} from "@/interfaces/render/beatsaver";
+import config from "@/lib/config";
 
 export const runtime = 'edge';
 
@@ -18,7 +19,6 @@ interface QueryMapByHashResponse {
 }
 
 app.get('/beatleader/*', async (c)=> {
-  //   /v3/scores/{hash}/{diff}/{mode}/{context}/{scope}/{method}
   const req = c.req.raw.clone()
   const url = new URL(c.req.url.replace('/api/beatleader',''))
   const afterUrl= c.req.url
@@ -28,6 +28,9 @@ app.get('/beatleader/*', async (c)=> {
     ...req,
     headers: {
       "User-Agent": "ABS/0.0.3 (https://aiobs.ktlab.io)"
+    },
+    next: {
+      revalidate: config.constants.CACHE_TIMEOUT
     }
   })
   return res
@@ -38,9 +41,21 @@ app.get('/render/player/:uid', async (c)=> {
   const {uid} = c.req.param()
 
   const items = [
-    fetch(`https://scoresaber.com/api/player/${uid}/scores?page=1&sort=top`).then(res=>res.json()),
-    fetch(`https://scoresaber.com/api/player/${uid}/scores?page=2&sort=top`).then(res=>res.json()),
-    fetch(`https://scoresaber.com/api/player/${uid}/scores?page=3&sort=top`).then(res=>res.json()),
+    fetch(`https://scoresaber.com/api/player/${uid}/scores?page=1&sort=top`,{
+      next: {
+        revalidate: config.constants.CACHE_TIMEOUT
+      }
+    }).then(res=>res.json()),
+    fetch(`https://scoresaber.com/api/player/${uid}/scores?page=2&sort=top`,{
+      next: {
+        revalidate: config.constants.CACHE_TIMEOUT
+      }
+    }).then(res=>res.json()),
+    fetch(`https://scoresaber.com/api/player/${uid}/scores?page=3&sort=top`,{
+      next: {
+        revalidate: config.constants.CACHE_TIMEOUT
+      }
+    }).then(res=>res.json()),
   ]
 
   const res = (await Promise.all(items)).map(item=>item["playerScores"]).flatMap(item=>item)
@@ -60,33 +75,53 @@ app.get('/render/player/:uid/full', async (c)=> {
   const platform = c.req.query('platform')
   // let url =
 
-  const res = await fetch(`https://scoresaber.com/api/player/${uid}/full`)
+  const res = await fetch(`https://scoresaber.com/api/player/${uid}/full`,{
+    next: {
+      revalidate: config.constants.CACHE_TIMEOUT
+    }
+  })
   return res
 })
 
 app.get('/render/beatsaver/:id', async (c)=> {
   const {id} = c.req.param()
-  const res = await fetch(`https://beatsaver.com/api/maps/id/${id}`)
+  const res = await fetch(`https://beatsaver.com/api/maps/id/${id}`,{
+    next: {
+      revalidate: config.constants.CACHE_TIMEOUT
+    }
+  })
   return res
 })
 
 app.get('/render/beatsaver/hash/:id', async (c)=> {
   const {id} = c.req.param()
-  const res = await fetch(`https://beatsaver.com/api/maps/hash/${id}`)
+  const res = await fetch(`https://beatsaver.com/api/maps/hash/${id}`,{
+    next: {
+      revalidate: config.constants.CACHE_TIMEOUT
+    }
+  })
   return res
 })
 
 app.get('/render/beatleader/:uid', async (c)=> {
   const {uid} = c.req.param()
 
-  const res = await fetch(`https://api.beatleader.xyz/player/${uid}`)
+  const res = await fetch(`https://api.beatleader.xyz/player/${uid}`,{
+    next: {
+      revalidate: config.constants.CACHE_TIMEOUT
+    }
+  })
   return res
 })
 
 app.get('/render/beatleader/score/:scoreid', async (c)=> {
   const {scoreid} = c.req.param()
 
-  const res = await fetch(`https://api.beatleader.xyz/score/${scoreid}`)
+  const res = await fetch(`https://api.beatleader.xyz/score/${scoreid}`,{
+    next: {
+      revalidate: config.constants.CACHE_TIMEOUT
+    }
+  })
   return res
 })
 
@@ -106,13 +141,21 @@ app.get('/render/beatleader/:uid/scores', async (c)=> {
   console.log('q',query)
   const url = `https://api.beatleader.xyz/player/${uid}/scores?` + q
   console.log(url)
-  const res = await fetch(url)
+  const res = await fetch(url,{
+    next: {
+      revalidate: config.constants.CACHE_TIMEOUT
+    }
+  })
   return res
 })
 
 app.get('/render/beatleader/:uid/pinnedScores', async (c)=> {
   const {uid} = c.req.param()
-  const res = await fetch(`https://api.beatleader.xyz/player/${uid}/pinnedScores`)
+  const res = await fetch(`https://api.beatleader.xyz/player/${uid}/pinnedScores`,{
+    next: {
+      revalidate: config.constants.CACHE_TIMEOUT
+    }
+  })
   return res
 })
 app.get('/oauth/beatsaver/token/:code', async (c)=> {
@@ -155,7 +198,10 @@ app.get('/*', async (c) => {
   req.headers.set('Origin', 'https://beatsaver.com')
   const res = await fetch(afterUrl, {
     ...req,
-    headers: header
+    headers: header,
+    next: {
+      revalidate: config.constants.CACHE_TIMEOUT
+    }
   })
 
   return res

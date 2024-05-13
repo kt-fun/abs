@@ -15,19 +15,30 @@ const BASE_URL = config.constants.BASE_URL
 async function getBeatLeaderItem(uid:string, q:string|undefined) {
   const url = `${BASE_URL}/api/render/beatleader/${uid}/scores?${q}`
   console.log(url)
-  const res = await fetch(url).then(res=> res.json())
+  const res = await fetch(url, {
+    next: {
+      revalidate: config.constants.CACHE_TIMEOUT
+    }
+  }).then(res=> res.json())
   return (res as BeadLeaderScoresResponse).data.map(item=>({...item,pinned:false}))
 }
 async function getPinnedBeatLeaderItem(uid:string) {
   const url = `${BASE_URL}/api/render/beatleader/${uid}/pinnedScores`
   console.log(url)
-  const res = await fetch(url).then(res=> res.json())
+  const res = await fetch(url,{
+    next: {
+      revalidate: config.constants.CACHE_TIMEOUT
+    }
+  }).then(res=> res.json())
   return (res as Datum[]).map(item=>({...item,pinned:true}))
 }
 async function getUserInfo(uid:string) {
   const url = `${BASE_URL}/api/render/beatleader/${uid}`
-  console.log(url)
-  const res =  await fetch(url)
+  const res =  await fetch(url, {
+    next: {
+      revalidate: config.constants.CACHE_TIMEOUT
+    }
+  })
   if (!res.ok) {
     throw new Error('Failed to fetch userInfo:'+uid)
   }

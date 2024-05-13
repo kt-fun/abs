@@ -5,17 +5,26 @@ import config from "@/lib/config";
 import Flags, {EarchIcon} from "@/components/render/flag";
 import {cn} from "@/lib/utils";
 
+
 const BASE_URL = config.constants.BASE_URL
 console.log("BASE_URL",config.constants.BASE_URL)
 async function getScoreItem(uid:string) {
   const url = `${BASE_URL}/api/render/player/${uid}`
-  const res = await fetch(url).then(res=> res.json())
+  const res = await fetch(url,{
+    next: {
+      revalidate: config.constants.CACHE_TIMEOUT,
+    },
+  }).then(res=> res.json())
   return res as ScoreSaberItem[]
 }
 
 async function getUserInfo(uid:string) {
   const url = `${BASE_URL}/api/render/player/${uid}/full`
-  const res =  await fetch(url)
+  const res =  await fetch(url, {
+    next: {
+      revalidate: config.constants.CACHE_TIMEOUT,
+    },
+  })
   if (!res.ok) {
     throw new Error('Failed to fetch userInfo:'+uid)
   }
