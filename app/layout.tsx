@@ -7,19 +7,22 @@ import {ThemeProvider} from "@/components/providers/ThemeProvider";
 import {UserPreferenceProvider} from "@/components/providers/UserPreferenceProvider";
 import {getLocale} from "@/app/i18n/server";
 import LocaleProvider from '@/components/providers/i18nProvider';
+
 const inter = Inter({ subsets: ['latin'] })
 
+
+
 export default function RootLayout({
-  children,
-}: {
+                                     children,
+                                   }: {
   children: React.ReactNode
 }) {
   const locale = getLocale();
   return (
-      <UserPreferenceProvider>
-        <html lang={locale}>
-        <body className={inter.className}>
-        <LocaleProvider value={locale}>
+    <UserPreferenceProvider>
+      <html lang={locale}>
+      <body className={inter.className}>
+      <LocaleProvider value={locale}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -32,10 +35,10 @@ export default function RootLayout({
             </section>
           </main>
         </ThemeProvider>
-        </LocaleProvider>
-        </body>
+      </LocaleProvider>
+      </body>
       </html>
-      </UserPreferenceProvider>
+    </UserPreferenceProvider>
 
   )
 }

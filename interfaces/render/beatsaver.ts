@@ -50,10 +50,14 @@ export interface BSMap{
         seconds: number,
         maxScore: string,
         paritySummary: any,
+        [key: string]: any
       }[]
     }[],
     lastPublishedAt: string,
     updatedAt: string,
     createdAt: string,
     tags: string[],
+    ranked: boolean,
+    blRanked: boolean,
+    [key: string]: any
   }
