@@ -1,4 +1,3 @@
-import {Avatar, AvatarImage} from "@/components/ui/avatar";
 import { ScoreSaberItem } from "@/interfaces/render/scoresaber";
 import {BarChart, Key, Pin, Sparkles, Star, Wrench} from "lucide-react";
 
@@ -15,7 +14,7 @@ const diffConv = (diff:string) => {
   return "E"
 }
 const getModifiers = (modifiers:string)=> {
-  return modifiers?modifiers.split(','):['']
+  return modifiers?modifiers.split(','):[]
 }
 export default function ScoreItem(
 {
@@ -28,7 +27,7 @@ export default function ScoreItem(
     <div className={'relative'}>
       <div className={"rounded-lg flex bg-black/[.4] space-x-2  backdrop-blur-md overflow-hidden"}>
         <img loading={'eager'} src={scoreItem.leaderboard.coverImage} className={"rounded-md h-20 w-20"}/>
-        <div className={"flex flex-col justify-between py-0.5"}>
+        <div className={"flex flex-col space-y-1 py-0.5"}>
           <div className={"font-semibold text-xs text-ellipsis overflow-hidden line-clamp-1 break-all"}>
             {scoreItem.leaderboard.songName}
           </div>
