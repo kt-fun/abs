@@ -170,6 +170,7 @@ app.get('/oauth/beatleader/:code', async (c)=> {
   const {code} = c.req.param()
   const headers = new Headers();
   headers.append("User-Agent", "AioSaber/0.0.2 (https://aiobs.ktlab.io)");
+  headers.append('Content-Type',"application/x-www-form-urlencoded");
   var urlencoded = new URLSearchParams();
   urlencoded.append('client_id', process.env.BEATLEADER_CLIENT_ID as string)
   urlencoded.append('client_secret', process.env.BEATLEADER_CLIENT_SECRET as string)
