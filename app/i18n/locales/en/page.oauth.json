@@ -1,3 +1,6 @@
 {
-  "button": " click to oauth via beatsaver"
+  "button": {
+    "beatsaver": "click to oauth via beatsaver",
+    "beatleader": "click to oauth via beatleader"
+  }
 }

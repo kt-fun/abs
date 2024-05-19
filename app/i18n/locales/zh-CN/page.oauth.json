@@ -1,3 +1,6 @@
 {
-  "button": "点击以获取 Bot 码"
+  "button": {
+    "beatsaver": "点击获取 beatsaver code",
+    "beatleader": "点击获取 beatleader code"
+  }
 }

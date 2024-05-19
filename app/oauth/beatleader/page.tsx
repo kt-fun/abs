@@ -13,10 +13,10 @@ interface OAuthResponse {
 }
 
 async function getCode(code:string) {
-  const url = `${BASE_URL}/api/oauth/beatsaver/${code}`
+  const url = `${BASE_URL}/api/oauth/beatleader/${code}`
   const res = await fetch(url).then(res=> res.json())
 
-  const key = setOauthKV(res, OAuthPlatform.BeatSaver)
+  const key = setOauthKV(res, OAuthPlatform.BeatLeader)
   return {
     code: await key,
     expireAt: "now",
@@ -24,18 +24,18 @@ async function getCode(code:string) {
 }
 
 export default async function Home(
-{
-  searchParams,
-}:{
-  searchParams:SearchParam
-}
+  {
+    searchParams,
+  }:{
+    searchParams:SearchParam
+  }
 ) {
   const code = searchParams['code'] as string
   const resp = await getCode(code)
 
   return (
     <div className={'flex items-center justify-center'}>
-      this is a tmp code for bsbot: {resp.code}
+      this is a tmp code that is key of beatleader info for bsbot: {resp.code}
     </div>
   )
 }

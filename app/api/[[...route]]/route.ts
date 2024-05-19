@@ -1,6 +1,6 @@
-import { Hono } from 'hono'
-import { handle } from 'hono/vercel'
-import {getOauthKV} from "@/lib/kv";
+import {Hono} from 'hono'
+import {handle} from 'hono/vercel'
+import {getOauthKV, OAuthPlatform} from "@/lib/kv";
 import {BSMap} from "@/interfaces/render/beatsaver";
 import config from "@/lib/config";
 
@@ -65,7 +65,7 @@ app.get('/render/player/:uid', async (c)=> {
   const res = (await Promise.all(items)).map(item=>item["playerScores"]).flatMap(item=>item)
   const scoreHashes = res.map(item=>item.leaderboard.songHash)
   const maps = (await fetch(`https://api.beatsaver.com/maps/hash/${scoreHashes.join(",")}`).then(res=>res.json())) as QueryMapByHashResponse
-  console.log("maps")
+  // console.log("maps")
   const result = res.map(item=> ({
     score: item.score,
     leaderboard: item.leaderboard,
@@ -145,29 +145,53 @@ app.get('/render/beatleader/:uid/scores', async (c)=> {
   console.log('q',query)
   const url = `https://api.beatleader.xyz/player/${uid}/scores?` + q
   console.log(url)
-  const res = await fetch(url,{
-    next: {
-      revalidate: config.constants.CACHE_TIMEOUT
-    }
-  })
+  const res = await fetch(url,{cache:'no-store'})
   return res
 })
 
 app.get('/render/beatleader/:uid/pinnedScores', async (c)=> {
   const {uid} = c.req.param()
-  const res = await fetch(`https://api.beatleader.xyz/player/${uid}/pinnedScores`,{
-    next: {
-      revalidate: config.constants.CACHE_TIMEOUT
-    }
-  })
+  const res = await fetch(`https://api.beatleader.xyz/player/${uid}/pinnedScores`,{cache:'no-store'})
   return res
 })
+
 app.get('/oauth/beatsaver/token/:code', async (c)=> {
   const {code} = c.req.param()
-  const res = await getOauthKV(code)
+  const res = await getOauthKV(code, OAuthPlatform.BeatSaver)
   return c.json(res)
 })
 
+app.get('/oauth/beatleader/token/:code', async (c)=> {
+  const {code} = c.req.param()
+  const res = await getOauthKV(code, OAuthPlatform.BeatLeader)
+  return c.json(res)
+})
+app.get('/oauth/beatleader/:code', async (c)=> {
+  const {code} = c.req.param()
+  const headers = new Headers();
+  headers.append("User-Agent", "AioSaber/0.0.2 (https://aiobs.ktlab.io)");
+  var urlencoded = new URLSearchParams();
+  urlencoded.append('client_id', process.env.BEATLEADER_CLIENT_ID as string)
+  urlencoded.append('client_secret', process.env.BEATLEADER_CLIENT_SECRET as string)
+  urlencoded.append('redirect_uri', process.env.BEATLEADER_REDIRECT_URL as string)
+  urlencoded.append('code', code)
+  urlencoded.append('grant_type', 'authorization_code')
+  const res = await fetch('https://api.beatleader.xyz/oauth2/token', {
+    method: 'POST',
+    headers: headers,
+    body: urlencoded,
+    redirect: 'follow'
+  })
+  try {
+    const json = await res.json()
+    return c.json(json)
+  }catch (e) {
+    return c.json({
+      "error":`unknown error, ${e}`
+    })
+  }
+
+})
 app.get('/oauth/beatsaver/:code', async (c)=> {
   const {code} = c.req.param()
   var myHeaders = new Headers();
