@@ -181,7 +181,8 @@ app.get('/oauth/beatleader/:code', async (c)=> {
     method: 'POST',
     headers: headers,
     body: urlencoded,
-    redirect: 'follow'
+    redirect: 'follow',
+    cache:'no-cache'
   })
   try {
     const json = await res.json()
@@ -207,7 +208,8 @@ app.get('/oauth/beatsaver/:code', async (c)=> {
     method: 'POST',
     headers: myHeaders,
     body: form,
-    redirect: 'follow'
+    redirect: 'follow',
+    cache:'no-cache'
   })
   const json = await res.json()
   return c.json(json)

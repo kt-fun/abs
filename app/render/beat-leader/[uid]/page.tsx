@@ -9,7 +9,7 @@ import ScoreBadge from "@/components/render/socre-badge";
 import { getHeadsetForHMD } from "@/lib/render/blheadset";
 import Flags, { EarchIcon } from "@/components/render/flag";
 import {cn} from "@/lib/utils";
-
+export const dynamic = 'force-dynamic'
 const BASE_URL = config.constants.BASE_URL
 
 async function getBeatLeaderItem(uid:string, q:string|undefined) {

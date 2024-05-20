@@ -6,6 +6,7 @@ import Flags, {EarchIcon} from "@/components/render/flag";
 import {cn} from "@/lib/utils";
 
 
+export const dynamic = 'force-dynamic'
 const BASE_URL = config.constants.BASE_URL
 console.log("BASE_URL",config.constants.BASE_URL)
 async function getScoreItem(uid:string) {
