@@ -44,10 +44,6 @@ const FeatureFilter = React.forwardRef<HTMLDivElement, FeatureFilterProps>((
   const {t} = useTranslation('components.filter')
   const {t :tagTrans} = useTranslation('tag')
   const [isOpen,setIsOpen] = useState(false)
-  let controls = useAnimationControls();
-  useEffect(() => {
-    isOpen && controls.start("open")
-  }, [controls, isOpen]);
   const containerRef = useRef(null)
   const checkIfOptionChecked = useCallback((option:FeatureOption)=>{
     if (!queryParam.options) return false
@@ -103,7 +99,7 @@ const FeatureFilter = React.forwardRef<HTMLDivElement, FeatureFilterProps>((
                     <motion.div
                         className={"z-10 bg-zinc-100/70 dark:bg-zinc-900/70  p-2 m-2 rounded-lg mt-1 overflow-hidden text-left shadow backdrop-blur max-w-80"}
                         initial="closed"
-                        animate={controls}
+                        animate={"open"}
                         // custom={height}
                         exit="closed"
                         variants={containerVariant}

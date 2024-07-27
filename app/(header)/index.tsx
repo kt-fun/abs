@@ -1,11 +1,11 @@
 import * as React from 'react';
-import ThemeButton from './ThemeButton';
+import ThemeButton from './themeSwitch';
 import Link from "@/components/ui/link";
-import Nav from "@/components/header/nav/nav-item/Nav";
-import MobileNav from "@/components/header/nav/mobile-nav-item/mobileNav";
-import I18NButton from "@/components/header/i18nButton";
+import Nav from "./nav/nav-item/Nav";
+import MobileNav from "./nav/mobile-nav-item/mobileNav";
+import I18NButton from "./i18nButton";
 
-export const Header = () => {
+const Index = () => {
   return (
       <header
         className='w-full px-4 md:px-8 h-full top-0 z-20 sticky bg-base-light dark:bg-base-dark'
@@ -36,3 +36,5 @@ export const Header = () => {
       </header>
   );
 };
+
+export default React.memo(Index);

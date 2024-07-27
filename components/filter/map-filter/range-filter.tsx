@@ -53,12 +53,6 @@ const RangeFilter = React.forwardRef<HTMLDivElement, RangeFilterProps>((
 )=> {
   const {t} = useTranslation('components.filter')
   const [isOpen,setIsOpen] = useState(false)
-  let controls = useAnimationControls();
-  useEffect(() => {
-    if (isOpen) {
-      controls.start("open");
-    }
-  }, [controls, isOpen]);
   const containerRef = useRef(ref);
   const { height } = useDimensions(containerRef);
   const npsRange = useMemo(()=>{
@@ -121,7 +115,7 @@ const RangeFilter = React.forwardRef<HTMLDivElement, RangeFilterProps>((
                         className={" p-4 m-2 rounded-lg mt-1 overflow-hidden text-left shadow backdrop-blur text-xs gap-2 flex flex-col"}
                         initial="closed"
                         custom={height}
-                        animate={controls}
+                        animate={"open"}
                         exit="closed"
                         variants={containerVariant}
                     >

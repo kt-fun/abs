@@ -35,7 +35,7 @@ const BSPlaylistOverviewHiddenInfo = React.forwardRef((
       }>
       <div className="flex flex-col justify-between  h-full pt-auto pb-0 dark bg-transparent rounded-t-lg text-white">
         <div>
-          <p className="text-xs text-ellipsis overflow-hidden m-2 line-clamp-[7]">
+          <p className="text-xs text-ellipsis overflow-hidden m-2 line-clamp-[6] xl:line-clamp-[7]">
             {bsPlaylist.description == "" ? "No description" : bsPlaylist.description}
           </p>
         </div>

@@ -1,8 +1,8 @@
 import {HTMLMotionProps, motion} from "framer-motion";
 import {cn} from "@/lib/utils";
 import Link from "@/components/ui/link";
-import {NavItem} from "@/components/header/nav/navItems";
-import {CollapsibleItem} from "@/components/header/nav/mobile-nav-item/collapsible-item";
+import {NavItem} from "../navItems";
+import {CollapsibleItem} from "./collapsible-item";
 import {useTranslation} from "@/hooks/useTranslation";
 
 const variants = {

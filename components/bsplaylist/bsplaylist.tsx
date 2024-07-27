@@ -23,13 +23,13 @@ export default function BSPlaylist(
   };
   return (
     <>
-      <Card className="mx-auto group flex flex-col w-[320px] xl:w-[256px] rounded-lg relative border-none shadow-none">
+      <Card className="mx-auto group flex flex-col  xl:w-[256px] sm:w-[200px] w-[256px]  rounded-lg relative border-none shadow-none">
         <motion.div
           layout
           className={
             cn(
               'aspect-square relative',
-              'w-[320px] xl:w-[256px] aspect-square group rounded-lg',
+              ' xl:w-[256px] sm:w-[200px] w-[256px]  aspect-square group rounded-lg',
             )
           }
         >
@@ -45,7 +45,7 @@ export default function BSPlaylist(
             }}
             loading="lazy" src={bg} className={cn(
             'object-cover',
-            'w-[320px] xl:w-[256px] group rounded-lg absolute shadow-none border-none bg-transparent aspect-square',
+            ' xl:w-[256px] sm:w-[200px] w-[256px] group rounded-lg absolute shadow-none border-none bg-transparent aspect-square',
             // isDetailMode && 'w-full aspect-square sm:w-[300px] rounded-lg basis-full max-w-[300px] relative'
           )}/>
           <BSPlaylistOverviewHiddenInfo

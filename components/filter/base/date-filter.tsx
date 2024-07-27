@@ -52,12 +52,6 @@ const DateFilter = React.forwardRef<HTMLDivElement, DateFilterProps>((
   const {formatDate,FNSLocale} = useLocaleFormat()
   const {t} = useTranslation('components.filter')
   const [isOpen,setIsOpen] = useState(false)
-  let controls = useAnimationControls();
-  useEffect(() => {
-    if (isOpen) {
-      controls.start("open");
-    }
-  }, [controls, isOpen]);
 
   const containerRef = useRef(ref);
   const { height } = useDimensions(containerRef);
@@ -95,7 +89,7 @@ const DateFilter = React.forwardRef<HTMLDivElement, DateFilterProps>((
                     <motion.div
                         className={"z-10 bg-zinc-100/70 dark:bg-zinc-700/70 p-2 m-2 rounded-lg mt-1 overflow-hidden text-left shadow backdrop-blur"}
                         initial="closed"
-                        animate={controls}
+                        animate="open"
                         exit="closed"
                         custom={height}
                         variants={containerVariant}

@@ -16,7 +16,7 @@
   },
   "label": {
     "tooltip":{
-      "copy-id": "click2 to copy map id",
+      "copy-id": "click to copy map id",
       "duration": "duration of this map",
       "max-nps": "max nps of this map",
       "created-at": "create time of this map"

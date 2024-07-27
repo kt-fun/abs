@@ -66,7 +66,6 @@ export default function ScoreGraph(
     scoreInfo: Datum
 }
 ) {
-    console.log("scoreInfo",scoreInfo)
     const [times, setTimes] = useState(0)
     // const [beatSavior ,setBeatSavior] = useState<any>(null)
     const [notes,setNotes] = useState<BSORNote[]>([])

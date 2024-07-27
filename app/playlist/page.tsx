@@ -34,19 +34,17 @@ export default function Playlist({
       return (
         <>
           <div className="flex justify-center grow">
-            <div className="flex-col flex max-w-[1024px]  w-full">
+            <div className="flex-col flex max-w-[1200px]  w-full">
                 <div className={' bg-base-light dark:bg-base-dark p-2'}>
                   <h1 className={"text-3xl font-bold"}>{t('title')}</h1>
                   <span className={"text-zinc-400 dark:text-zinc-300 text-xs"}>{t('sub-title')}</span>
                 </div>
               {
                 <PlaylistFilter
-                  className={'sticky top-16 z-10 flex left-0 right-0 w-full bg-base-light dark:bg-base-dark p-2'}
+                  className={'w-full sticky top-16 z-10 flex left-0 right-0 bg-base-light dark:bg-base-dark p-2'}
                   queryParam={queryParam}
                   onUpdateQueryParam={updateQuery}
-                  onQuery={()=>{
-                    scrollToTop()
-                    refresh()}}
+                  onQuery={()=>{scrollToTop();refresh()}}
                   isQuerying={isLoadingMore ?? false}
                 />
               }
@@ -54,7 +52,7 @@ export default function Playlist({
                 variants={containerVariants}
                 initial={'hidden'}
                 animate={'show'}
-                className="grid gap-8 grid-cols-1 xl:grid-cols-4 2xl:grid-cols-4 md:grid-cols-2 py-2">
+                className="grid gap-4 grid-cols-1 xl:grid-cols-4 2xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 py-2">
                 {
                   playlists.map((playlist: IBSPlaylist, i) => {
                     return (

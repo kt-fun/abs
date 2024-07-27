@@ -88,9 +88,6 @@ const WrappedBSPlaylist =(
           onDrag={checkSwipeToDismiss}
           variants={variant}
           animate={isSelected ? "open" : "closed"}
-          whileHover={{
-            scale: isSelected ? 1 : 1.02
-          }}
         >
           <BSPlaylist bsPlaylist={bsPlaylist} />
         </motion.div>

@@ -1,8 +1,8 @@
 'use client'
 import {NavigationMenu, NavigationMenuList} from "@/components/ui/navigation-menu";
 import * as React from "react";
-import {HeaderMenuItem} from "@/components/header/nav/nav-item/HeaderMenuItem";
-import {navLinks} from "@/components/header/nav/navItems";
+import {HeaderMenuItem} from "./HeaderMenuItem";
+import {navLinks} from "../navItems";
 
 const  Nav = ({
     ...props

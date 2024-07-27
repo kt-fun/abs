@@ -7,7 +7,7 @@ import { CgProfile } from "react-icons/cg";
 import NotifyModal from "./NotifyModal";
 import {Avatar} from "@/components/ui/avatar";
 import Link from "@/components/ui/link";
-import {LoginForm} from "@/components/header/wip/LoginForm";
+import {LoginForm} from "./LoginForm";
 import {AlertDialog, AlertDialogContent, AlertDialogTrigger} from "@/components/ui/alert-dialog";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 export const LoggedinUserNav = ({

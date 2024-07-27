@@ -4,7 +4,6 @@ import { BSUserWithStats } from "@/interfaces/beatsaver-user";
 import { FaMapMarkedAlt } from "react-icons/fa";
 import * as Progress from '@radix-ui/react-progress';
 import  {Avatar} from "@/components/ui/avatar";
-import * as Card from "@/components/ui/card";
 import {Tooltip} from "@/components/ui/tooltip";
 import dayjs from "dayjs";
 import { useCallback } from "react";
@@ -55,73 +54,73 @@ export default function BSMapper(
   );
   const {formatNumber} = useLocaleFormat()
     return (
-        <>
-        <Card.Card className={cn("min-w-64 max-w-[300px]",className)}>
-          <Card.CardContent className="p-2">
-            <motion.div className="flex">
-                <Avatar
-                    src={bsUserWithStats.avatar}
-                    className="m-2 w-12 h-12"
-                    fallback={bsUserWithStats.name[0]} />
-                <div className="overflow-hidden">
-                    <Link href={`/mapper/${bsUserWithStats.id}`}  className="overflow-hidden" >
-                      <div  className="text-lg text-ellipsis font-medium">
-                        {bsUserWithStats.name}
-                      </div>
-                    </Link>
-                    <p
-                    className="overflow-ellipsis line-clamp-2 pr-2 text-xs text-gray-400"
-                    dangerouslySetInnerHTML={{__html:escapeHtml(getDescription(bsUserWithStats.description))}}
-                    />
-                </div>
-            </motion.div>
-            <motion.div>
-                <div className="flex justify-between">
+      <>
+        <motion.div className={cn("min-w-64 max-w-[300px] p-2", className)}>
+          <motion.div className="flex">
+            <Avatar
+              src={bsUserWithStats.avatar}
+              className="m-2 w-12 h-12"
+              fallback={bsUserWithStats.name[0]}/>
+            <div className="overflow-hidden">
+              <Link href={`/mapper/${bsUserWithStats.id}`} className="overflow-hidden">
+                <span className="text-lg text-ellipsis font-medium  animate-underline">
+                  {bsUserWithStats.name}
+                </span>
+              </Link>
+              <p
+                className="overflow-ellipsis line-clamp-2 pr-2 text-xs text-gray-400"
+                dangerouslySetInnerHTML={{__html: escapeHtml(getDescription(bsUserWithStats.description))}}
+              />
+            </div>
+          </motion.div>
+          <motion.div>
+            <div className="flex justify-between">
 
-                    <LabelWithIcon tooltip="ranked map amount" label={formatNumber(bsUserWithStats.stats?.rankedMaps?? 0)}>
-                        <RankedIcon/>
-                    </LabelWithIcon>
-                    <LabelWithIcon tooltip="total map amount" label={formatNumber(bsUserWithStats.stats.totalMaps)}>
-                        <FaMapMarkedAlt/>
-                    </LabelWithIcon>
-                </div>
-                <div className="flex justify-between">
-                  <ThumbUpCountLabel count={bsUserWithStats.stats.totalUpvotes} tooltip="total up vote"/>
-                  <ThumbDownCountLabel count={bsUserWithStats.stats.totalDownvotes} tooltip="total down vote"/>
-                </div>
-                <div className="flex items-center justify-between">
-                    <Progress.Root className="relative overflow-hidden rounded-full w-full h-2 bg-gray-100" value={rating}>
-                    <Progress.Indicator
-                        className=" h-2 rounded-full bg-gradient-to-r from-red-500 to-blue-500"
-                        style={{ transform: `translateX(-${100 - rating}%)` }}
-                    />
-                    </Progress.Root>
-                    <div className="pl-4 font-medium text-xs">{rating.toFixed(1)}%</div>
-                </div>
-            </motion.div>
-            <motion.div className="flex justify-between">
+              <LabelWithIcon tooltip="ranked map amount"
+                             label={formatNumber(bsUserWithStats.stats?.rankedMaps ?? 0)}>
+                <RankedIcon/>
+              </LabelWithIcon>
+              <LabelWithIcon tooltip="total map amount" label={formatNumber(bsUserWithStats.stats.totalMaps)}>
+                <FaMapMarkedAlt/>
+              </LabelWithIcon>
+            </div>
+            <div className="flex justify-between">
+              <ThumbUpCountLabel count={bsUserWithStats.stats.totalUpvotes} tooltip="total up vote"/>
+              <ThumbDownCountLabel count={bsUserWithStats.stats.totalDownvotes} tooltip="total down vote"/>
+            </div>
+            <div className="flex items-center justify-between">
+              <Progress.Root className="relative overflow-hidden rounded-full w-full h-2 bg-gray-100"
+                             value={rating}>
+                <Progress.Indicator
+                  className=" h-2 rounded-full bg-gradient-to-r from-red-500 to-blue-500"
+                  style={{transform: `translateX(-${100 - rating}%)`}}
+                />
+              </Progress.Root>
+              <div className="pl-4 font-medium text-xs">{rating.toFixed(1)}%</div>
+            </div>
+          </motion.div>
+          <motion.div className="flex justify-between">
 
             {
-                bsUserWithStats.stats.firstUpload && 
+              bsUserWithStats.stats.firstUpload &&
                 <Tooltip content="First Map Uploaded At">
                     <div
-                    className="flex space-x-2  cursor-default text-gray-400 text-xs"
+                        className="flex space-x-2  cursor-default text-gray-400 text-xs"
                     >Since: {dayjs(bsUserWithStats.stats.firstUpload).format('YYYY-MM-DD')}
                     </div>
                 </Tooltip>
             }
             {
-                bsUserWithStats.stats.lastUpload && 
+              bsUserWithStats.stats.lastUpload &&
                 <Tooltip content="Last Map Uploaded At" asChild>
                     <div
-                    className="flex space-x-2  cursor-default text-gray-400 text-xs"
+                        className="flex space-x-2  cursor-default text-gray-400 text-xs"
                     >Last: {dayjs(bsUserWithStats.stats.lastUpload).fromNow()}
                     </div>
                 </Tooltip>
             }
-            </motion.div>
-          </Card.CardContent>
-        </Card.Card>
-        </>
+          </motion.div>
+        </motion.div>
+      </>
     )
 }

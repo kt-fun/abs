@@ -7,6 +7,7 @@ import {ReachListEnd, EmptyContent, Loading} from "@/components/shared/load-stat
 import {containerVariants, listItemVariants} from "@/components/shared/variants";
 import {useWindowScrollEndCallback} from "@/hooks/ui/useWindowScrollCallback";
 import {useTranslation} from "@/hooks/useTranslation";
+import {cn} from "@/lib/utils";
 
 export default function MapperPage() {
   const {t} = useTranslation('page.mapper')
@@ -35,11 +36,9 @@ export default function MapperPage() {
               !isEmpty &&  users.map((it, i:number) => {
                 return (
                   <motion.li
-                    variants={listItemVariants}
-                    custom={i}
                     key={it.id}
                   >
-                    <BSMapper bsUserWithStats={it} className="w-full"/>
+                    <BSMapper bsUserWithStats={it} className="w-full rounded-lg"/>
                   </motion.li>
                 );
               })

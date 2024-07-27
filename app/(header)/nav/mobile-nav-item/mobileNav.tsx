@@ -3,9 +3,9 @@ import {motion, useCycle} from "framer-motion";
 import * as React from "react";
 import {useRef} from "react";
 import {useDimensions} from "@/hooks/ui/useDimensions";
-import {navLinks} from "@/components/header/nav/navItems";
-import HeaderItem from "@/components/header/nav/mobile-nav-item/HeaderItem";
-import MenuToggle from "@/components/header/nav/mobile-nav-item/MenuToggle";
+import {navLinks} from "../navItems";
+import HeaderItem from "./HeaderItem";
+import MenuToggle from "./MenuToggle";
 const sidebar = {
   open: (height = 1000) => ({
     clipPath: `circle(${height * 2 + 200}px at 100% 10%)`,

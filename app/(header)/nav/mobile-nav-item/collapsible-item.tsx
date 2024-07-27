@@ -1,10 +1,8 @@
-import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "@/components/ui/collapsible";
-import {Button} from "@/components/ui/button";
 import {ChevronsUpDown} from "lucide-react";
 import {AnimatePresence, motion} from "framer-motion";
 import * as React from "react";
-import {NavItem} from "@/components/header/nav/navItems";
-import HeaderItem, {Item} from "@/components/header/nav/mobile-nav-item/HeaderItem";
+import {NavItem} from "../navItems";
+import HeaderItem, {Item} from "./HeaderItem";
 import {useTranslation} from "@/hooks/useTranslation";
 
 

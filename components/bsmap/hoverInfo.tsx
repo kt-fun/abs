@@ -35,7 +35,7 @@ ref
     }
     >
       <div
-        className="flex flex-col justify-between pt-auto px-1 bg-transparent h-full  rounded-lg"
+        className="flex flex-col justify-between pt-auto p-1 bg-transparent h-full  rounded-lg"
       >
         {
           bsMap.curator &&

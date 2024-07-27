@@ -7,10 +7,7 @@ import {ThemeProvider} from "@/components/providers/ThemeProvider";
 import {UserPreferenceProvider} from "@/components/providers/UserPreferenceProvider";
 import {getLocale} from "@/app/i18n/server";
 import LocaleProvider from '@/components/providers/i18nProvider';
-
 const inter = Inter({ subsets: ['latin'] })
-
-
 
 export default function RootLayout({
                                      children,

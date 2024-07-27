@@ -89,11 +89,8 @@ const WrappedBSMapper =(
           onDrag={checkSwipeToDismiss}
           variants={variant}
           animate={isSelected ? "open" : "closed"}
-          whileHover={{
-            scale: isSelected ? 1 : 1.02
-          }}
         >
-          <BSMapper bsUserWithStats={bsUserWithStats} className={'w-full bg-zinc-100/70 dark:bg-zinc-800/70 backdrop-blur-xl'}/>
+          <BSMapper bsUserWithStats={bsUserWithStats} className={'w-full bg-zinc-100/70 dark:bg-zinc-800/70 backdrop-blur-xl rounded-lg'}/>
         </motion.div>
       </div>
     </motion.div>

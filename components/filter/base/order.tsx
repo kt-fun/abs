@@ -52,12 +52,6 @@ ref,
   const t = useCallback((id:string)=>ft(`order.${id}`),[ft])
   const orders = ['Relevance', 'Rating', 'Latest', 'Curated']
   const [isOpen,setIsOpen] = useState(false)
-  let controls = useAnimationControls();
-  useEffect(() => {
-    if (isOpen) {
-      controls.start("open");
-    }
-  }, [controls, isOpen]);
   return (
     <div
       {...rest}
@@ -68,7 +62,6 @@ ref,
         <PopoverTrigger asChild>
           <motion.button
             layout
-            // whileTap={{scale: 0.97}}
             className={"flex items-center rounded-full p-1 px-2 bg-zinc-100 dark:bg-zinc-700/70 cursor-pointer space-x-1"}
           >
             <ArrowUpDown className={"h-4 w-4"}/>
@@ -82,7 +75,7 @@ ref,
                 <motion.ul
                     className={"z-10 bg-zinc-100/70 dark:bg-zinc-700/70 p-2 m-2 rounded-lg mt-1 overflow-hidden text-left shadow backdrop-blur"}
                     initial="closed"
-                    animate={controls}
+                    animate={"open"}
                     exit="closed"
                     variants={containerVariant}
                 >
@@ -90,7 +83,7 @@ ref,
                     orders.map((item) =>
                       <motion.li
                         key={item}
-                        animate={controls}
+                        animate={"open"}
                         variants={itemVariants}
                         whileHover={{
                           scale: 1.02,

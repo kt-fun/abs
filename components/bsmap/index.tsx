@@ -54,10 +54,11 @@ const WrappedBSMap =(
           )}
           layout
           variants={variant}
+          // transition={{duration: 5}}
           animate={isSelected ? "open" : "closed"}
-          whileHover={{
-            scale: isSelected ? 1 : 1.02
-          }}
+          // whileHover={{
+          //   scale: isSelected ? 1 : 1.02
+          // }}
         >
           <BSMap
             bsMap={bsMap} mode={isSelected ? 'detail' : 'overview'}
