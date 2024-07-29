@@ -98,7 +98,7 @@ const RangeFilter = React.forwardRef<HTMLDivElement, RangeFilterProps>((
       >
         <Popover open={isOpen} onOpenChange={setIsOpen}>
           <PopoverTrigger asChild>
-            <motion.div layout className={"text-xs rounded-full p-1 px-2 bg-zinc-100 dark:bg-zinc-700/70 cursor-pointer flex items-center space-x-1"}>
+            <motion.div layout className={"text-xs rounded-full p-1 px-2 bg-zinc-100/70 dark:bg-zinc-900/70 cursor-pointer flex items-center space-x-1"}>
               <ListFilter className={"h-4 w-4"}/>
               <span>{t('range.filter')}</span>
             </motion.div>
@@ -108,7 +108,7 @@ const RangeFilter = React.forwardRef<HTMLDivElement, RangeFilterProps>((
               isOpen &&
                 <PopoverContent
 
-                    className={"w-full z-10 bg-zinc-100/70 dark:bg-zinc-700/70"}
+                    className={"w-full z-10 bg-zinc-100/70 dark:bg-zinc-900/70"}
                     asChild
                 >
                     <motion.div

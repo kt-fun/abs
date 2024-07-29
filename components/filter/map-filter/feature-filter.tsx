@@ -47,7 +47,7 @@ const FeatureFilter = React.forwardRef<HTMLDivElement, FeatureFilterProps>((
   const containerRef = useRef(null)
   const checkIfOptionChecked = useCallback((option:FeatureOption)=>{
     if (!queryParam.options) return false
-    return queryParam.options[option.label as keyof typeof queryParam.options] == true
+    return queryParam.options[option.value as keyof typeof queryParam.options] == true
   },[queryParam])
   const handleOptionChange = (option:FeatureOption)=>{
     const checked = checkIfOptionChecked(option)
@@ -55,7 +55,7 @@ const FeatureFilter = React.forwardRef<HTMLDivElement, FeatureFilterProps>((
       ...queryParam,
       options: {
         ...queryParam.options,
-        [option.label]: !checked
+        [option.value]: !checked
       }
     })
   }
@@ -87,7 +87,7 @@ const FeatureFilter = React.forwardRef<HTMLDivElement, FeatureFilterProps>((
       >
         <Popover open={isOpen} onOpenChange={setIsOpen}>
           <PopoverTrigger asChild>
-            <motion.div layout className={"text-xs rounded-full p-1 px-2 bg-zinc-100 dark:bg-zinc-700/70 cursor-pointer flex items-center space-x-1"}>
+            <motion.div layout className={"text-xs rounded-full p-1 px-2 bg-zinc-100/70 dark:bg-zinc-900/70 cursor-pointer flex items-center space-x-1"}>
               <ListFilter className={"h-4 w-4"}/>
               <span>{t('filter')}</span>
             </motion.div>

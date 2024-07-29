@@ -60,6 +60,7 @@ export interface BSBeatMap {
     name: string;
     qualified: boolean;
     ranked: boolean;
+    blRanked: boolean;
     stats: BSMapStats;
     tags?: string[];
     updatedAt: string;

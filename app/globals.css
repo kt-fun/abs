@@ -20,6 +20,14 @@
 }
 
 @layer base {
+    /*html {*/
+    /*    @apply bg-blend-darken object-fill;*/
+    /*    background-image: url("https://www.loliapi.com/acg/pc/");*/
+
+    /*}*/
+    /*body {*/
+    /*    @apply bg-blend-darken bg-black/[.6];*/
+    /*}*/
     :root {
         /*--background: 0 0% 100% ;*/
         --background: rgb(244 244 245 / 0.7);

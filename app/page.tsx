@@ -36,7 +36,7 @@ export default function Home({
   }
   return (
     <>
-      <div className="flex max-w-[1024px] grow flex-col pb-2">
+      <div className="flex max-w-[1024px] grow flex-col pb-2 bg-base-light dark:bg-base-dark">
         <div className={"flex items-center bg-base-light dark:bg-base-dark px-4"}>
           <div>
             <h1 className={"text-3xl font-bold"}>{t('title')}</h1>
@@ -45,7 +45,7 @@ export default function Home({
         </div>
         {
           <MapFilter
-            className={'sticky top-16 z-10 flex left-0 right-0 w-full bg-base-light dark:bg-base-dark p-2'}
+            className={'sticky top-16 z-10 flex left-0 right-0 w-full bg-base-light dark:bg-base-dark mb-2 p-2'}
             queryParam={queryParam}
             onUpdateQueryParam={updateQuery}
             onQuery={()=>{

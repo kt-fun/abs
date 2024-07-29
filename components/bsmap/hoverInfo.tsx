@@ -15,7 +15,8 @@ const BSMapOverviewHiddenInfo = React.forwardRef((
 {
   bsMap,
   isDetailMode,
-  className
+  className,
+  ...rest
 }:{
   bsMap:BSBeatMap,
   isDetailMode: boolean
@@ -28,11 +29,11 @@ ref
     <div
       ref={ref as any}
       className={
-      cn(
-        `bg-black/[.6] h-full ${!isDetailMode && `group-hover:visible`} ${current && !isDetailMode ? '' : 'invisible'}  bg-blend-darken  rounded-lg z-10`,
-        className
-      )
-    }
+        cn(
+          `bg-black/[.6] h-full ${!isDetailMode && `group-hover:visible`} ${current && !isDetailMode ? '' : 'invisible'}  bg-blend-darken  rounded-lg z-10`,
+          className
+        )
+      }
     >
       <div
         className="flex flex-col justify-between pt-auto p-1 bg-transparent h-full  rounded-lg"
@@ -55,7 +56,7 @@ ref
         <p
           className="text-ellipsis overflow-hidden  line-clamp-1 sm:line-clamp-4 text-xs dark text-gray-200 mx-1"
         >
-          {bsMap.description == "" ? t("description.empty") : bsMap.description}
+          {bsMap.description == "" ? t("description-empty") : bsMap.description}
         </p>
         <ScrollArea>
           <div className='grid  grid-rows-1 sm:grid-rows-2 grid-flow-col dark'>

@@ -4,6 +4,7 @@
     "empty": "still now review here 😯"
   },
   "description": "Description",
+  "description-empty": "No description",
   "leaderboard": "Leaderboard",
   "table-column": {
     "rank": "Rank",

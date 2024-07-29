@@ -17,6 +17,7 @@ import ReviewList from "@/components/bsmap/reviewList";
 import LeaderBoardList from "@/components/bsmap/leaderboardList";
 import LockBodyScroll from "@/components/shared/LockBodyScroll";
 import {useTranslation} from "@/hooks/useTranslation";
+import RankIcon from "@/components/icons/RankIcon";
 
 
 
@@ -54,8 +55,8 @@ const BSMap = (
       className={
         cn(
           ' min-w-[360px] max-w-[960px] relative mx-auto border-none shadow-none',
-          isDetailMode ? `h-auto sm:h-auto` : `h-[160px] sm:h-[200px]`,
-          "bg-opacity-95 backdrop-blur"
+          isDetailMode ? `h-auto sm:h-auto bg-opacity-70 dark:bg-opacity-70 backdrop-blur` : `h-[160px] sm:h-[200px]`,
+          // ""
         )
       }
     >
@@ -92,6 +93,9 @@ const BSMap = (
         )}/>
         <BSMapOverviewHiddenInfo
           layout
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           bsMap={bsMap}
           className={"absolute w-full"}
           isDetailMode={isDetailMode}
@@ -107,29 +111,25 @@ const BSMap = (
           <div className="overflow-ellipsis line-clamp-1 text-xl font-medium pr-2 ">
             <motion.div
               layout
-              className={cn("overflow-ellipsis break-all line-clamp-1 text-xl font-medium pr-2 cursor-pointer relative animate-underline")}
+              className={cn("overflow-ellipsis break-all line-clamp-1 w-fit text-xl font-medium pr-2 cursor-pointer relative animate-underline")}
               onClick={onSelect}
             >
-              {bsMap.name}
+              {bsMap.name?.trim() ?? "no name"}
             </motion.div>
           </div>
           <motion.div layout className='flex items-center'>
             <BSUserLabel user={bsMap.uploader}/>
           </motion.div>
-          <motion.div layout className='flex space-x-2'>
+          <motion.div layout className='flex space-x-2 flex-wrap '>
+            <RankIcon blrank={bsMap.blRanked} ssrank={bsMap.ranked}/>
             <div onClick={handleCopyMapId}>
               <MapMetaLabel.BSIDLabel id={bsMap.id} className="cursor-pointer" tooltip={t('label.tooltip.copy-id')}/>
             </div>
-            {
-              isDetailMode &&
-                <MapMetaLabel.BSBPMLabel
-                    bpm={bsMap.metadata.bpm}
-                />
-            }
             <MapMetaLabel.DurationLabel  duration={bsMap.metadata.duration} tooltip={t("label.tooltip.duration")}/>
-            {
-              !isDetailMode && <MapDiffLabel.BSNPSLabel nps={getMaxNPS(bsMap)} tooltip={t("label.tooltip.max-nps")}/>
-            }
+            {/*{*/}
+            {/*  !isDetailMode && <MapDiffLabel.BSNPSLabel nps={getMaxNPS(bsMap)} tooltip={t("label.tooltip.max-nps")}/>*/}
+            {/*}*/}
+            <MapMetaLabel.BSBPMLabel bpm={bsMap.metadata.bpm}/>
             {
               isDetailMode &&
                 <MapMetaLabel.DateLabel
@@ -152,7 +152,7 @@ const BSMap = (
             </div>
             <ScrollBar orientation="horizontal" className={"translate-y-1"}/>
           </ScrollArea>
-          <AnimatePresence key={bsMap.id + 'diff'}>
+          <AnimatePresence key={bsMap.id + 'diff'} >
             {
               isDetailMode &&
                 <motion.div layout className='grid w-fit grid-cols-3 items-center justify-center justify-items-center'>
@@ -167,12 +167,6 @@ const BSMap = (
                         }}
                         animate={{
                           opacity: 1,
-                          transition:{
-                            duration: 1
-                          }
-                        }}
-                        exit={{
-                          opacity: 0.5,
                         }}
                         key={diff.characteristic + diff.difficulty + bsMap.id}
                         className={"text-zinc-700/80 dark:text-zinc-50 py-0.5 px-2"}
@@ -190,9 +184,6 @@ const BSMap = (
                     }}
                     animate={{
                       opacity: 1,
-                      transition:{
-                        duration: 1
-                      }
                     }}
                 >
                     <BSOpts bsMap={bsMap} itemClassName={cn('')} className={"justify-start mx-0 flex"}/>
@@ -214,11 +205,11 @@ const BSMap = (
               }
             </motion.div>
           </motion.div>
-          <AnimatePresence key={bsMap.id+'description'}>
-
+          <AnimatePresence key={bsMap.id+'description-1'}>
             {
               isDetailMode &&
-                <motion.div  className={""}>
+                <motion.div
+                >
                     <span className={"font-medium"}>{t('description')}</span>
                     <div className={"text-xs p-2"}>
                         <p className={cn("text-ellipsis line-clamp-3 break-all")}>
@@ -230,35 +221,31 @@ const BSMap = (
           </AnimatePresence>
         </motion.div>
       </motion.div>
-      <AnimatePresence key={bsMap.id+'description'}>
         {
           isDetailMode &&
-            <motion.div
-                initial = {{opacity: 0}}
-                animate = {{opacity: 1}}
-                exit = {{opacity: 0}}
+            <div
                 className={cn(isDetailMode && ' p-4')}
             >
-                <motion.div>
-                    <motion.div className={"flex space-x-2 items-center"}>
+                <div>
+                    <div className={"flex space-x-2 items-center"}>
                         <span className={"font-medium"}>{t('reviews.label')}</span>
                         <span className={"opacity-30  text-xs"}>({bsMap.stats.reviews ?? 0})</span>
-                    </motion.div>
-                    <motion.div className={cn("text-xs")}>
+                    </div>
+                    <div className={cn("text-xs")}>
                       {
                         bsMap.stats.reviews && <ReviewList mapId={bsMap.id} onContentUpdate={onContentUpdate}/>
                       }
                       {
                         !bsMap.stats.reviews && <p>{t('reviews.empty')}</p>
                       }
-                    </motion.div>
-                </motion.div>
-                <motion.div>
+                    </div>
+                </div>
+                <div>
                     <div className={"flex items-center justify-between flex-col md:flex-row"}>
-                        <motion.div>
+                        <div>
                             <span className={"font-medium"}>{t('leaderboard')}</span>
-                        </motion.div>
-                        <motion.div className={'flex space-x-2 flex-wrap'}>
+                        </div>
+                        <div className={'flex space-x-2 flex-wrap'}>
                           {
                             bsMap.versions[0].diffs.map(diff=>
                               <div
@@ -272,9 +259,9 @@ const BSMap = (
                               </div>
                             )
                           }
-                        </motion.div>
+                        </div>
                     </div>
-                    <motion.div>
+                    <div>
                       {
                         <LeaderBoardList
                           onContentUpdate={onContentUpdate}
@@ -283,11 +270,10 @@ const BSMap = (
                           difficulty={currentDiff.difficulty}
                         />
                       }
-                    </motion.div>
-                </motion.div>
-            </motion.div>
+                    </div>
+                </div>
+            </div>
         }
-      </AnimatePresence>
 
       {
         isDetailMode && <LockBodyScroll/>

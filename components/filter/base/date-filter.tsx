@@ -67,7 +67,7 @@ const DateFilter = React.forwardRef<HTMLDivElement, DateFilterProps>((
       >
         <Popover open={isOpen} onOpenChange={setIsOpen}>
           <PopoverTrigger asChild>
-            <motion.div className={"text-xs rounded-full p-1 px-2 bg-zinc-100/70 dark:bg-zinc-700/70 cursor-pointer flex items-center space-x-2 w-56"}>
+            <motion.div className={"text-xs rounded-full p-1 px-2 bg-zinc-100/70 dark:bg-zinc-900/70 cursor-pointer flex items-center space-x-2 w-56"}>
               <CalendarIcon className={"h-4 w-4"}/>
               <span className={"flex items-center justify-between w-full"}>
                 <span>
@@ -87,7 +87,7 @@ const DateFilter = React.forwardRef<HTMLDivElement, DateFilterProps>((
               isOpen &&
                 <PopoverContent asChild>
                     <motion.div
-                        className={"z-10 bg-zinc-100/70 dark:bg-zinc-700/70 p-2 m-2 rounded-lg mt-1 overflow-hidden text-left shadow backdrop-blur"}
+                        className={"z-10 bg-zinc-100/70 dark:bg-zinc-900/70 p-2 m-2 rounded-lg mt-1 overflow-hidden text-left shadow backdrop-blur"}
                         initial="closed"
                         animate="open"
                         exit="closed"

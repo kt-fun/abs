@@ -28,6 +28,7 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem
         >
+          {/*bg-base-light dark:bg-base-dark*/}
           <main className="flex min-h-screen flex-col bg-base-light dark:bg-base-dark">
             <Header/>
             <section className='grow justify-center flex'>

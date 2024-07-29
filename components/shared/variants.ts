@@ -13,17 +13,17 @@ export const listItemVariants = {
   hidden: {
     y: 50,
     opacity: 0,
-    transition: {
-      y: { stiffness: 1000 }
-    }
+    // transition: {
+    //   y: { stiffness: 1000 }
+    // }
   },
-  show: (i:number)=>({
+  show: {
     y: 0,
     opacity: 1,
     transition: {
-      duration: 0.5,
+      duration: 0.3,
       // y: { stiffness: 1000, velocity: -100 },
-        delay: (i % 20) * 0.2
+      //   delay: (i % 20) * 0.2
     }
-  })
+  }
 }

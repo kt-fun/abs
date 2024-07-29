@@ -4,6 +4,7 @@
     "empty": "这里还没评论哦 😯"
   },
   "description": "简介",
+  "description-empty": "暂无介绍",
   "leaderboard": "打分板",
   "table-column": {
     "rank": "排名",
