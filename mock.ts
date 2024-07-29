@@ -24,6 +24,7 @@ export const bsUserWithStats:BSUserWithStats =
 export const bsmap:BSBeatMap = {
     "id": "3873d",
     "name": "Feliz Bottom Jeans - Jose Feliciano",
+    "blRanked": false,
     "description": "I'll be making this better but in the mean time Ive used beatsage to generate the map because there wasnt one for download.",
     "uploader": {
         "id": 74331,
