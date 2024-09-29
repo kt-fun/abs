@@ -39,6 +39,16 @@ dayjs.extend(duration);
 Chart.defaults.backgroundColor = 'rgb(0,0,0,0)';
 Chart.defaults.borderColor = 'rgb(0,0,0,0.1)';
 Chart.defaults.color = '#ffffff';
+
+// factor 1, 2,3,4
+const splitter = (type: string, factor: number)=> ({
+  borderColor: type == 'score' ? 'rgb(196, 71, 95, 0.8)' : 'rgba(53, 162, 235, 0.8)',
+  type: 'line' as const,
+  borderWidth: 0.5,
+  scaleID: 'y',
+  value: factor * 10 + 9.5,
+  borderDash: [9, 9],
+})
 export default function Score({
   scoreData,
   label,
@@ -104,6 +114,19 @@ export default function Score({
           drawTime: 'afterDatasetsDraw' as const
         },
         annotations: {
+          annotation0: {
+            type: 'line' as const,
+            borderColor: type == 'score' ? 'rgb(196, 71, 95)' : 'rgb(53, 162, 235)',
+            label: {
+              backgroundColor: type == 'score' ? 'rgb(196, 71, 95,0.5)' : 'rgb(53, 162, 235,0.5)',
+              content: 'Top 3',
+              display: true
+            },
+            borderWidth: 1,
+            scaleID: 'y',
+            value: 2.5,
+            borderDash: [6, 6],
+          },
           annotation1: {
             type: 'line' as const,
             borderColor: type == 'score' ? 'rgb(196, 71, 95)' : 'rgb(53, 162, 235)',
@@ -116,7 +139,27 @@ export default function Score({
             scaleID: 'y',
             value: 9.5,
             borderDash: [6, 6],
-          }
+          },
+          annotation2: splitter(type, 1),
+          annotation3: splitter(type, 2),
+          annotation4: splitter(type, 3),
+          annotation5: {
+            type: 'line' as const,
+            borderColor: type == 'score' ? 'rgb(196, 71, 95)' : 'rgb(53, 162, 235)',
+            label: {
+              backgroundColor: type == 'score' ? 'rgb(196, 71, 95,0.5)' : 'rgb(53, 162, 235,0.5)',
+              content: 'Top 50',
+              display: true
+            },
+            borderWidth: 1,
+            scaleID: 'y',
+            value: 49.5,
+            borderDash: [6, 6],
+          },
+          annotation6: splitter(type, 5),
+          annotation7: splitter(type, 6),
+          annotation8: splitter(type, 7),
+          annotation9: splitter(type, 8),
         },
       }
     },
@@ -149,7 +192,7 @@ export default function Score({
           <Bar options={options} data={data} width={1380} height={2048}
           />
         </div>
-        <img src={"https://moe.anosu.top/img?type=mp"} className={'inset-0 w-[1400px] h-[2048px] absolute -z-10 object-cover'}
+        <img src={"https://www.loliapi.com/acg/pe/"} className={'inset-0 w-[1400px] h-[2048px] absolute -z-10 object-cover'}
              loading={'eager'}/>
       </div>
     </div>
