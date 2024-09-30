@@ -22,18 +22,62 @@ async function getScoreInfo(scoreid:string) {
 }
 async function getBeatMapInfo(hashId:string) {
     const url = `${BASE_URL}/api/render/beatsaver/hash/${hashId}`
-    const res =  await fetch(url)
+    const res = await fetch(url)
     if (!res.ok) {
-      throw new Error('Failed to fetch mapInfo:'+ hashId)
+        throw new Error('Failed to fetch mapInfo:' + hashId)
     }
     return (await res.json()) as BSMap
 }
+
+
+// https://api.beatleader.xyz/leaderboard/?leaderboardContext=general&page=289&sortBy=rank&order=desc
+const getLeaderboard = async (leaderboardId:string,page: number) => {
+    const url = `https://api.beatleader.xyz/leaderboard/${leaderboardId}?leaderboardContext=general&page=${page}&sortBy=rank&order=desc`
+    const res =  await fetch(url)
+    if (!res.ok) {
+        throw new Error('Failed to fetch mapInfo:'+ leaderboardId)
+    }
+    return (await res.json()) as any
+}
+
+
+async function getLeaderboardAround(leaderboardId:string,rank: number) {
+    let page = Math.ceil(rank / 10)
+    const rest = rank % 10
+    if(rest > 5) {
+        page--
+    }
+    const res = await Promise.all([
+        getLeaderboard(leaderboardId, page),
+        getLeaderboard(leaderboardId, page+1),
+    ])
+
+    const around = res.flatMap(it => it.scores)
+
+    const rankIndex = around.findIndex(it=>it.rank === rank)
+    let result = around
+    if(rankIndex >= 5) {
+        result =  around.slice(rankIndex-5, rankIndex+5)
+    }else {
+        result = around.slice(0,10)
+    }
+    const newRankIndex = result.findIndex(it=>it.rank === rank)
+
+    return {
+        around: result,
+        newRankIndex
+    }
+}
+
 
 export default async function BSPlayerRankPage({params,searchParams}: { params: { scoreid: string },searchParams: { [key: string]: string | string[] | undefined };}) {
 
     const [score] = await Promise.all([
         getScoreInfo(params.scoreid),
     ])
+
+    //
+    const  aroundScores = await getLeaderboardAround(score.leaderboardId, score.rank)
 
     const beatmap = await getBeatMapInfo(score.song.hash)
 

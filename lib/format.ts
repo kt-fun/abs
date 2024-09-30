@@ -6,9 +6,10 @@ export const formatTime = (time: string) => {
     dayjs.extend(relativeTime)
     return dayjs(time).fromNow()
 }
-export const formatDate = (time: Date | undefined) => {
+
+export const formatDate = (time: Date | undefined, template?: string) => {
     if (!time) return undefined
-    return dayjs(time).format('YYYY-MM-DD')
+    return dayjs(time).format(template ?? 'YYYY-MM-DD')
 }
 export const formatDuration = (duration: number) => {
     const minutes = Math.floor(duration / 60)
@@ -31,4 +32,9 @@ export const formatNumber = (number: number) => {
         return "0"
     }
 
+}
+
+
+export function numberWithCommas(x: number) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

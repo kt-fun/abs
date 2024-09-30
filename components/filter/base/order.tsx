@@ -73,20 +73,24 @@ ref,
             isOpen &&
               <PopoverContent asChild>
                 <motion.ul
-                    className={"z-10 bg-zinc-100/70 dark:bg-zinc-900/70 p-2 m-2 rounded-lg mt-1 overflow-hidden text-left shadow backdrop-blur"}
+                    className={cn(
+                      "z-10 bg-zinc-100/70 dark:bg-zinc-900/70 p-2 m-2 rounded-lg mt-1 overflow-hidden text-left shadow backdrop-blur",
+                      "after:content-[''] after:absolute after:top-0 after:left-0 after:w-full after:h-0 after:bg-red-300 after:ease-in-out after:pointer-events-auto group-after"
+                    )}
                     initial="closed"
                     animate={"open"}
                     exit="closed"
                     variants={containerVariant}
                 >
                   {
-                    orders.map((item) =>
+                    orders.map((item,index) =>
                       <motion.li
                         key={item}
                         animate={"open"}
                         variants={itemVariants}
                         className={
-                          "w-40 select-none rounded px-2 py-1.5 hover:bg-zinc-300/40 dark:hover:bg-zinc-500/50"
+                          // hover:bg-zinc-300/40 dark:hover:bg-zinc-500/50
+                          "w-40 select-none rounded px-2 py-1.5"
                         }
                         onClick={()=> {
                           onUpdateOrder(item)

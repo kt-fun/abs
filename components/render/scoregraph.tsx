@@ -405,8 +405,9 @@ export default function ScoreGraph(
     },[scoreId])
     return (
         <>
-            <section style={{height: '12em'}}>
-                <canvas className="chartjs" ref={canvas} />
+						{/*style={{height: '12em'}}*/}
+            <section >
+                <canvas className="chartjs h-[240px] w-[480px]" ref={canvas} />
             </section>
         </>
     )

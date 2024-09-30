@@ -10,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@amcharts/amcharts5": "^5.10.5",
     "@h6s/calendar": "^2.0.1",
     "@next/bundle-analyzer": "^14.1.4",
     "@popmotion/popcorn": "^0.4.4",
