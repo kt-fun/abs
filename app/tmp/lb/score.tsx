@@ -42,9 +42,9 @@ Chart.defaults.color = '#ffffff';
 
 // factor 1, 2,3,4
 const splitter = (type: string, factor: number)=> ({
-  borderColor: type == 'score' ? 'rgb(196, 71, 95, 0.8)' : 'rgba(53, 162, 235, 0.8)',
+  borderColor: type == 'score' ? 'rgb(196, 71, 95, 0.7)' : 'rgba(53, 162, 235, 0.7)',
   type: 'line' as const,
-  borderWidth: 0.5,
+  borderWidth: 0.7,
   scaleID: 'y',
   value: factor * 10 + 9.5,
   borderDash: [9, 9],

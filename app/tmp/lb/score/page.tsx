@@ -1,7 +1,8 @@
 export const dynamic = 'force-dynamic'
 import Score from "@/app/tmp/lb/score";
+const season = 'Autumn'
 async function getScoreInfo() {
-  const url = `http://gateway.lightband.cn:3005/activity/api/activity/playInfo?code=autumn2024`
+  const url = `http://gateway.lightband.cn:3005/activity/api/activity/playInfo?code=${season.toLowerCase()}2024`
   const res =  await fetch(url, { cache: 'no-store' })
   console.log('loading score')
   if (!res.ok) {
@@ -26,7 +27,7 @@ export default async function Home() {
   return (
     <div className={' w-full flex m-auto items-center justify-center'}>
       <div className={"text-3xl text-white"}>
-        <Score scoreData={data} label={"Score"} title={"Summer Score Top 100"} type={'score'}/>
+        <Score scoreData={data} label={"Score"} title={`${season} Score Top 100`} type={'score'}/>
       </div>
     </div>
   )
