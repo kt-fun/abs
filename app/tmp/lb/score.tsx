@@ -192,7 +192,7 @@ export default function Score({
           <Bar options={options} data={data} width={1380} height={2048}
           />
         </div>
-        <img src={"https://www.loliapi.com/acg/pe/"} className={'inset-0 w-[1400px] h-[2048px] absolute -z-10 object-cover'}
+        <img src={"https://moe.anosu.top/img?type=mp"} className={'inset-0 w-[1400px] h-[2048px] absolute -z-10 object-cover'}
              loading={'eager'}/>
       </div>
     </div>
