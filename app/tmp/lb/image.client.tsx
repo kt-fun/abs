@@ -1,5 +1,5 @@
 "use client"
-import {useOpsPanel} from "@/app/tmp/lb/optsPanel";
+// import {useOpsPanel} from "@/app/tmp/lb/optsPanel";
 
 export default function Image({
   width, height
@@ -7,7 +7,8 @@ export default function Image({
   width: number;
   height: number;
 }) {
-  const {background, size} = useOpsPanel()
+  // const {background, size} = useOpsPanel()
+  const background = "https://loliapi.com/acg/pe"
   return <img src={background}
               style={{
                 height: height,
