@@ -1,14 +1,15 @@
 "use client"
 // import {useOpsPanel} from "@/app/tmp/lb/optsPanel";
 
+import {useOpsPanel} from "@/app/tmp/lb/client/optsPanel";
+
 export default function Image({
   width, height
 }:{
   width: number;
   height: number;
 }) {
-  // const {background, size} = useOpsPanel()
-  const background = "https://moe.anosu.top/img?type=mp"
+  const {background, size} = useOpsPanel()
   return <img src={background}
               style={{
                 height: height,

@@ -1,5 +1,5 @@
 "use client"
-import React, {createContext, useContext, useRef} from "react";
+import React, {createContext, MutableRefObject, useContext, useRef} from "react";
 import {Input} from "@/components/ui/input";
 import {
   Select,
@@ -8,26 +8,31 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import {exportAsImage} from "@/app/tmp/lb/exportimg";
+import {exportAsImage} from "@/app/tmp/lb/client/exportimg";
 import {useRandomBackground} from "@/hooks/useBackground";
 import { Button } from "@/components/ui/button";
 import {useMatchPath} from "@/hooks/useMatchPath";
 import CustomLink from "@/components/shared/custom-link";
 import {cn} from "@/lib/utils";
-export default function Ops() {
-    const { background, switchOne, source, presetSource, changeSource } = useRandomBackground()
+import {useOpsPanel} from "@/app/tmp/lb/client/optsPanel";
+export default function Ops(
+  {
+    randombgOps,
+    elementRef,
+  }: {
+    randombgOps: ReturnType<typeof useRandomBackground>,
+    elementRef: MutableRefObject<any>
+  }
+
+) {
+    const { switchOne, source, presetSource, changeSource } = randombgOps
   const [input, setInput] = React.useState<string>()
   const updateInput = (e: any)=>{
     setInput(e?.target.value)
   }
-  const data = {
-    background,
-    size: 20,
-  }
-  const ref = useRef(null)
   const exportImage = ()=> {
-    if(ref) {
-      exportAsImage(ref.current as any, "image.png")
+    if(elementRef.current) {
+      exportAsImage(elementRef.current as any, "image.png")
     }
 
   }
@@ -61,10 +66,10 @@ function SideNav() {
   return (
     <div>
       <ul className={'flex gap-2'}>
-        <li><RouteItem name={"砍方块榜"} path={"/tmp/lb/hitcnt"}/></li>
-        <li><RouteItem name={"比分榜"} path={"/tmp/lb/score"}/></li>
-        <li><RouteItem name={"动态砍方块榜"} path={"/tmp/lb/hitcnt/race"}/></li>
-        <li><RouteItem name={"动态比分榜"} path={"/tmp/lb/score/race"}/></li>
+        <li><RouteItem name={"砍方块榜"} path={"/tmp/lb/client/hitcnt"}/></li>
+        <li><RouteItem name={"比分榜"} path={"/tmp/lb/client/score"}/></li>
+        <li><RouteItem name={"动态砍方块榜"} path={"/tmp/lb/client/hitcnt/race"}/></li>
+        <li><RouteItem name={"动态比分榜"} path={"/tmp/lb/client/score/race"}/></li>
       </ul>
     </div>
   )

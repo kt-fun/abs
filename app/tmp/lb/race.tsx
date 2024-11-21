@@ -27,12 +27,13 @@ function Race({
   const range = size ?? 100
   const yH = (h - 100) / range
   // 'rgb(196, 71, 95, 0.7)' : 'rgba(53, 162, 235, 0.7)'
+  console.log(allData)
   const tickColor = type == 'score' ? am5.color('rgb(196, 71, 95)') : am5.color('rgb(53, 162, 235)');
   const columnColor = type == 'score' ? am5.color('rgb(53, 162, 235)') : am5.color('rgb(196, 71, 95)');
   const title = type == 'hitcnt' ? `Hit Count Top ${range} Race` : `Score Top ${range} Race`
   const times = Object.keys(allData).sort()
   const prefix = type == 'hitcnt' ? { number: 1e3, suffix: "K" } : { number: 1e4, suffix: "W" };
-  var stepDuration = 2700;
+  var stepDuration = 2000;
 
   useLayoutEffect(() => {
     var timeIdx = 0;
@@ -298,11 +299,13 @@ function Race({
     }, 100);
 
     var interval = setInterval(function () {
-      // console.log("step", stepDuration, time ,timeIdx)
+      console.log("step", stepDuration, time ,timeIdx)
+      console.log(times.length)
       timeIdx++
       time = times[timeIdx]
 
       if (timeIdx == times.length) {
+
         clearInterval(interval);
         clearInterval(sortInterval);
         yAxis.zoomToIndexes(0, range);
