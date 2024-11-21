@@ -17,7 +17,7 @@ interface LeaderBoardItemProps {
 const getPlayerURL = (id:string)=>{
   return `https://beatleader.xyz/u/${id}`
 }
-const LeaderBoardItem = React.forwardRef<HTMLLIElement, LeaderBoardItemProps>((
+const LeaderBoardItem = React.forwardRef<HTMLTableRowElement, LeaderBoardItemProps>((
 {
   score
 }:LeaderBoardItemProps,

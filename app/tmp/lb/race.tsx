@@ -10,18 +10,30 @@ import {Percent} from "@amcharts/amcharts5";
 // fetch data = []
 function Race({
   allData,
-  type
+  type,
+  width,
+  height,
+  size,
+  // title
  }: {
   allData: Record<any, any>,
-  type: 'hitcnt' | 'score'
+  type: 'hitcnt' | 'score',
+  width?: number,
+  height?: number,
+  size?: number
 }) {
+  const w = width ?? 1800
+  const h = height ?? 3000
+  const range = size ?? 100
+  const yH = (h - 100) / range
   // 'rgb(196, 71, 95, 0.7)' : 'rgba(53, 162, 235, 0.7)'
   const tickColor = type == 'score' ? am5.color('rgb(196, 71, 95)') : am5.color('rgb(53, 162, 235)');
   const columnColor = type == 'score' ? am5.color('rgb(53, 162, 235)') : am5.color('rgb(196, 71, 95)');
-  const title = type == 'hitcnt' ? 'Hit Count Top 100 Race' : 'Score Top 100 Race'
+  const title = type == 'hitcnt' ? `Hit Count Top ${range} Race` : `Score Top ${range} Race`
   const times = Object.keys(allData).sort()
   const prefix = type == 'hitcnt' ? { number: 1e3, suffix: "K" } : { number: 1e4, suffix: "W" };
-  var stepDuration = 2000;
+  var stepDuration = 2700;
+
   useLayoutEffect(() => {
     var timeIdx = 0;
     var time = times[timeIdx];
@@ -101,7 +113,6 @@ function Race({
     }
 
 
-    const yH = 29
     const baseH = 8 + 58
     const getLabel = (text:string, y: number) => {
       return am5.Label.new(root, {
@@ -124,8 +135,6 @@ function Race({
       })
     }
     var top3line = getLine(baseH + yH * 3)
-    // var top10line = getLine(68 + 29.5 * 10)
-    // var top50line = getLine(68 + 29.5 * 50)
     chart.children.push(top3line);
     const lines = new Array(9).fill(0).map((_, i) => {
       return getLine(baseH + yH * (i + 1) * 10)
@@ -296,7 +305,7 @@ function Race({
       if (timeIdx == times.length) {
         clearInterval(interval);
         clearInterval(sortInterval);
-        yAxis.zoomToIndexes(0, 100);
+        yAxis.zoomToIndexes(0, range);
         return
       }
       updateData();
@@ -336,7 +345,7 @@ function Race({
         });
 
         // yAxis.zoom(0, itemsWithNonZero / yAxis.dataItems.length);
-        yAxis.zoomToIndexes(0, 100);
+        yAxis.zoomToIndexes(0, range);
       }
     }
 
@@ -345,7 +354,7 @@ function Race({
 
     yAxis.events.on("datavalidated", ()=>{
       var totalCount = yAxis.dataItems.length;
-      yAxis.zoomToIndexes(0, 100);
+      yAxis.zoomToIndexes(0, range);
     })
 
     // Make stuff animate on load
@@ -359,7 +368,7 @@ function Race({
     };
   }, [allData, columnColor, tickColor, title, times]);
   return (
-    <div id="chartdiv" style={{ width: "1800px", height: "3000px" }}></div>
+    <div id="chartdiv" style={{ width: w, height: h }}></div>
   );
 }
 export default Race;

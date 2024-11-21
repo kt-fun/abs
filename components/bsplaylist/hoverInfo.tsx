@@ -52,13 +52,13 @@ const BSPlaylistOverviewHiddenInfo = React.forwardRef((
           </div>
           <div className="flex justify-between px-2 items-center">
             <Progress.Root className="relative overflow-hidden rounded-full w-full h-2 mx-2 my-2 bg-gray-100"
-                           value={bsPlaylist.stats?.avgScore * 100??0}>
+                           value={bsPlaylist.stats?.avgScore * 100}>
               <Progress.Indicator
                 className=" h-2 rounded-full bg-gradient-to-r from-red-500 to-blue-500"
-                style={{transform: `translateX(-${100 - bsPlaylist.stats?.avgScore * 100??0}%)`}}
+                style={{transform: `translateX(-${100 - bsPlaylist.stats?.avgScore * 100}%)`}}
               />
             </Progress.Root>
-            <p className="pl-1 font-semibold text-xs">{(bsPlaylist.stats?.avgScore * 100??0).toFixed(1)}%</p>
+            <p className="pl-1 font-semibold text-xs">{(bsPlaylist.stats?.avgScore * 100).toFixed(1)}%</p>
           </div>
           <div className=" px-3 flex items-center space-x-1 justify-between pb-1">
             <div>

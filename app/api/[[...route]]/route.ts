@@ -158,13 +158,17 @@ app.get('/render/beatleader/:uid/pinnedScores', async (c)=> {
 app.get('/oauth/beatsaver/token/:code', async (c)=> {
   const {code} = c.req.param()
   const res = await getOauthKV(code, OAuthPlatform.BeatSaver)
-  return c.json(res)
+  return c.json({
+    res
+  })
 })
 
 app.get('/oauth/beatleader/token/:code', async (c)=> {
   const {code} = c.req.param()
   const res = await getOauthKV(code, OAuthPlatform.BeatLeader)
-  return c.json(res)
+  return c.json({
+    res
+  })
 })
 app.get('/oauth/beatleader/:code', async (c)=> {
   const {code} = c.req.param()

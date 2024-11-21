@@ -1,5 +1,5 @@
 'use client'
-import {useCallback, useEffect, useMemo, useRef, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -16,7 +16,10 @@ interface ScoreProps {
   }[],
   label: string,
   title: string,
-  type: 'hit'|'score'
+  size: number,
+  width?: number,
+  height?: number,
+  type: 'hitcnt'|'score'
 }
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import ChartAnnotation from 'chartjs-plugin-annotation';
@@ -32,7 +35,6 @@ ChartJS.register(
 );
 import { Bar } from "react-chartjs-2";
 import Chart from "chart.js/auto";
-import html2canvas from "html2canvas";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 dayjs.extend(duration);
@@ -49,24 +51,29 @@ const splitter = (type: string, factor: number)=> ({
   value: factor * 10 + 9.5,
   borderDash: [9, 9],
 })
-export default function Score({
-  scoreData,
-  label,
-  title,
-  type
-}:ScoreProps) {
+
+
+ function Score({
+                        scoreData,
+                        label,
+                        title,
+                        type,
+                  size: s,
+                        width,
+                        height
+                      }: ScoreProps) {
+  const size = s ?? 100
   const options = {
     indexAxis: 'y' as const,
-    elements: {
-    },
-    responsive: true,
+    elements: {},
+    // responsive: true,
+    width: width,
+    height: height,
     plugins: {
-
       legend: {
         position: 'top' as const,
         labels: {
           borderRadius: 5,
-
           useBorderRadius: true,
         }
       },
@@ -85,7 +92,7 @@ export default function Score({
         color: 'white',
         labels: {},
         formatter: function(value: any) {
-          if(type == 'hit') {
+          if(type == 'hitcnt') {
             return (value/1000).toFixed(2) + "k";
           }
           return (value/10000).toFixed(2) + "w";
@@ -165,7 +172,7 @@ export default function Score({
     },
   };
   const data = {
-    labels:scoreData.map(it=> {
+    labels:scoreData.slice(0, size).map(it=> {
       let name = it.name
       if(it.name.length > 10) {
         name = it.name.slice(0,10) + "...";
@@ -175,7 +182,7 @@ export default function Score({
     datasets: [
       {
         label: label,
-        data: scoreData.map(it=>it.score),
+        data: scoreData.slice(0, size).map(it=>it.score),
         borderColor: type =='score' ? 'rgb(53, 162, 235)':'rgb(196, 71, 95)',
         backgroundColor: type =='score' ? 'rgba(53, 162, 235, 0.5)':'rgb(196, 71, 95, 0.5)',
         borderRadius: 5,
@@ -184,52 +191,11 @@ export default function Score({
       },
     ],
   };
-  const ref = useRef(null);
-  return (
-    <div>
-      <div className={"relative z-10 overflow-hidden rounded-lg"} id={'render-result'} ref={ref}>
-        <div className={"bg-blend-darken bg-black/[.6] z-10 rounded-lg w-[1400px] h-[2048px] flex justify-center mx-auto"}>
-          <Bar options={options} data={data} width={1380} height={2048}
-          />
-        </div>
-        <img src={"https://moe.anosu.top/img?type=mp"} className={'inset-0 w-[1400px] h-[2048px] absolute -z-10 object-cover'}
-             loading={'eager'}/>
-      </div>
-    </div>
 
+  return (
+    <Bar options={options} data={data} width={width} height={height}/>
   )
 }
 
+export default React.memo(Score)
 
-
-const exportAsImage = async (element:HTMLElement, imageFileName:string) => {
-  const html = document.getElementsByTagName("html")[0];
-  const body = document.getElementsByTagName("body")[0];
-  let htmlWidth = html.clientWidth;
-  let bodyWidth = body.clientWidth;
-  const newWidth = element.scrollWidth - element.clientWidth;
-  if (newWidth > element.clientWidth) {
-    htmlWidth += newWidth;
-    bodyWidth += newWidth;
-  }
-  html.style.width = htmlWidth + "px";
-  body.style.width = bodyWidth + "px";
-  const canvas = await html2canvas(element);
-  const image = canvas.toDataURL("image/png", 1.0);
-  downloadImage(image, imageFileName);
-  // html.style.width = null;
-  // body.style.width = null;
-};
-
-const downloadImage = (blob:string, fileName:string) => {
-  let fakeLink = window.document.createElement("a");
-  fakeLink.style.display = 'none'
-  fakeLink.download = fileName;
-  fakeLink.href = blob
-
-  document.body.appendChild(fakeLink);
-  fakeLink.click();
-  document.body.removeChild(fakeLink);
-
-  fakeLink.remove();
-};
