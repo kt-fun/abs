@@ -3,8 +3,6 @@ import {getLBScoreInfo} from "@/hooks/api/api";
 
 export const dynamic = 'force-dynamic'
 
-const season = 'Winter'
-
 
 export default async function Home({ params }: { params: { type: string } }) {
   const type = params.type as 'score' | 'hitcnt'

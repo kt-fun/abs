@@ -3,9 +3,11 @@ import {Slider} from "@/components/ui/slider";
 export const dynamic = 'force-dynamic'
 import Score from "@/app/tmp/lb/score";
 import Image from "@/app/tmp/lb/image.client";
-const season = 'Winter'
+const seasonCode = 'newyear'
+const season = 'New Year'
+const year = '2025'
 async function getScoreInfo() {
-  const url = `http://gateway.lightband.cn:3005/activity/api/activity/playInfo?code=${season.toLowerCase()}2024`
+  const url = `http://gateway.lightband.cn:3005/activity/api/activity/playInfo?code=${seasonCode}${year}`
   const res =  await fetch(url, { cache: 'no-store' })
   console.log('load score')
   if (!res.ok) {
