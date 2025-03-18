@@ -3,8 +3,8 @@ import {Slider} from "@/components/ui/slider";
 export const dynamic = 'force-dynamic'
 import Score from "@/app/tmp/lb/score";
 import Image from "@/app/tmp/lb/image.client";
-const seasonCode = 'newyear'
-const season = 'New Year'
+const seasonCode = 'spring'
+const season = 'Spring'
 const year = '2025'
 async function getScoreInfo() {
   const url = `http://gateway.lightband.cn:3005/activity/api/activity/playInfo?code=${seasonCode}${year}`
