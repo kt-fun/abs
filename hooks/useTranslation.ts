@@ -1,11 +1,3 @@
-// import {useContext} from "react";
-//
-// export const useTranslation = () => {
-//     return {
-//         t: (key: string) => key
-//     }
-// }
-
 'use client';
 
 import {useEffect} from 'react';

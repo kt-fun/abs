@@ -11,7 +11,7 @@ export enum OAuthPlatform {
   BeatSaver = 'beatsaver'
 }
 
-export type OAuthPlatformField = 'beatleader'|'beatsaver'
+export type OAuthPlatformField = 'beatleader' | 'beatsaver'
 
 export default async function setOauthKV(OauthInfo: any,platform:OAuthPlatform) {
   let id = nanoid()

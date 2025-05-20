@@ -38,5 +38,3 @@ const nextConfig = {
 //   enabled: process.env.ANALYZE === 'true',
 // })
 module.exports = nextConfig
-
-    // withBundleAnalyzer()
