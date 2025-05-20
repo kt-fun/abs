@@ -3,29 +3,9 @@ import {Slider} from "@/components/ui/slider";
 export const dynamic = 'force-dynamic'
 import Score from "@/app/tmp/lb/score";
 import Image from "@/app/tmp/lb/image.client";
-const seasonCode = 'spring'
-const season = 'Spring'
-const year = '2025'
-async function getScoreInfo() {
-  const url = `http://gateway.lightband.cn:3005/activity/api/activity/playInfo?code=${seasonCode}${year}`
-  const res =  await fetch(url, { cache: 'no-store' })
-  console.log('load score')
-  if (!res.ok) {
-    throw new Error('Failed to fetch scoreInfo:')
-  }
-  console.log('load score success')
-  const data = await res.json()
-  const scoreList = data.data.scoreRankList.map((it:any) => ({
-    name: it.player.nickname,
-    score: it.score,
-  }))
-  const hitCountList = data.data.hitCountRankList.map((it:any) => ({
-    name: it.player.nickname,
-    score: it.score,
-  }))
+import {getScoreInfo, season} from "@/app/tmp/lb/utils";
 
-  return [scoreList, hitCountList]
-}
+
 export default async function Home({ params }: { params: { type: string } }) {
   const [data, hitData] =  await getScoreInfo()
   const type = params.type as 'hitcnt' | 'score'
