@@ -1,9 +1,9 @@
 const seasonCode = 'summer'
 const year = '2025'
-
+const code = '02'
 export const season = 'Summer'
 export async function getScoreInfo() {
-  const url = `http://gateway.lightband.cn:3005/activity/api/activity/playInfo?code=${seasonCode}${year}`
+  const url = `http://gateway.lightband.cn:3005/activity/api/activity/playInfo?code=${seasonCode}${year}${code}`
   const res =  await fetch(url, { cache: 'no-store' })
   console.log('load score')
   if (!res.ok) {
